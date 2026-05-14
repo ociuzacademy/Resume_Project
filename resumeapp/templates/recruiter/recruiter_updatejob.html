@@ -1,0 +1,126 @@
+{% extends 'recruiter_home.html' %}
+{%  block content %}
+<style>
+  /* Center-align the heading */
+  h2 {
+      text-align: center;
+  }
+
+  /* Style for the heading text */
+  .heading-text {
+      color: black;
+  }
+</style>
+{% if alert_message1 %}
+        <script>
+            var userConfirmed = confirm("{{ alert_message1 }}");
+            if (userConfirmed) {
+                // Redirect to another page or perform other actions
+                window.location.href ='/recruiter_jobviewmore/{{job.id}}'
+            } else {
+                // Handle the case when the user clicks "Cancel"
+            }
+        </script>
+    {% endif %}
+    <!-- HOME -->
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
+      <div class="block no-padding  gray">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="inner2">
+                <div class="inner-title2">
+                  
+                </div>
+      
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section>
+      <br>
+      <br>
+      <h2><span class="heading-text"><strong>Update your Job</strong></span></h2>
+      <div class="block remove-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="account-popup-area signup-popup-box static">
+                <div class="account-popup">
+                    <form action="/recruiter_updatejob/{{data.id}}/"  method="post" enctype="multipart/form-data" class="form-group" style="width: 100%; padding-right: 20px;">
+                        {% csrf_token %}		
+                        <div>
+                          {% comment %} <h2 style="color:blue">UPDATE JOB</h4>							 {% endcomment %}
+                        <div><br><br>
+                          Job Title
+                          <input type="text"  value="{{data.jobtitle}}" name="jobtitle"  class="form-control" placeholder="Job Title" required /><br>
+                          <i class="la la-name"></i>
+                      </div>
+                        <div class="form-control">
+                          Job Type:
+                          <select data-placeholder="Job Type" class="chosen" name="jobtype">
+                            <option value="....">Choose Your Job Type</option>
+                              <option value="Fulltime" {% if data.jobtype == "Fulltime" %}selected{% endif %}>Fulltime</option>
+                              <option  value="Parttime" {% if data.jobtype == "Parttime" %}selected{% endif %}>Part time</option>
+                              <option value="Internship" {% if data.jobtype == "Internship" %}selected{% endif %}>Internship</option>
+                              <option  value="Contract" {% if data.jobtype == "Contract" %}selected{% endif %}>Contract</option>
+                          </select> 
+                      </div><br>
+                        <div>
+                            Posted on:
+                            <input type="text"  value="{{data.jobdate1}}" class="form-control" placeholder="Job added date" onfocus="(this.type='date')" id="date" name="jobdate1" required/>
+                            <i class="la la-date"></i>
+                        </div><br>
+                        <div>
+                            Expire on:
+                          <input type="text"  value="{{data.jobdate2}}" class="form-control" placeholder="Apply Before Date" onfocus="(this.type='date')" id="date" name="jobdate2" required/>
+                          <i class="la la-date"></i>
+                      </div><br>
+                        <div>
+                          Minimum Experience:
+                            <input type="number"  value="{{data.jobexp1}}" class="form-control" placeholder="Min. Experience" name="jobexp1" required/>
+                        </div><br>
+                        <div>
+                          Maximum Experience:
+                          <input type="number"  value="{{data.jobexp2}}" class="form-control" placeholder="Max. Experience" name="jobexp2" required/>
+                      </div><br>
+            
+                    <div>
+                      No. of Vacancy:
+                      <input type="number"  value="{{data.jobvacancy}}" class="form-control" placeholder="No of vacancy available" name="jobvacancy" required/>
+                  </div><br>
+                        <div>
+                          Job Location:
+                            <input type="text"  value="{{data.joblocation}}"  class="form-control" placeholder="Job location" name="joblocation" required/>
+                        </div><br>
+                        <div>
+                          Skills Required:
+                          <textarea class="form-control"  name="jobskills" placeholder="Skills Required" required>{{ data.jobskills }}</textarea>
+                          <i class="la la-name"></i>
+                      </div><br>
+                      <div>
+                        Job Description:
+                        <textarea style="height:250px" class="form-control" name="jobdescription" placeholder="Job Description" required>{{ data.jobdescription }}</textarea>
+                        <i class="la la-name"></i>
+                    </div><br>
+
+                    <input type="hidden" name="id" value="{{request.session.id}}">
+                        {% comment %} <div>
+                          <h4>Upload Description</h4>
+                            <input type="file"  class="form-control" name="jobdescription" required /> <br /><br />
+                        </div><br> {% endcomment %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    
+                  </div>
+                </div><!-- SIGNUP POPUP -->
+              </div>
+            </div>
+          </div>
+        </div>
+          </section>
+            {% endblock %}
+        

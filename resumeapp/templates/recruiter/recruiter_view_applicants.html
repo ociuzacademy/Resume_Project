@@ -1,0 +1,373 @@
+{% extends 'recruiter_home.html' %}
+
+{% block content %}
+
+<style>
+
+    .hero-section{
+        background-image: url('/static/images/hero_1.jpg');
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        padding: 100px 0;
+    }
+
+    .hero-overlay{
+        background: rgba(0,0,0,0.60);
+        position: absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+    }
+
+    .hero-content{
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .hero-content h1{
+        color: white;
+        font-size: 52px;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .hero-content p{
+        color: #e2e8f0;
+        font-size: 18px;
+    }
+
+    .applicants-section{
+        padding: 80px 0;
+        background: #f1f5f9;
+        min-height: 100vh;
+    }
+
+    .table-container{
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+    }
+
+    .table{
+        margin-bottom: 0;
+    }
+
+    .table thead{
+        background: #0f172a;
+    }
+
+    .table th{
+        color: white;
+        padding: 20px;
+        font-size: 15px;
+        font-weight: 600;
+        border: none;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .table td{
+        padding: 20px;
+        vertical-align: middle;
+        text-align: center;
+        color: #334155;
+        font-size: 14px;
+    }
+
+    .job-title{
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .resume-preview{
+        width: 100%;
+        height: 450px;
+        border: 1px solid #dbeafe;
+        border-radius: 15px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .resume-preview img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .btn-open{
+        margin-top: 15px;
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+    .btn-open:hover{
+        background: #1d4ed8;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-notify{
+        background: #f59e0b;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s ease;
+        display: inline-block;
+    }
+
+    .btn-notify:hover{
+        background: #d97706;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-notified{
+        background: #0ea5e9;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .empty-box{
+        background: white;
+        padding: 80px 40px;
+        text-align: center;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .empty-box h3{
+        font-size: 34px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 10px;
+    }
+
+    .empty-box p{
+        color: #64748b;
+        font-size: 16px;
+    }
+
+    .no-resume{
+        color: red;
+        font-weight: 600;
+    }
+    .btn-download{
+    display:inline-block;
+    background:#0f172a;
+    color:white;
+    padding:10px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s ease;
+}
+
+.btn-download:hover{
+    background:#020617;
+    color:white;
+    text-decoration:none;
+}
+</style>
+
+
+
+<!-- HERO SECTION -->
+
+<section class="hero-section">
+
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content">
+
+        <h1>Shortlisted Applicants</h1>
+
+        <p>
+            Review applicant details and preview resumes instantly
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- APPLICANTS SECTION -->
+
+<section class="applicants-section">
+
+    <div class="container">
+
+        {% if pending_applicants %}
+
+        <div class="table-container">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Job Title</th>
+                            <th>Applicant</th>
+                            <th>Email</th>
+                            <th>Qualification</th>
+                            <th>Experience</th>
+                            <th style="min-width:500px;">Resume Preview</th>
+                            <th>Notification</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for job in pending_applicants %}
+
+                            {% for applicant in job.applicants %}
+
+                            <tr>
+
+                                <td class="job-title">
+
+                                    {{ job.job_title }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ applicant.user.name }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ applicant.user.email }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ applicant.user.qualification }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ applicant.resume.experience }}
+
+                                </td>
+
+                                <td>
+
+    {% if applicant.resume.resume1 %}
+
+        <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+
+            <!-- OPEN BUTTON -->
+
+            <a href="{{ applicant.resume.resume1.url }}"
+               target="_blank"
+               class="btn-open">
+
+                Open Resume
+
+            </a>
+
+            <!-- DOWNLOAD BUTTON -->
+
+            <a href="{{ applicant.resume.resume1.url }}"
+               download
+               class="btn-download">
+
+                Download Resume
+
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <span class="no-resume">
+
+            No Resume Uploaded
+
+        </span>
+
+    {% endif %}
+
+</td>
+
+                                <td>
+
+                                    {% if applicant.notification_sent %}
+
+                                        <button class="btn-notified" disabled>
+
+                                            Notified
+
+                                        </button>
+
+                                    {% else %}
+
+                                        <a href="/recruiter_create_notification/{{ applicant.id }}/"
+                                           class="btn-notify">
+
+                                            Notify
+
+                                        </a>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-box">
+
+            <h3>No Applicants Found</h3>
+
+            <p>
+                There are currently no shortlisted applicants available.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

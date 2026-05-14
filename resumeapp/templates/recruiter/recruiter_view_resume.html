@@ -1,0 +1,58 @@
+{% extends 'recruiter_home.html' %}
+
+{% block content %}
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
+    <div class="block no-padding gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner2">
+                        <div class="inner-title2">
+                            <h2 style="font-weight: bold; color: black; text-align: center;">View Your Jobs</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% csrf_token %}
+
+<section class="site-section">
+    <div class="container">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-7 text-center">
+                <h2 class="section-title mb-2">Jobs Posted</h2>
+            </div>
+        </div>
+
+        {% for i in recruiter_joblist %}
+        <ul class="job-listings mb-5">
+            <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+                <a href="/recruiter_jobviewmore/{{ i.id }}"></a>
+                <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                    <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                        <h2>{{i.jobtitle}}</h2>
+                        <strong>{{company_name}}</strong><br>
+                        <span>Experience required:{{i.jobexp1}} - {{i.jobexp2}} yrs</span>
+                        <span style="padding-left: 100%;">
+                            <a href="/recruiter_jobviewmore/{{ i.id }}">
+                                <button type="button" class="btn btn-info">View More</button>
+                            </a>
+                            <a href="/view_applicants/{{ i.id }}">
+                                <button type="button" class="btn btn-primary">View Applicants</button>
+                            </a>
+                        </span><br>
+                        <span>{{i.jobtype}}</span><br>
+                        <span>Apply Before:{{i.jobdate}}</span>
+                        <span class="icon-room">{{i.joblocation}}</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

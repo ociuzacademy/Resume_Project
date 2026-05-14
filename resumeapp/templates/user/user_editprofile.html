@@ -1,0 +1,300 @@
+{% extends 'user_home.html' %}
+
+{% block content %}
+
+<style>
+
+    .edit-page{
+        padding:80px 0;
+        background:#f8fafc;
+        min-height:100vh;
+    }
+
+    .edit-card{
+        max-width:850px;
+        margin:auto;
+        background:white;
+        border-radius:25px;
+        overflow:hidden;
+        box-shadow:0 10px 35px rgba(0,0,0,0.08);
+    }
+
+    .edit-header{
+        background:#0f172a;
+        padding:50px 40px;
+        text-align:center;
+    }
+
+    .edit-header h2{
+        color:white;
+        font-size:38px;
+        font-weight:800;
+    }
+
+    .edit-body{
+        padding:45px;
+    }
+
+    .profile-preview{
+        text-align:center;
+        margin-bottom:30px;
+    }
+
+    .profile-preview img{
+        width:140px;
+        height:140px;
+        border-radius:50%;
+        object-fit:cover;
+        border:5px solid #dbeafe;
+    }
+
+    .form-group{
+        margin-bottom:22px;
+    }
+
+    .form-group label{
+        display:block;
+        margin-bottom:8px;
+        font-weight:700;
+        color:#0f172a;
+    }
+
+    .form-control{
+        width:100%;
+        padding:14px;
+        border:1px solid #cbd5e1;
+        border-radius:12px;
+        font-size:15px;
+    }
+
+    textarea.form-control{
+        min-height:120px;
+        resize:none;
+    }
+
+    .save-btn{
+        width:100%;
+        padding:15px;
+        background:#2563eb;
+        color:white;
+        border:none;
+        border-radius:12px;
+        font-size:16px;
+        font-weight:700;
+        transition:0.3s ease;
+    }
+
+    .save-btn:hover{
+        background:#1d4ed8;
+    }
+
+</style>
+
+
+
+<!-- HERO -->
+
+<section class="section-hero overlay inner-page bg-image"
+         style="background-image:url('/static/images/hero_1.jpg');
+                background-size:cover;
+                background-position:center;
+                height:320px;">
+
+    <div class="container h-100 d-flex align-items-center justify-content-center">
+
+        <div class="text-center">
+
+            <h1 style="color:white; font-size:52px; font-weight:800;">
+                Edit Profile
+            </h1>
+
+            <p style="color:white; font-size:18px;">
+                Update your account information
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section class="edit-page">
+
+    <div class="container">
+
+        <div class="edit-card">
+
+            <div class="edit-header">
+
+                <h2>
+
+                    Edit Your Profile
+
+                </h2>
+
+            </div>
+
+
+
+            <div class="edit-body">
+
+                <form method="post"
+                      action="/user_editprofile/"
+                      enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+
+
+                    <div class="profile-preview">
+
+                        {% if user_profile.profile_pic %}
+
+                            <img src="{{ user_profile.profile_pic.url }}">
+
+                        {% else %}
+
+                            <img src="/static/pr.png">
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Profile Picture
+
+                        </label>
+
+                        <input type="file"
+                               name="profile_pic"
+                               class="form-control">
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Name
+
+                        </label>
+
+                        <input type="text"
+                               name="name"
+                               value="{{ user_profile.name }}"
+                               class="form-control">
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Bio
+
+                        </label>
+
+                        <textarea name="bio"
+                                  class="form-control">{{ user_profile.bio }}</textarea>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Address
+
+                        </label>
+
+                        <input type="text"
+                               name="adrs"
+                               value="{{ user_profile.adrs }}"
+                               class="form-control">
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Phone
+
+                        </label>
+
+                        <input type="text"
+                               name="phn"
+                               value="{{ user_profile.phn }}"
+                               class="form-control">
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Gender
+
+                        </label>
+
+                        <input type="text"
+                               name="gender"
+                               value="{{ user_profile.gender }}"
+                               class="form-control">
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Place
+
+                        </label>
+
+                        <input type="text"
+                               name="plc"
+                               value="{{ user_profile.plc }}"
+                               class="form-control">
+
+                    </div>
+
+
+
+                    <button type="submit"
+                            class="save-btn">
+
+                        Save Changes
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

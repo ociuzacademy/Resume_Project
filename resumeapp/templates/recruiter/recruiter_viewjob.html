@@ -1,0 +1,158 @@
+{% extends 'recruiter_home.html' %}
+
+{% block content %}
+
+<section class="section-hero overlay inner-page bg-image"
+    style="background-image: url('/static/images/hero_1.jpg'); padding: 90px 0;">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+
+                <h1 class="text-white fw-bold">
+                    Manage Job Posts
+                </h1>
+
+                <p class="text-white mt-3">
+                    View and manage all jobs posted by your company
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="site-section py-5">
+
+    <div class="container">
+
+        <!-- Section Title -->
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-8 text-center">
+
+                <h2 class="section-title mb-3 fw-bold">
+                    Jobs Posted
+                </h2>
+
+                <p class="text-muted">
+                    Track applications, review job details, and manage recruitment activities.
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Job List -->
+        <div class="row">
+
+            {% for i in recruiter_joblist %}
+
+            <div class="col-lg-12 mb-4">
+
+                <div class="card shadow-sm border-0 rounded-4">
+
+                    <div class="card-body p-4">
+
+                        <div class="row align-items-center">
+
+                            <!-- Left Content -->
+                            <div class="col-lg-8">
+
+                                <div class="mb-3">
+
+                                    <h3 class="fw-bold text-dark mb-2">
+                                        {{ i.jobtitle }}
+                                    </h3>
+
+                                    <h6 class="text-primary fw-semibold">
+                                        {{ company_name }}
+                                    </h6>
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-2">
+
+                                        <p class="mb-1">
+                                            <strong>Experience:</strong>
+                                            {{ i.jobexp1 }} - {{ i.jobexp2 }} Years
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <strong>Job Type:</strong>
+                                            {{ i.jobtype }}
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-2">
+
+                                        <p class="mb-1">
+                                            <strong>Apply Before:</strong>
+                                            {{ i.jobdate }}
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <strong>Location:</strong>
+                                            {{ i.joblocation }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Right Buttons -->
+                            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+
+                                <a href="/recruiter_jobviewmore/{{ i.id }}"
+                                   class="btn btn-info text-white px-4 py-2 mb-2">
+                                    View Details
+                                </a>
+
+                                <br>
+
+                                <a href="/recruiter_view_applicants/{{ i.id }}/"
+                                   class="btn btn-primary px-4 py-2">
+                                    View Applicants
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-lg-12">
+
+                <div class="alert alert-warning text-center shadow-sm">
+
+                    <h5 class="mb-2">
+                        No Jobs Posted Yet
+                    </h5>
+
+                    <p class="mb-0">
+                        Start posting jobs to attract candidates.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

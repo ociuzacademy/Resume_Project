@@ -1,0 +1,165 @@
+{% extends 'recruiter_home.html' %}
+
+{% block content %}
+
+<style>
+
+    .notification-section{
+        min-height:100vh;
+        background:#f8fafc;
+        padding:80px 0;
+    }
+
+    .notification-card{
+        background:white;
+        border-radius:24px;
+        padding:50px;
+        max-width:700px;
+        margin:auto;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .notification-title{
+        text-align:center;
+        margin-bottom:35px;
+    }
+
+    .notification-title h2{
+        font-size:40px;
+        font-weight:800;
+        color:#0f172a;
+        margin-bottom:10px;
+    }
+
+    .notification-title p{
+        color:#64748b;
+        font-size:16px;
+    }
+
+    .form-group{
+        margin-bottom:25px;
+    }
+
+    .form-group label{
+        display:block;
+        margin-bottom:10px;
+        font-size:16px;
+        font-weight:600;
+        color:#1e293b;
+    }
+
+    textarea{
+        width:100%;
+        min-height:220px;
+        border:1px solid #cbd5e1;
+        border-radius:14px;
+        padding:18px;
+        font-size:15px;
+        resize:none;
+        outline:none;
+        transition:0.3s ease;
+    }
+
+    textarea:focus{
+        border-color:#2563eb;
+        box-shadow:0 0 0 4px rgba(37,99,235,0.15);
+    }
+
+    .submit-btn{
+        width:100%;
+        background:#2563eb;
+        color:white;
+        border:none;
+        padding:16px;
+        font-size:16px;
+        font-weight:700;
+        border-radius:14px;
+        transition:0.3s ease;
+    }
+
+    .submit-btn:hover{
+        background:#1d4ed8;
+    }
+
+</style>
+
+
+<!-- HERO SECTION -->
+
+<section class="section-hero overlay inner-page bg-image"
+         style="background-image: url('/static/images/hero_1.jpg');
+                height:300px;
+                background-size:cover;
+                background-position:center;">
+
+    <div class="container h-100 d-flex align-items-center justify-content-center">
+
+        <div class="text-center">
+
+            <h1 style="color:white; font-size:50px; font-weight:800;">
+                Create Notification
+            </h1>
+
+            <p style="color:white; font-size:18px;">
+                Send interview or job updates to applicants
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- FORM SECTION -->
+
+<section class="notification-section">
+
+    <div class="container">
+
+        <div class="notification-card">
+
+            <div class="notification-title">
+
+                <h2>Create Notification</h2>
+
+                <p>
+                    Notify applicants regarding interview schedules,
+                    shortlisting status, or other important updates.
+                </p>
+
+            </div>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+
+                    <label for="id_message">
+                        Notification Message
+                    </label>
+
+                    <textarea name="message"
+                              id="id_message"
+                              placeholder="Enter your message here..."
+                              required></textarea>
+
+                </div>
+
+                <button type="submit" class="submit-btn">
+
+                    Send Notification
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

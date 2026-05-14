@@ -1,0 +1,70 @@
+{% extends 'recruiter_home.html' %}
+{% block content %}
+<style>
+  /* Custom styles for the job details page */
+  .section-hero {
+    margin-bottom: 30px;
+  }
+
+  .inner-title2 h2 {
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .job-details {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .job-details h2 {
+    color: #4768cc;
+  }
+
+  .job-details p {
+    margin-bottom: 10px;
+  }
+</style>
+
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
+  <div class="block no-padding gray">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner2">
+            <div class="inner-title2">
+              <!-- Add a heading or remove if not needed -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="site-section">
+  <div class="container">
+    <div class="row mb-5 justify-content-center">
+      <div class="col-md-7 text-center">
+        <h2 class="section-title mb-2">Job Details</h2>
+      </div>
+    </div>
+
+    <div class="job-details">
+      <h2>{{ job.jobtitle }}</h2>
+      <p><strong>Company:</strong> {{ company_name }}</p>
+      <p><strong>Experience required:</strong> {{ job.jobexp1 }} - {{ job.jobexp2 }} yrs</p>
+      <p><strong>Job Type:</strong> {{ job.jobtype }}</p>
+      <p><strong>Posted on:</strong> {{ job.jobdate1 }}</p>
+      <p><strong>Apply Before:</strong> {{ job.jobdate2 }}</p>
+      <p><strong>Location:</strong> {{ job.joblocation }}</p>
+      <p><strong>Skill Required:</strong> {{ job.jobskills }}</p>
+      <p><strong>Job Description:</strong> {{ job.jobdescription }}</p><br>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'recruiter_home.html' %}
+{%  block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Processing Results</title>
+</head>
+<body>
+    <h1>Resume Processing Results</h1>
+
+    <p>Resume Path: {{ resume_path }}</p>
+    <p>Number of Predefined Skills: {{ num_predefined_skills }}</p>
+    <p>Number of Matching Skills: {{ num_matching_skills }}</p>
+
+    <h2>Matching Skills:</h2>
+    <ul>
+        {% for skill in matching_skills %}
+            <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Job Skills from Database:</h2>
+    <ul>
+        {% for job_skill in job_skills_from_db %}
+            <li>{{ job_skill }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+{% endblock %}

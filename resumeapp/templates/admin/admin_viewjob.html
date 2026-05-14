@@ -1,0 +1,62 @@
+{% extends 'admin_home.html' %}
+{%  block content %}
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
+    <div class="block no-padding  gray">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner2">
+              <div class="inner-title2">
+                <h2 style="font-weight: bold; color: black; text-align: center;">View Jobs</h2>
+              </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% csrf_token %}
+
+  <section class="site-section">
+     
+      <div class="container">
+         
+        <div class="row mb-5 justify-content-center">
+          <div class="col-md-7 text-center">
+            <h2 class="section-title mb-2">Jobs Listed</h2>
+          </div>
+        </div>
+       
+        {% for i in joblist %}
+        <ul class="job-listings mb-5">
+          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+        
+
+            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                <h2>{{i.jobtitle}}</h2>
+                <strong>{{company_name}}</strong><br>
+                <span><b>Experience required:</b>{{i.jobexp1}} - {{i.jobexp2}} yrs</span><br>
+                {% comment %} <span style="padding-left: 100%;"><a href="/recruiter_jobviewmore/{{ i.id }}"><button type="button" class="btn btn-info">View More</button></span></a><br> {% endcomment %}
+                <span><b>Job type:</b>{{i.jobtype}}</span><br>
+                <span><b>Apply Before:</b>{{i.jobdate2}}</span>
+                {% comment %} <span style="padding-left:80%" class="icon-room">location:{{i.joblocation}}</span> {% endcomment %}
+               {% comment %} <span><a href="recruiter_updatejob/" style="width:150px;padding:40px 60px" class="btn btn-success">Update</a><span> {% endcomment %}
+                {% comment %} <span><a href="recruiter_updatejob/" style="width:150px;padding:4px 6px" class="btn btn-dark">delete</a><span> {% endcomment %}
+                  
+   
+                </div>
+                <h5 class="icon-room">{{i.joblocation}}</h3>
+            </div>
+            
+          </li>
+</ul>
+{% endfor %}
+</div>
+</section>
+
+
+
+{% endblock%}

@@ -1,0 +1,63 @@
+{% extends 'recruiter_home.html' %}
+{%  block content %}
+
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
+    <div class="block no-padding gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner2">
+                        <div class="inner-title2">
+                            <h2 style="font-weight: bold; color: black; text-align: center;">Edit Your Profile</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="account-popup-area signup-popup-box static">
+                    <div class="account-popup">
+                        <form method="post" action="/recruiter_editprofile/">
+                            {% csrf_token %}
+                            {% for user_profile in user_profile %}
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name:</label>
+                                    <input type="text" name="name" value="{{ user_profile.name }}" class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label">Bio:</label>
+                                    <textarea name="bio" rows="4" class="form-control" required>{{ user_profile.bio }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="adrs" class="form-label">Address:</label>
+                                    <input type="text" name="adrs" class="form-control" value="{{ user_profile.adrs }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="phn" class="form-label">Phone:</label>
+                                    <input type="text" name="phn" class="form-control" value="{{ user_profile.phn }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="plc" class="form-label">Place:</label>
+                                    <input type="text" name="plc" class="form-control" value="{{ user_profile.plc }}">
+                                </div>
+
+                                <button type="submit" class="btn btn-success">Save Changes</button>
+                            {% endfor %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends 'admin/admin_home.html' %}
+{% block content %}
+
+<section class="section-hero overlay inner-page bg-image"
+    style="background-image: url('/static/images/hero_1.jpg'); padding: 80px 0;">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 style="font-weight:bold; color:white;">
+                    View Companies for Approval
+                </h2>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="site-section py-5">
+
+    <div class="container">
+
+        <div class="card shadow border-0">
+
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Pending Company Requests</h4>
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle text-center">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Profile Image</th>
+                                <th>Company Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Place</th>
+                                <th>Status</th>
+                                <th width="220">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for i in pending_recruiters %}
+                            <tr>
+
+                                <td>{{ forloop.counter }}</td>
+
+                                <!-- Profile Image -->
+                                <td>
+                                    {% if i.profile_pic %}
+                                        <img src="{{ i.profile_pic.url }}"
+                                             alt="Profile"
+                                             width="80"
+                                             height="80"
+                                             style="object-fit:cover; border-radius:50%;">
+                                    {% else %}
+                                        <span class="text-muted">No Image</span>
+                                    {% endif %}
+                                </td>
+
+                                <!-- Company Name -->
+                                <td>
+                                    <strong>{{ i.name }}</strong>
+                                </td>
+
+                                <!-- Email -->
+                                <td>{{ i.email }}</td>
+
+                                <!-- Phone -->
+                                <td>{{ i.phn }}</td>
+
+                                <!-- Place -->
+                                <td>{{ i.plc }}</td>
+
+                                <!-- Status -->
+                                <td>
+                                    <span class="badge bg-warning text-dark">
+                                        {{ i.status }}
+                                    </span>
+                                </td>
+
+                                <!-- Actions -->
+                                <td>
+
+                                    <div class="d-flex justify-content-center gap-2">
+
+                                        <form method="post" action="/admin_approve/{{ i.id }}/">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                Approve
+                                            </button>
+                                        </form>
+
+                                        <form method="post" action="/admin_reject/{{ i.id }}/">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Reject
+                                            </button>
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {% empty %}
+
+                            <tr>
+                                <td colspan="8" class="text-center text-muted">
+                                    No pending companies found.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

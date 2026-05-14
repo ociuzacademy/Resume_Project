@@ -1,0 +1,80 @@
+{% extends 'recruiter_home.html' %}
+
+{% block content %}
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
+    <div class="block no-padding gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner2">
+                        <div class="inner-title2">
+                            <h2 style="font-weight: bold; color: black; text-align: center;">Pending applicants</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% csrf_token %}
+
+<section class="site-section">
+    <div class="container">
+
+      {% if pending_applicants %}
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Applicant Name</th>
+              <th>Email</th>
+              <th>Qualification</th>
+              <th>Experience</th>
+              <th>Resume</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in pending_applicants %}
+              {% for applicant in job.applicants %}
+                <tr>
+                  <td>{{ job.job_title }}</td>
+                  <td>{{ applicant.user.name }}</td>
+                  <td>{{ applicant.user.email }}</td>
+                  <td>{{ applicant.user.qualification }}</td>
+                  <td>{{ applicant.resume.experience }}</td>
+                  <td>
+                    <a href="{{ applicant.resume.resume1.url }}" target="_blank">View/Download Resume</a>
+                  </td>
+    
+                  <td>
+                    <a href="/shortlistCandidate/{{applicant.id}}/" class="btn btn-success">shortlist</a>
+                    <a href="/rejectCandidate/{{applicant.id}}/" class="btn btn-danger">Reject</a>
+                    {% comment %} <button type="button" class="btn btn-success" onclick="shortlistCandidate({{ applicant.id }})">Shortlist</button>
+                    <button type="button" class="btn btn-danger" onclick="rejectCandidate({{ applicant.id }})">Reject</button>
+                  </td> {% endcomment %}
+                </tr>
+              {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No pending applicants for any job.</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <!-- Add JavaScript functions for shortlisting and rejecting candidates -->
+  <script>
+    function shortlistCandidate(candidateId) {
+      // Add logic to handle shortlisting of the candidate with the given ID
+      alert("Shortlisting candidate with ID: " + candidateId);
+    }
+
+    function rejectCandidate(candidateId) {
+      // Add logic to handle rejecting of the candidate with the given ID
+      alert("Rejecting candidate with ID: " + candidateId);
+    }
+  </script>
+{% endblock %}

@@ -1,0 +1,318 @@
+{% extends 'user_home.html' %}
+
+{% block content %}
+
+<style>
+
+    .profile-page{
+        padding:80px 0;
+        background:#f8fafc;
+        min-height:100vh;
+    }
+
+    .profile-card{
+        background:white;
+        border-radius:25px;
+        overflow:hidden;
+        box-shadow:0 10px 35px rgba(0,0,0,0.08);
+        max-width:850px;
+        margin:auto;
+    }
+
+    .profile-header{
+        background:#0f172a;
+        padding:60px 40px;
+        text-align:center;
+    }
+
+    .profile-img{
+        width:140px;
+        height:140px;
+        border-radius:50%;
+        object-fit:cover;
+        border:5px solid white;
+        margin-bottom:20px;
+    }
+
+    .profile-header h2{
+        color:white;
+        font-size:34px;
+        font-weight:800;
+        margin-bottom:10px;
+    }
+
+    .profile-header p{
+        color:#cbd5e1;
+        font-size:16px;
+    }
+
+    .profile-body{
+        padding:45px;
+    }
+
+    .profile-row{
+        display:flex;
+        border-bottom:1px solid #e2e8f0;
+        padding:18px 0;
+        flex-wrap:wrap;
+    }
+
+    .profile-label{
+        width:220px;
+        font-weight:700;
+        color:#0f172a;
+    }
+
+    .profile-value{
+        flex:1;
+        color:#475569;
+    }
+
+    .edit-btn{
+        display:inline-block;
+        background:#2563eb;
+        color:white;
+        padding:14px 30px;
+        border-radius:12px;
+        text-decoration:none;
+        font-weight:600;
+        transition:0.3s ease;
+    }
+
+    .edit-btn:hover{
+        background:#1d4ed8;
+        color:white;
+        text-decoration:none;
+    }
+
+    .btn-area{
+        text-align:center;
+        margin-top:40px;
+    }
+
+    @media(max-width:768px){
+
+        .profile-row{
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .profile-label{
+            width:100%;
+        }
+
+        .profile-body{
+            padding:25px;
+        }
+    }
+
+</style>
+
+
+
+<!-- HERO -->
+
+<section class="section-hero overlay inner-page bg-image"
+         style="background-image:url('/static/images/hero_1.jpg');
+                background-size:cover;
+                background-position:center;
+                height:320px;">
+
+    <div class="container h-100 d-flex align-items-center justify-content-center">
+
+        <div class="text-center">
+
+            <h1 style="color:white; font-size:52px; font-weight:800;">
+                My Profile
+            </h1>
+
+            <p style="color:white; font-size:18px;">
+                View your account details
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section class="profile-page">
+
+    <div class="container">
+
+        <div class="profile-card">
+
+            <div class="profile-header">
+
+                {% if user_profile.profile_pic %}
+
+                    <img src="{{ user_profile.profile_pic.url }}"
+                         class="profile-img">
+
+                {% else %}
+
+                    <img src="/static/pr.png"
+                         class="profile-img">
+
+                {% endif %}
+
+                <h2>
+
+                    {{ user_profile.name }}
+
+                </h2>
+
+                <p>
+
+                    {{ user_profile.email }}
+
+                </p>
+
+            </div>
+
+
+
+            <div class="profile-body">
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+
+                        Username
+
+                    </div>
+
+                    <div class="profile-value">
+
+                        {{ user_profile.uname }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+
+                        Phone
+
+                    </div>
+
+                    <div class="profile-value">
+
+                        {{ user_profile.phn }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+
+                        Gender
+
+                    </div>
+
+                    <div class="profile-value">
+
+                        {{ user_profile.gender }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+
+                        Qualification
+
+                    </div>
+
+                    <div class="profile-value">
+
+                        {{ user_profile.qualification }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+
+                        Place
+
+                    </div>
+
+                    <div class="profile-value">
+
+                        {{ user_profile.plc }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+
+                        Address
+
+                    </div>
+
+                    <div class="profile-value">
+
+                        {{ user_profile.adrs }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+
+                        Bio
+
+                    </div>
+
+                    <div class="profile-value">
+
+                        {{ user_profile.bio|default:"No bio added" }}
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="btn-area">
+
+                    <a href="/user_editprofile/"
+                       class="edit-btn">
+
+                        Edit Profile
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

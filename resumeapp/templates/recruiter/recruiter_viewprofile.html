@@ -1,0 +1,127 @@
+{% extends 'recruiter_home.html' %}
+{% block content %}
+
+<style>
+  .profile-heading {
+    font-family: 'Your Preferred Font', sans-serif;
+    color: #4768cc;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .profile-info {
+    padding: 20px;
+  }
+
+  .profile-field {
+    margin-bottom: 15px;
+  }
+
+  .profile-field strong {
+    display: inline-block;
+    width: 150px;
+    font-weight: bold;
+  }
+
+  .profile-edit-button {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .btn-success {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+  .profile-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  .profile-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
+  <div class="block no-padding gray">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner2">
+            <div class="inner-title2">
+              <h2 class="profile-heading">Your Profile</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container mt-5 profile-container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="account-popup-area signup-popup-box static">
+          <div class="account-popup">
+            <div class="profile-info">
+
+              <div class="profile-icon">
+                <img src="{{ user_profile.profile_pic.url }}" alt="Profile Picture">
+              </div>
+
+              <div class="profile-field">
+                <strong>Email:</strong> <span>{{ user_profile.email }}</span>
+              </div>
+
+              <div class="profile-field">
+                <strong>Name:</strong> <span>{{ user_profile.name }}</span>
+              </div>
+
+              <div class="profile-field">
+                <strong>Mob:</strong> <span>{{ user_profile.phn }}</span>
+              </div>
+
+              <div class="profile-field">
+                <strong>About Us:</strong> <p>{{ user_profile.bio }}</p>
+              </div>
+
+              <div class="profile-field">
+                <strong>Address:</strong> <p>{{ user_profile.adrs }}</p>
+              </div>
+
+              <div class="profile-field">
+                <strong>Place:</strong> <p>{{ user_profile.plc }}</p>
+              </div>
+
+              <div class="profile-edit-button">
+                <a href="/recruiter_editprofile/?id={{user_profile.id}}" class="btn btn-success">Edit Profile</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

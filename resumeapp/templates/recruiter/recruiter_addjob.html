@@ -1,0 +1,107 @@
+{% extends 'recruiter_home.html' %}
+{%  block content %}
+{% if alert_message %}
+        <script>
+            var userConfirmed = confirm("{{ alert_message }}");
+            if (userConfirmed) {
+                // Redirect to another page or perform other actions
+                window.location.href = '/recruiter_addjob/';
+            } else {
+                // Handle the case when the user clicks "Cancel"
+            }
+        </script>
+    {% endif %}
+
+
+    <!-- HOME -->
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
+      <div class="block no-padding  gray">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="inner2"><br>
+                <div class="inner-title2">
+
+                  <h2 style="font-weight: bold; color: black; text-align: center;">Add New Job</h2>
+                </div>
+      
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section>
+      <div class="block remove-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="account-popup-area signup-popup-box static">
+                <div class="account-popup"><br><br>
+                    <form action="/recruiter_addjob/" method="post" enctype="multipart/form-data" class="form-group" style="width: 100%; padding-right: 20px;">
+                        {% csrf_token %}		
+                        <div>
+                          {% comment %} <h2 style="color:blue">.........................</h4>							
+                        <div> {% endcomment %}
+                          <input type="text"  name="jobtitle"  class="form-control" placeholder="Job Title" required /><br>
+                          <i class="la la-name"></i>
+                      </div>
+                        <div class="form-control">
+                          <select data-placeholder="Job Type" class="chosen" name="jobtype">
+                            <option value="....">Choose Your Job Type</option>
+                              <option value="Fulltime">Fulltime</option>
+                              <option  value="Parttime">Part time</option>
+                              <option value="Internship">Internship</option>
+                              <option  value="Contract">Contract</option>
+                          </select> 
+                      </div><br>
+                        <div>
+                            
+                            <input type="text"  class="form-control" placeholder="From date" onfocus="(this.type='date')" id="date" name="jobdate1" required/>
+                            <i class="la la-date"></i>
+                        </div><br>
+                        <div>
+                            
+                          <input type="text"  class="form-control" placeholder="Apply Before Date" onfocus="(this.type='date')" id="date" name="jobdate2" required/>
+                          <i class="la la-date"></i>
+                      </div><br>
+                        <div>
+                            <input type="number"  class="form-control" placeholder="Min. Experience" name="jobexp1" required/>
+                        </div><br>
+                        <div>
+                          <input type="number"  class="form-control" placeholder="Max. Experience" name="jobexp2" required/>
+                      </div><br>
+            
+                    <div>
+                      <input type="number"  class="form-control" placeholder="No of vacancy available" name="jobvacancy" required/>
+                  </div><br>
+                        <div>
+                            <input type="text"  class="form-control" placeholder="Job location" name="joblocation" required/>
+                        </div><br>
+                        <div>
+                          <textarea class="form-control" name="jobskills" placeholder="Skill" required></textarea>
+                          <i class="la la-name"></i>
+                      </div><br>
+                      <div>
+                        <textarea class="form-control" name="jobdescription" placeholder="Job Description" required></textarea>
+                        <i class="la la-name"></i>
+                    </div><br>
+
+                    {% comment %} <input type="hidden" name="id" value="{{request.session.id}}"> {% endcomment %}
+                        {% comment %} <div>
+                          <h4>Upload Description</h4>
+                            <input type="file"  class="form-control" name="jobdescription" required /> <br /><br />
+                        </div><br> {% endcomment %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    
+                  </div>
+                </div><!-- SIGNUP POPUP -->
+              </div>
+            </div>
+          </div>
+        </div>
+          </section>
+            {% endblock %}
+        

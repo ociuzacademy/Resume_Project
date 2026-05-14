@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+{% block content %}
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');" id="home-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7">
+              <h1 class="text-white font-weight-bold">Login</h1>
+              <div class="custom-breadcrumbs">
+                <a href="/">Home</a> <span class="mx-2 slash">/</span>
+                <span class="text-white"><strong>Login</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="site-section" id="next-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+              <form action="/login/" class="" method="post">
+                {% csrf_token %}
+  
+                <div class="row form-group">
+                  <div class="col-md-6 mb-3 mb-md-0">
+                    <label class="text-black" for="lname">Email</label>
+                    <input type="email" id="lname" class="form-control" name="email" required>
+                  </div>
+                </div>
+  
+               
+  
+                
+                  <div class="row form-group">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <label class="text-black" for="lname" >Password</label>
+                        <input type="password" id="lname" class="form-control" name="pswd"  required>
+                      </div>
+                  </div>
+                  <br>
+  
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <input type="submit" value="Login" class="btn btn-primary btn-md text-white">
+                  </div>
+                </div>
+  
+    
+              </form>
+            </div>
+        </div>
+    </div>
+  </section>
+            {%  endblock %}
