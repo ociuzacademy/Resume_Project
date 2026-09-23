@@ -1,63 +1,605 @@
 {% extends 'recruiter_home.html' %}
-{%  block content %}
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
-    <div class="block no-padding  gray">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="inner2">
-              <div class="inner-title2">
-                <!-- <h2 style="font-weight: bold; color: black; text-align: center;">Job Details</h2> -->
-              </div>
-    
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  {% csrf_token %}
+{% block content %}
 
-  <section class="site-section">
+<style>
+
+    .job-details-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
+    }
+
+    .job-details-wrapper {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    /* HEADER */
+
+    .job-page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .job-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .job-page-header h1 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .job-page-header p {
+        margin: auto;
+        max-width: 650px;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* MAIN CARD */
+
+    .job-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 42px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    /* JOB TOP */
+
+    .job-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 25px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .job-title-area h2 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+    .company-name {
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    .company-name strong {
+        color: #2563eb;
+    }
+
+    .job-type-badge {
+        white-space: nowrap;
+        padding: 9px 15px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    /* INFORMATION GRID */
+
+    .job-info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        margin: 30px 0;
+    }
+
+    .info-box {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 18px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+    }
+
+    .info-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 12px;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .info-content span {
+        display: block;
+        margin-bottom: 4px;
+        color: #94a3b8;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+    }
+
+    .info-content strong {
+        display: block;
+        color: #1e293b;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    /* CONTENT SECTIONS */
+
+    .job-content-section {
+        margin-top: 35px;
+    }
+
+    .job-content-section h3 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        color: #0f172a;
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+    .job-content-section h3::before {
+        content: "";
+        width: 4px;
+        height: 22px;
+        border-radius: 5px;
+        background: #2563eb;
+    }
+
+    .job-content-section p {
+        margin: 0;
+        color: #64748b;
+        font-size: 15px;
+        line-height: 1.8;
+        white-space: pre-line;
+    }
+
+    /* SKILLS */
+
+    .skills-box {
+        padding: 20px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        color: #475569;
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+    /* ACTIONS */
+
+    .job-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-top: 40px;
+        padding-top: 28px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .action-left {
+        display: flex;
+        gap: 12px;
+    }
+
+    .btn-update {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 24px;
+        border-radius: 12px;
+        background: #2563eb;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: .25s ease;
+    }
+
+    .btn-update:hover {
+        background: #1d4ed8;
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 22px;
+        border-radius: 12px;
+        background: #f1f5f9;
+        color: #475569;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: .25s ease;
+    }
+
+    .btn-back:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+        text-decoration: none;
+    }
+
+    .btn-delete {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 22px;
+        border: none;
+        border-radius: 12px;
+        background: #fee2e2;
+        color: #dc2626;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: .25s ease;
+    }
+
+    .btn-delete:hover {
+        background: #dc2626;
+        color: #ffffff;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .job-details-page {
+            padding: 40px 15px 60px;
+        }
+
+        .job-card {
+            padding: 25px;
+        }
+
+        .job-page-header h1 {
+            font-size: 30px;
+        }
+
+        .job-top {
+            flex-direction: column;
+        }
+
+        .job-title-area h2 {
+            font-size: 25px;
+        }
+
+        .job-info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .job-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .action-left {
+            flex-direction: column;
+        }
+
+        .btn-update,
+        .btn-back,
+        .btn-delete {
+            width: 100%;
+            justify-content: center;
+        }
+
+    }
+
+</style>
+
+
+<section class="job-details-page">
+
     <div class="container">
-        <div class="row mb-5 justify-content-center">
-            <div class="col-md-7 text-center">
-                <h2 class="section-title mb-2">Job Details</h2>
-            </div>
-        </div>
 
-        <div class="job-details">
-            <h2>{{ job.jobtitle }}</h2>
-            <p><strong>Company:</strong> {{ company_name }}</p>
-            <p><strong>Experience required:</strong> {{ job.jobexp1 }} - {{ job.jobexp2 }} yrs</p>
-            <p><strong>Job Type:</strong> {{ job.jobtype }}</p>
-            <p><strong>Posted on:</strong> {{ job.jobdate1 }}</p>
-            <p><strong>Apply Before:</strong> {{ job.jobdate2 }}</p>
-            <p><strong>Location:</strong> {{ job.joblocation }}</p>
-            <p><strong>Skills Required:</strong> {{ job.jobskills }}</p>
-            <p><strong>Job Description:</strong> {{ job.jobdescription }}</p><br>
-            {% comment %} <a href="#"><span><button type="button" class="btn btn-info">View applicants</button></span></a> {% endcomment %}
-            <a href="/recruiter_updatejob/{{ job.id }}"><span><button type="button" class="btn btn-success">Update</button></span></a>
-            {% comment %} <a href="/recruiter_deletejob/{{ job.id }}"><span><button type="button" class="btn btn-danger">Delete</button></span></a> {% endcomment %}
-            <br><br>
-            <form method="post" action="/recruiter_deletejob/{{ job.id }}/" onsubmit="return confirmDelete()">
-              {% csrf_token %}
-              <span><button type="submit" class="btn btn-danger">Delete Job</button></span>
-              <input type="hidden" name="confirm_delete" id="confirm_delete" value="0">
-              </form>
-            
-      
-          <script>
-              function confirmDelete() {
-                  return confirm("Are you sure you want to delete the job?");
-              }
-          </script>
-            <!-- Add any other details you want to display -->
+        <div class="job-details-wrapper">
+
+            <!-- PAGE HEADER -->
+
+            <div class="job-page-header">
+
+                <div class="job-badge">
+                    💼 Job Management
+                </div>
+
+                <h1>Job Details</h1>
+
+                <p>
+                    Review your job posting, update the information,
+                    or remove the job when it is no longer available.
+                </p>
+
+            </div>
+
+
+            <!-- JOB CARD -->
+
+            <div class="job-card">
+
+                <!-- JOB HEADER -->
+
+                <div class="job-top">
+
+                    <div class="job-title-area">
+
+                        <h2>
+                            {{ job.jobtitle }}
+                        </h2>
+
+                        <div class="company-name">
+
+                            Company:
+                            <strong>{{ company_name }}</strong>
+
+                        </div>
+
+                    </div>
+
+                    <div class="job-type-badge">
+
+                        {{ job.jobtype }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- JOB INFORMATION -->
+
+                <div class="job-info-grid">
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="info-box">
+
+                        <div class="info-icon">
+                            💼
+                        </div>
+
+                        <div class="info-content">
+
+                            <span>Experience</span>
+
+                            <strong>
+                                {{ job.jobexp1 }} - {{ job.jobexp2 }} years
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="info-box">
+
+                        <div class="info-icon">
+                            📍
+                        </div>
+
+                        <div class="info-content">
+
+                            <span>Location</span>
+
+                            <strong>
+                                {{ job.joblocation }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- POSTED DATE -->
+
+                    <div class="info-box">
+
+                        <div class="info-icon">
+                            📅
+                        </div>
+
+                        <div class="info-content">
+
+                            <span>Posted On</span>
+
+                            <strong>
+                                {{ job.jobdate1 }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- APPLY BEFORE -->
+
+                    <div class="info-box">
+
+                        <div class="info-icon">
+                            ⏰
+                        </div>
+
+                        <div class="info-content">
+
+                            <span>Apply Before</span>
+
+                            <strong>
+                                {{ job.jobdate2 }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- VACANCIES -->
+
+                    <div class="info-box">
+
+                        <div class="info-icon">
+                            👥
+                        </div>
+
+                        <div class="info-content">
+
+                            <span>Vacancies</span>
+
+                            <strong>
+                                {{ job.jobvacancy }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- JOB TYPE -->
+
+                    <div class="info-box">
+
+                        <div class="info-icon">
+                            🏢
+                        </div>
+
+                        <div class="info-content">
+
+                            <span>Employment Type</span>
+
+                            <strong>
+                                {{ job.jobtype }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SKILLS -->
+
+                <div class="job-content-section">
+
+                    <h3>
+                        Skills Required
+                    </h3>
+
+                    <div class="skills-box">
+                        {{ job.jobskills }}
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="job-content-section">
+
+                    <h3>
+                        Job Description
+                    </h3>
+
+                    <p>
+                        {{ job.jobdescription }}
+                    </p>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="job-actions">
+
+                    <div class="action-left">
+
+                        <a href="{% url 'recruiter_viewjob' %}"
+                           class="btn-back">
+
+                            ← Back to Jobs
+
+                        </a>
+
+                        <a href="/recruiter_updatejob/{{ job.id }}"
+                           class="btn-update">
+
+                            ✏️ Update Job
+
+                        </a>
+
+                    </div>
+
+
+                    <form method="post"
+                          action="/recruiter_deletejob/{{ job.id }}/"
+                          onsubmit="return confirmDelete();">
+
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="confirm_delete"
+                               id="confirm_delete"
+                               value="0">
+
+                        <button type="submit"
+                                class="btn-delete">
+
+                            🗑 Delete Job
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
+
 </section>
 
+
+<script>
+
+    function confirmDelete() {
+
+        return confirm(
+            "Are you sure you want to delete this job?"
+        );
+
+    }
+
+</script>
+
 {% endblock %}
+

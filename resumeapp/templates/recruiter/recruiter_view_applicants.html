@@ -4,370 +4,623 @@
 
 <style>
 
-    .hero-section{
-        background-image: url('/static/images/hero_1.jpg');
-        background-size: cover;
-        background-position: center;
-        position: relative;
-        padding: 100px 0;
+    .applicants-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
     }
 
-    .hero-overlay{
-        background: rgba(0,0,0,0.60);
-        position: absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
+    .applicants-wrapper {
+        max-width: 1250px;
+        margin: auto;
     }
 
-    .hero-content{
-        position: relative;
-        z-index: 2;
+    /* HEADER */
+
+    .page-header {
         text-align: center;
+        margin-bottom: 40px;
     }
 
-    .hero-content h1{
-        color: white;
-        font-size: 52px;
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .page-header h1 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 38px;
         font-weight: 800;
-        margin-bottom: 10px;
     }
 
-    .hero-content p{
-        color: #e2e8f0;
-        font-size: 18px;
+    .page-header p {
+        margin: auto;
+        max-width: 650px;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.7;
     }
 
-    .applicants-section{
-        padding: 80px 0;
-        background: #f1f5f9;
-        min-height: 100vh;
-    }
+    /* MAIN CARD */
 
-    .table-container{
-        background: white;
-        border-radius: 20px;
+    .applicants-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
     }
 
-    .table{
-        margin-bottom: 0;
+    /* CARD HEADER */
+
+    .card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 25px 30px;
+        border-bottom: 1px solid #e2e8f0;
     }
 
-    .table thead{
+    .card-title {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .card-icon {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        border-radius: 13px;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .card-title h3 {
+        margin: 0 0 3px;
+        color: #0f172a;
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+    .card-title p {
+        margin: 0;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    /* TABLE */
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .applicants-table {
+        width: 100%;
+        min-width: 1050px;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .applicants-table thead {
         background: #0f172a;
     }
 
-    .table th{
-        color: white;
-        padding: 20px;
-        font-size: 15px;
-        font-weight: 600;
+    .applicants-table th {
+        padding: 17px 16px;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+        text-align: left;
+        white-space: nowrap;
         border: none;
-        text-align: center;
+    }
+
+    .applicants-table td {
+        padding: 20px 16px;
+        color: #475569;
+        font-size: 14px;
         vertical-align: middle;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .applicants-table tbody tr {
+        transition: .2s ease;
+    }
+
+    .applicants-table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .applicants-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* JOB */
+
+    .job-title {
+        color: #0f172a !important;
+        font-weight: 800 !important;
+    }
+
+    /* APPLICANT */
+
+    .applicant-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 160px;
+    }
+
+    .applicant-avatar {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        border-radius: 50%;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .applicant-name {
+        color: #1e293b;
+        font-weight: 700;
+    }
+
+    /* EMAIL */
+
+    .email-text {
+        color: #64748b;
         white-space: nowrap;
     }
 
-    .table td{
-        padding: 20px;
-        vertical-align: middle;
-        text-align: center;
+    /* EXPERIENCE */
+
+    .experience-badge {
+        display: inline-block;
+        padding: 7px 11px;
+        border-radius: 8px;
+        background: #f1f5f9;
+        color: #475569;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    /* RESUME */
+
+    .resume-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-width: 190px;
+    }
+
+    .btn-open,
+    .btn-download {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 9px 13px;
+        border-radius: 9px;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+        transition: .25s ease;
+    }
+
+    .btn-open {
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+    }
+
+    .btn-open:hover {
+        background: #2563eb;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .btn-download {
+        background: #f1f5f9;
         color: #334155;
+        border: 1px solid #e2e8f0;
+    }
+
+    .btn-download:hover {
+        background: #0f172a;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .no-resume {
+        display: inline-flex;
+        padding: 8px 11px;
+        border-radius: 8px;
+        background: #fef2f2;
+        color: #dc2626;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    /* NOTIFICATION */
+
+    .btn-notify {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 9px 15px;
+        border-radius: 9px;
+        background: #2563eb;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+        transition: .25s ease;
+        white-space: nowrap;
+    }
+
+    .btn-notify:hover {
+        background: #1d4ed8;
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    .btn-notified {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 15px;
+        border: none;
+        border-radius: 9px;
+        background: #dcfce7;
+        color: #15803d;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    /* EMPTY STATE */
+
+    .empty-box {
+        text-align: center;
+        padding: 80px 30px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+    }
+
+    .empty-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        border-radius: 20px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+
+    .empty-box h3 {
+        margin-bottom: 10px;
+        color: #0f172a;
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .empty-box p {
+        margin: 0;
+        color: #64748b;
         font-size: 14px;
     }
 
-    .job-title{
-        font-weight: 700;
-        color: #0f172a;
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .applicants-page {
+            padding: 40px 15px 60px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+        }
+
+        .card-top {
+            padding: 20px;
+        }
+
     }
 
-    .resume-preview{
-        width: 100%;
-        height: 450px;
-        border: 1px solid #dbeafe;
-        border-radius: 15px;
-        overflow: hidden;
-        background: #fff;
-    }
-
-    .resume-preview img{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .btn-open{
-        margin-top: 15px;
-        display: inline-block;
-        background: #2563eb;
-        color: white;
-        padding: 10px 18px;
-        border-radius: 10px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: 0.3s ease;
-    }
-
-    .btn-open:hover{
-        background: #1d4ed8;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-notify{
-        background: #f59e0b;
-        color: white;
-        padding: 10px 18px;
-        border-radius: 10px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: 0.3s ease;
-        display: inline-block;
-    }
-
-    .btn-notify:hover{
-        background: #d97706;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-notified{
-        background: #0ea5e9;
-        color: white;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 10px;
-        font-weight: 600;
-    }
-
-    .empty-box{
-        background: white;
-        padding: 80px 40px;
-        text-align: center;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-
-    .empty-box h3{
-        font-size: 34px;
-        font-weight: 700;
-        color: #0f172a;
-        margin-bottom: 10px;
-    }
-
-    .empty-box p{
-        color: #64748b;
-        font-size: 16px;
-    }
-
-    .no-resume{
-        color: red;
-        font-weight: 600;
-    }
-    .btn-download{
-    display:inline-block;
-    background:#0f172a;
-    color:white;
-    padding:10px 18px;
-    border-radius:10px;
-    text-decoration:none;
-    font-weight:600;
-    transition:0.3s ease;
-}
-
-.btn-download:hover{
-    background:#020617;
-    color:white;
-    text-decoration:none;
-}
 </style>
 
 
-
-<!-- HERO SECTION -->
-
-<section class="hero-section">
-
-    <div class="hero-overlay"></div>
-
-    <div class="container hero-content">
-
-        <h1>Shortlisted Applicants</h1>
-
-        <p>
-            Review applicant details and preview resumes instantly
-        </p>
-
-    </div>
-
-</section>
-
-
-
-<!-- APPLICANTS SECTION -->
-
-<section class="applicants-section">
+<section class="applicants-page">
 
     <div class="container">
 
-        {% if pending_applicants %}
+        <div class="applicants-wrapper">
 
-        <div class="table-container">
+            <!-- PAGE HEADER -->
 
-            <div class="table-responsive">
+            <div class="page-header">
 
-                <table class="table table-hover align-middle">
+                <div class="page-badge">
+                    ⭐ Recruitment Management
+                </div>
 
-                    <thead>
+                <h1>Shortlisted Applicants</h1>
 
-                        <tr>
-
-                            <th>Job Title</th>
-                            <th>Applicant</th>
-                            <th>Email</th>
-                            <th>Qualification</th>
-                            <th>Experience</th>
-                            <th style="min-width:500px;">Resume Preview</th>
-                            <th>Notification</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {% for job in pending_applicants %}
-
-                            {% for applicant in job.applicants %}
-
-                            <tr>
-
-                                <td class="job-title">
-
-                                    {{ job.job_title }}
-
-                                </td>
-
-                                <td>
-
-                                    {{ applicant.user.name }}
-
-                                </td>
-
-                                <td>
-
-                                    {{ applicant.user.email }}
-
-                                </td>
-
-                                <td>
-
-                                    {{ applicant.user.qualification }}
-
-                                </td>
-
-                                <td>
-
-                                    {{ applicant.resume.experience }}
-
-                                </td>
-
-                                <td>
-
-    {% if applicant.resume.resume1 %}
-
-        <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
-
-            <!-- OPEN BUTTON -->
-
-            <a href="{{ applicant.resume.resume1.url }}"
-               target="_blank"
-               class="btn-open">
-
-                Open Resume
-
-            </a>
-
-            <!-- DOWNLOAD BUTTON -->
-
-            <a href="{{ applicant.resume.resume1.url }}"
-               download
-               class="btn-download">
-
-                Download Resume
-
-            </a>
-
-        </div>
-
-    {% else %}
-
-        <span class="no-resume">
-
-            No Resume Uploaded
-
-        </span>
-
-    {% endif %}
-
-</td>
-
-                                <td>
-
-                                    {% if applicant.notification_sent %}
-
-                                        <button class="btn-notified" disabled>
-
-                                            Notified
-
-                                        </button>
-
-                                    {% else %}
-
-                                        <a href="/recruiter_create_notification/{{ applicant.id }}/"
-                                           class="btn-notify">
-
-                                            Notify
-
-                                        </a>
-
-                                    {% endif %}
-
-                                </td>
-
-                            </tr>
-
-                            {% endfor %}
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
+                <p>
+                    Review shortlisted candidates, access their resumes,
+                    and send important recruitment notifications.
+                </p>
 
             </div>
 
+
+            {% if pending_applicants %}
+
+                <!-- APPLICANTS CARD -->
+
+                <div class="applicants-card">
+
+                    <div class="card-top">
+
+                        <div class="card-title">
+
+                            <div class="card-icon">
+                                👥
+                            </div>
+
+                            <div>
+
+                                <h3>Shortlisted Candidates</h3>
+
+                                <p>
+                                    Review candidate information and resumes
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TABLE -->
+
+                    <div class="table-wrapper">
+
+                        <table class="applicants-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Job Title</th>
+                                    <th>Applicant</th>
+                                    <th>Email</th>
+                                    <th>Qualification</th>
+                                    <th>Experience</th>
+                                    <th>Resume</th>
+                                    <th>Notification</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for job in pending_applicants %}
+
+                                    {% for applicant in job.applicants %}
+
+                                        <tr>
+
+                                            <!-- JOB -->
+
+                                            <td class="job-title">
+
+                                                {{ job.job_title }}
+
+                                            </td>
+
+
+                                            <!-- APPLICANT -->
+
+                                            <td>
+
+                                                <div class="applicant-info">
+
+                                                    <div class="applicant-avatar">
+
+                                                        {{ applicant.user.name|first|upper }}
+
+                                                    </div>
+
+                                                    <span class="applicant-name">
+
+                                                        {{ applicant.user.name }}
+
+                                                    </span>
+
+                                                </div>
+
+                                            </td>
+
+
+                                            <!-- EMAIL -->
+
+                                            <td>
+
+                                                <span class="email-text">
+
+                                                    {{ applicant.user.email }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- QUALIFICATION -->
+
+                                            <td>
+
+                                                {{ applicant.user.qualification }}
+
+                                            </td>
+
+
+                                            <!-- EXPERIENCE -->
+
+                                            <td>
+
+                                                <span class="experience-badge">
+
+                                                    {{ applicant.resume.experience }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- RESUME -->
+
+                                            <td>
+
+                                                {% if applicant.resume.resume1 %}
+
+                                                    <div class="resume-actions">
+
+                                                        <a
+                                                            href="{{ applicant.resume.resume1.url }}"
+                                                            target="_blank"
+                                                            class="btn-open">
+
+                                                            👁 Open
+
+                                                        </a>
+
+                                                        <a
+                                                            href="{{ applicant.resume.resume1.url }}"
+                                                            download
+                                                            class="btn-download">
+
+                                                            ↓ Download
+
+                                                        </a>
+
+                                                    </div>
+
+                                                {% else %}
+
+                                                    <span class="no-resume">
+
+                                                        No Resume
+
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </td>
+
+
+                                            <!-- NOTIFICATION -->
+
+                                            <td>
+
+                                                {% if applicant.notification_sent %}
+
+                                                    <button
+                                                        class="btn-notified"
+                                                        disabled>
+
+                                                        ✓ Notified
+
+                                                    </button>
+
+                                                {% else %}
+
+                                                    <a
+                                                        href="/recruiter_create_notification/{{ applicant.id }}/"
+                                                        class="btn-notify">
+
+                                                        🔔 Notify
+
+                                                    </a>
+
+                                                {% endif %}
+
+                                            </td>
+
+                                        </tr>
+
+                                    {% endfor %}
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <!-- EMPTY STATE -->
+
+                <div class="empty-box">
+
+                    <div class="empty-icon">
+                        👥
+                    </div>
+
+                    <h3>No Applicants Found</h3>
+
+                    <p>
+                        There are currently no shortlisted applicants available.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
         </div>
-
-        {% else %}
-
-        <div class="empty-box">
-
-            <h3>No Applicants Found</h3>
-
-            <p>
-                There are currently no shortlisted applicants available.
-            </p>
-
-        </div>
-
-        {% endif %}
 
     </div>
 
 </section>
 
 {% endblock %}
+

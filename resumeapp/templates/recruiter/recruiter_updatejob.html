@@ -1,126 +1,750 @@
 {% extends 'recruiter_home.html' %}
-{%  block content %}
+
+{% block content %}
+
 <style>
-  /* Center-align the heading */
-  h2 {
-      text-align: center;
-  }
 
-  /* Style for the heading text */
-  .heading-text {
-      color: black;
-  }
+    .update-job-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
+    }
+
+    .update-job-wrapper {
+        max-width: 950px;
+        margin: auto;
+    }
+
+    /* HEADER */
+
+    .update-job-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .update-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #eff6ff;
+        color: #2563eb;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .update-job-header h1 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .update-job-header p {
+        margin: auto;
+        max-width: 650px;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* CARD */
+
+    .update-job-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 42px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    /* CARD HEADER */
+
+    .card-heading {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .card-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 14px;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .card-heading h3 {
+        margin: 0 0 4px;
+        color: #0f172a;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .card-heading p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    /* FORM */
+
+    .form-group-custom {
+        margin-bottom: 23px;
+    }
+
+    .form-group-custom label {
+        display: block;
+        margin-bottom: 9px;
+        color: #1e293b;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .required {
+        color: #ef4444;
+        margin-left: 3px;
+    }
+
+    .form-control-custom {
+        width: 100%;
+        min-height: 50px;
+        padding: 13px 15px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 15px;
+        outline: none;
+        box-sizing: border-box;
+        transition: all 0.25s ease;
+    }
+
+    .form-control-custom:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
+    }
+
+    .form-control-custom::placeholder {
+        color: #94a3b8;
+    }
+
+    textarea.form-control-custom {
+        min-height: 150px;
+        resize: vertical;
+        line-height: 1.7;
+    }
+
+    textarea.description-box {
+        min-height: 220px;
+    }
+
+    select.form-control-custom {
+        cursor: pointer;
+    }
+
+    /* GRID */
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    /* SECTION */
+
+    .form-section {
+        margin-bottom: 35px;
+    }
+
+    .form-section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 22px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .form-section-title::before {
+        content: "";
+        width: 4px;
+        height: 20px;
+        border-radius: 5px;
+        background: #2563eb;
+    }
+
+    .form-section-title h4 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    /* ACTIONS */
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        padding-top: 28px;
+        margin-top: 10px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-cancel {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 13px 24px;
+        border-radius: 12px;
+        background: #f1f5f9;
+        color: #475569;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: 0.25s ease;
+    }
+
+    .btn-cancel:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+        text-decoration: none;
+    }
+
+    .btn-update {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 27px;
+        border: none;
+        border-radius: 12px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .btn-update:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
+    }
+
+    /* TIP */
+
+    .update-tip {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-top: 25px;
+        padding: 18px;
+        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+    }
+
+    .tip-icon {
+        font-size: 18px;
+    }
+
+    .update-tip strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #1e293b;
+        font-size: 14px;
+    }
+
+    .update-tip span {
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .update-job-page {
+            padding: 40px 15px 60px;
+        }
+
+        .update-job-card {
+            padding: 25px;
+        }
+
+        .update-job-header h1 {
+            font-size: 30px;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-cancel,
+        .btn-update {
+            width: 100%;
+        }
+
+    }
+
 </style>
-{% if alert_message1 %}
-        <script>
-            var userConfirmed = confirm("{{ alert_message1 }}");
-            if (userConfirmed) {
-                // Redirect to another page or perform other actions
-                window.location.href ='/recruiter_jobviewmore/{{job.id}}'
-            } else {
-                // Handle the case when the user clicks "Cancel"
-            }
-        </script>
-    {% endif %}
-    <!-- HOME -->
-    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="block no-padding  gray">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="inner2">
-                <div class="inner-title2">
-                  
-                </div>
-      
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  
-    <section>
-      <br>
-      <br>
-      <h2><span class="heading-text"><strong>Update your Job</strong></span></h2>
-      <div class="block remove-bottom">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="account-popup-area signup-popup-box static">
-                <div class="account-popup">
-                    <form action="/recruiter_updatejob/{{data.id}}/"  method="post" enctype="multipart/form-data" class="form-group" style="width: 100%; padding-right: 20px;">
-                        {% csrf_token %}		
-                        <div>
-                          {% comment %} <h2 style="color:blue">UPDATE JOB</h4>							 {% endcomment %}
-                        <div><br><br>
-                          Job Title
-                          <input type="text"  value="{{data.jobtitle}}" name="jobtitle"  class="form-control" placeholder="Job Title" required /><br>
-                          <i class="la la-name"></i>
-                      </div>
-                        <div class="form-control">
-                          Job Type:
-                          <select data-placeholder="Job Type" class="chosen" name="jobtype">
-                            <option value="....">Choose Your Job Type</option>
-                              <option value="Fulltime" {% if data.jobtype == "Fulltime" %}selected{% endif %}>Fulltime</option>
-                              <option  value="Parttime" {% if data.jobtype == "Parttime" %}selected{% endif %}>Part time</option>
-                              <option value="Internship" {% if data.jobtype == "Internship" %}selected{% endif %}>Internship</option>
-                              <option  value="Contract" {% if data.jobtype == "Contract" %}selected{% endif %}>Contract</option>
-                          </select> 
-                      </div><br>
-                        <div>
-                            Posted on:
-                            <input type="text"  value="{{data.jobdate1}}" class="form-control" placeholder="Job added date" onfocus="(this.type='date')" id="date" name="jobdate1" required/>
-                            <i class="la la-date"></i>
-                        </div><br>
-                        <div>
-                            Expire on:
-                          <input type="text"  value="{{data.jobdate2}}" class="form-control" placeholder="Apply Before Date" onfocus="(this.type='date')" id="date" name="jobdate2" required/>
-                          <i class="la la-date"></i>
-                      </div><br>
-                        <div>
-                          Minimum Experience:
-                            <input type="number"  value="{{data.jobexp1}}" class="form-control" placeholder="Min. Experience" name="jobexp1" required/>
-                        </div><br>
-                        <div>
-                          Maximum Experience:
-                          <input type="number"  value="{{data.jobexp2}}" class="form-control" placeholder="Max. Experience" name="jobexp2" required/>
-                      </div><br>
-            
-                    <div>
-                      No. of Vacancy:
-                      <input type="number"  value="{{data.jobvacancy}}" class="form-control" placeholder="No of vacancy available" name="jobvacancy" required/>
-                  </div><br>
-                        <div>
-                          Job Location:
-                            <input type="text"  value="{{data.joblocation}}"  class="form-control" placeholder="Job location" name="joblocation" required/>
-                        </div><br>
-                        <div>
-                          Skills Required:
-                          <textarea class="form-control"  name="jobskills" placeholder="Skills Required" required>{{ data.jobskills }}</textarea>
-                          <i class="la la-name"></i>
-                      </div><br>
-                      <div>
-                        Job Description:
-                        <textarea style="height:250px" class="form-control" name="jobdescription" placeholder="Job Description" required>{{ data.jobdescription }}</textarea>
-                        <i class="la la-name"></i>
-                    </div><br>
 
-                    <input type="hidden" name="id" value="{{request.session.id}}">
-                        {% comment %} <div>
-                          <h4>Upload Description</h4>
-                            <input type="file"  class="form-control" name="jobdescription" required /> <br /><br />
-                        </div><br> {% endcomment %}
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                    
-                  </div>
-                </div><!-- SIGNUP POPUP -->
-              </div>
+
+<section class="update-job-page">
+
+    <div class="container">
+
+        <div class="update-job-wrapper">
+
+            <!-- PAGE HEADER -->
+
+            <div class="update-job-header">
+
+                <div class="update-badge">
+                    ✏️ Job Management
+                </div>
+
+                <h1>Update Your Job</h1>
+
+                <p>
+                    Modify the job information below and keep your
+                    recruitment listing accurate and up to date.
+                </p>
+
             </div>
-          </div>
+
+
+            <!-- UPDATE CARD -->
+
+            <div class="update-job-card">
+
+                <div class="card-heading">
+
+                    <div class="card-icon">
+                        ✏️
+                    </div>
+
+                    <div>
+
+                        <h3>Job Information</h3>
+
+                        <p>
+                            Update the details of your existing job posting.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% if alert_message1 %}
+
+                    <script>
+
+                        var userConfirmed = confirm(
+                            "{{ alert_message1 }}"
+                        );
+
+                        if (userConfirmed) {
+
+                            window.location.href =
+                                "/recruiter_jobviewmore/{{ job.id }}";
+
+                        }
+
+                    </script>
+
+                {% endif %}
+
+
+                <form
+                    action="/recruiter_updatejob/{{ data.id }}/"
+                    method="post"
+                    enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+
+                    <!-- BASIC INFORMATION -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-title">
+
+                            <h4>Basic Job Information</h4>
+
+                        </div>
+
+
+                        <!-- JOB TITLE -->
+
+                        <div class="form-group-custom">
+
+                            <label for="jobtitle">
+                                Job Title
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="jobtitle"
+                                name="jobtitle"
+                                value="{{ data.jobtitle }}"
+                                class="form-control-custom"
+                                placeholder="e.g. Python Developer"
+                                required>
+
+                        </div>
+
+
+                        <!-- JOB TYPE -->
+
+                        <div class="form-group-custom">
+
+                            <label for="jobtype">
+                                Job Type
+                                <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="jobtype"
+                                name="jobtype"
+                                class="form-control-custom"
+                                required>
+
+                                <option value="">
+                                    Choose Your Job Type
+                                </option>
+
+                                <option
+                                    value="Fulltime"
+                                    {% if data.jobtype == "Fulltime" %}
+                                        selected
+                                    {% endif %}>
+                                    Fulltime
+                                </option>
+
+                                <option
+                                    value="Parttime"
+                                    {% if data.jobtype == "Parttime" %}
+                                        selected
+                                    {% endif %}>
+                                    Part time
+                                </option>
+
+                                <option
+                                    value="Internship"
+                                    {% if data.jobtype == "Internship" %}
+                                        selected
+                                    {% endif %}>
+                                    Internship
+                                </option>
+
+                                <option
+                                    value="Contract"
+                                    {% if data.jobtype == "Contract" %}
+                                        selected
+                                    {% endif %}>
+                                    Contract
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- APPLICATION PERIOD -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-title">
+
+                            <h4>Application Period</h4>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group-custom">
+
+                                <label for="jobdate1">
+                                    Posted On
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="jobdate1"
+                                    name="jobdate1"
+                                    value="{{ data.jobdate1|date:'Y-m-d' }}"
+                                    class="form-control-custom"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group-custom">
+
+                                <label for="jobdate2">
+                                    Expire On
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="jobdate2"
+                                    name="jobdate2"
+                                    value="{{ data.jobdate2|date:'Y-m-d' }}"
+                                    class="form-control-custom"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EXPERIENCE & VACANCIES -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-title">
+
+                            <h4>Experience & Vacancy</h4>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group-custom">
+
+                                <label for="jobexp1">
+                                    Minimum Experience
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="jobexp1"
+                                    name="jobexp1"
+                                    value="{{ data.jobexp1 }}"
+                                    class="form-control-custom"
+                                    placeholder="e.g. 1"
+                                    min="0"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group-custom">
+
+                                <label for="jobexp2">
+                                    Maximum Experience
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="jobexp2"
+                                    name="jobexp2"
+                                    value="{{ data.jobexp2 }}"
+                                    class="form-control-custom"
+                                    placeholder="e.g. 5"
+                                    min="0"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group-custom">
+
+                            <label for="jobvacancy">
+                                Number of Vacancies
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="jobvacancy"
+                                name="jobvacancy"
+                                value="{{ data.jobvacancy }}"
+                                class="form-control-custom"
+                                placeholder="e.g. 5"
+                                min="1"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOCATION & SKILLS -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-title">
+
+                            <h4>Location & Requirements</h4>
+
+                        </div>
+
+
+                        <div class="form-group-custom">
+
+                            <label for="joblocation">
+                                Job Location
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="joblocation"
+                                name="joblocation"
+                                value="{{ data.joblocation }}"
+                                class="form-control-custom"
+                                placeholder="e.g. Kochi, Kerala / Remote"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group-custom">
+
+                            <label for="jobskills">
+                                Skills Required
+                                <span class="required">*</span>
+                            </label>
+
+                            <textarea
+                                id="jobskills"
+                                name="jobskills"
+                                class="form-control-custom"
+                                placeholder="e.g. Python, Django, REST API, MySQL"
+                                required>{{ data.jobskills }}</textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-title">
+
+                            <h4>Job Description</h4>
+
+                        </div>
+
+
+                        <div class="form-group-custom">
+
+                            <label for="jobdescription">
+                                Description
+                                <span class="required">*</span>
+                            </label>
+
+                            <textarea
+                                id="jobdescription"
+                                name="jobdescription"
+                                class="form-control-custom description-box"
+                                placeholder="Describe the role, responsibilities, qualifications, and expectations..."
+                                required>{{ data.jobdescription }}</textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SESSION USER -->
+
+                    <input
+                        type="hidden"
+                        name="id"
+                        value="{{ request.session.id }}">
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="form-actions">
+
+                        <a
+                            href="/recruiter_jobviewmore/{{ data.id }}"
+                            class="btn-cancel">
+
+                            ← Cancel
+
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn-update">
+
+                            ✓ Update Job
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <!-- TIP -->
+
+                <div class="update-tip">
+
+                    <div class="tip-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <strong>Update Tip</strong>
+
+                        <span>
+                            Make sure the job title, application dates,
+                            required skills, experience range, and job
+                            description are accurate before saving your changes.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-          </section>
-            {% endblock %}
-        
+
+    </div>
+
+</section>
+
+{% endblock %}
+

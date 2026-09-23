@@ -2,108 +2,164 @@
 
 {% block content %}
 
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- PDF.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 <style>
 
     :root {
-        --ink: #0d1117;
-        --paper: #f5f2ed;
-        --accent: #e85d2f;
-        --muted: #7a7469;
-        --card-bg: #ffffff;
-        --border: #e2ddd6;
+        --resume-ink: #0f172a;
+        --resume-bg: #f8fafc;
+        --resume-card: #ffffff;
+        --resume-primary: #2563eb;
+        --resume-primary-dark: #1d4ed8;
+        --resume-muted: #64748b;
+        --resume-border: #e2e8f0;
+        --resume-soft: #eff6ff;
     }
 
-    * { box-sizing: border-box; }
-
-    body {
-        font-family: 'DM Sans', sans-serif;
-        background: var(--paper);
-    }
-
-    /* ── PAGE BODY ────────────────────────────────── */
-    .resume-page {
+    .my-resume-page {
+        min-height: calc(100vh - 80px);
+        background: var(--resume-bg);
         padding: 60px 20px 80px;
-        max-width: 960px;
-        margin: 0 auto;
     }
 
-    /* ── CARD ─────────────────────────────────────── */
+    .resume-wrapper {
+        max-width: 1050px;
+        margin: auto;
+    }
+
+    /* PAGE HEADER */
+
+    .resume-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .resume-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: var(--resume-soft);
+        color: var(--resume-primary);
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .resume-header h1 {
+        margin: 0 0 10px;
+        color: var(--resume-ink);
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .resume-header p {
+        max-width: 650px;
+        margin: auto;
+        color: var(--resume-muted);
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* RESUME CARD */
+
     .resume-card {
-        background: var(--card-bg);
-        border-radius: 20px;
+        background: var(--resume-card);
+        border: 1px solid var(--resume-border);
+        border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.08);
-        border: 1px solid var(--border);
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
     }
 
-    .card-top {
-        padding: 36px 40px 28px;
-        border-bottom: 1px solid var(--border);
+    /* CARD HEADER */
+
+    .card-header-custom {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
+        gap: 20px;
+        padding: 27px 32px;
+        border-bottom: 1px solid var(--resume-border);
     }
 
-    .card-top-left h2 {
-        font-family: 'Syne', sans-serif;
-        font-size: 26px;
+    .card-heading {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .heading-icon {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        border-radius: 13px;
+        background: var(--resume-soft);
+        color: var(--resume-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .card-heading h2 {
+        margin: 0 0 3px;
+        color: var(--resume-ink);
+        font-size: 20px;
         font-weight: 800;
-        color: var(--ink);
     }
 
-    .card-top-left p {
-        color: var(--muted);
-        font-size: 14px;
-        margin-top: 4px;
+    .card-heading p {
+        margin: 0;
+        color: var(--resume-muted);
+        font-size: 13px;
     }
 
-    .badge {
+    /* FILE BADGE */
+
+    .file-badge {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        padding: 6px 14px;
+        gap: 7px;
+        padding: 8px 13px;
         border-radius: 50px;
         font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
+        font-weight: 700;
+        white-space: nowrap;
     }
 
-    .badge-pdf {
-        background: #fff3ee;
-        color: var(--accent);
-        border: 1px solid #ffd5c5;
+    .pdf-badge {
+        background: #fef2f2;
+        color: #dc2626;
+        border: 1px solid #fecaca;
     }
 
-    .badge-img {
-        background: #eef6ff;
+    .image-badge {
+        background: #eff6ff;
         color: #2563eb;
-        border: 1px solid #c7dcff;
+        border: 1px solid #bfdbfe;
     }
 
-    /* ── PREVIEW AREA ─────────────────────────────── */
-    .preview-area {
-        padding: 30px 40px;
-        background: #f9f7f4;
+    /* PREVIEW */
+
+    .preview-section {
+        padding: 30px;
+        background: #f1f5f9;
     }
 
-    /* PDF canvas wrapper */
-    .pdf-canvas-wrapper {
-        background: #e8e4de;
-        border-radius: 12px;
+    .pdf-wrapper {
+        background: #e2e8f0;
+        border-radius: 15px;
         overflow-y: auto;
-        max-height: 860px;
+        max-height: 850px;
+        padding: 25px 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 24px 16px;
         gap: 16px;
-        box-shadow: inset 0 2px 8px rgba(0,0,0,0.08);
+        box-shadow: inset 0 2px 8px rgba(15, 23, 42, 0.08);
     }
 
     #pdfCanvas {
@@ -111,563 +167,839 @@
         max-width: 780px;
         display: block;
         border-radius: 6px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-        background: white;
+        background: #ffffff;
+        box-shadow: 0 5px 25px rgba(15, 23, 42, 0.18);
     }
 
-    /* loading / error states */
     .pdf-status {
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--muted);
-        font-size: 15px;
         width: 100%;
-    }
-
-    /* page controls */
-    .page-controls {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 14px;
-        margin-top: 18px;
-        flex-wrap: wrap;
-    }
-
-    .page-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 9px 20px;
-        border-radius: 9px;
-        border: 1.5px solid var(--border);
-        background: white;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--ink);
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .page-btn:hover:not(:disabled) {
-        background: var(--ink);
-        color: white;
-        border-color: var(--ink);
-        transform: translateY(-1px);
-    }
-
-    .page-btn:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-    }
-
-    .page-info {
-        font-size: 14px;
-        color: var(--muted);
-        font-weight: 500;
-        min-width: 90px;
+        padding: 70px 20px;
         text-align: center;
-    }
-
-    /* zoom controls */
-    .zoom-controls {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 12px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .zoom-label {
-        font-size: 13px;
-        color: var(--muted);
-        font-weight: 500;
-    }
-
-    .zoom-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 7px;
-        border: 1.5px solid var(--border);
-        background: white;
-        font-size: 18px;
-        line-height: 1;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--ink);
-        transition: all 0.2s;
-    }
-
-    .zoom-btn:hover {
-        background: var(--ink);
-        color: white;
-        border-color: var(--ink);
-    }
-
-    #zoomValue {
-        font-size: 13px;
-        color: var(--ink);
-        font-weight: 600;
-        min-width: 42px;
-        text-align: center;
-    }
-
-    /* image preview */
-    .img-preview {
-        width: 100%;
-        border-radius: 12px;
-        box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-        display: block;
-    }
-
-    /* ── ACTION BUTTONS ───────────────────────────── */
-    .card-actions {
-        padding: 28px 40px;
-        display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
-        align-items: center;
-        border-top: 1px solid var(--border);
-    }
-
-    .btn-resume {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 13px 26px;
-        border-radius: 10px;
-        font-family: 'DM Sans', sans-serif;
+        color: var(--resume-muted);
         font-size: 14px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.2s ease;
-        cursor: pointer;
-        border: none;
     }
-
-    .btn-resume-primary {
-        background: var(--ink);
-        color: white;
-    }
-
-    .btn-resume-primary:hover {
-        background: #1e2733;
-        color: white;
-        text-decoration: none;
-        transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(13,17,23,0.25);
-    }
-
-    .btn-resume-accent {
-        background: var(--accent);
-        color: white;
-    }
-
-    .btn-resume-accent:hover {
-        background:#eb6725;
-        color: white;
-        text-decoration: none;
-        transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(232,93,47,0.35);
-    }
-
-    .btn-resume-outline {
-        background: white;
-        color: var(--ink);
-        border: 1.5px solid var(--border);
-    }
-
-    .btn-resume-outline:hover {
-        border-color: var(--ink);
-        color: var(--ink);
-        text-decoration: none;
-        transform: translateY(-1px);
-    }
-
-    /* ── EMPTY STATE ──────────────────────────────── */
-    .empty-state {
-        background: var(--card-bg);
-        border-radius: 20px;
-        padding: 100px 40px;
-        text-align: center;
-        border: 2px dashed var(--border);
-    }
-
-    .empty-icon {
-        width: 80px;
-        height: 80px;
-        background: #16b03d;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 24px;
-    }
-
-    .empty-icon svg {
-        width: 36px;
-        height: 36px;
-        color: var(--muted);
-    }
-
-    .empty-state h2 {
-        font-family: 'Syne', sans-serif;
-        font-size: 28px;
-        font-weight: 800;
-        color: var(--ink);
-        margin-bottom: 10px;
-    }
-
-    .empty-state p {
-        color: var(--muted);
-        font-size: 15px;
-        max-width: 340px;
-        margin: 0 auto 30px;
-        line-height: 1.6;
-    }
-
-    .btn-resume--upload {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 13px 28px;
-        background: var(--accent);
-        color: white;
-        border-radius: 10px;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 14px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.2s;
-    }
-
-    .btn-resume--upload:hover {
-        background: #edeeef;
-        color: white;
-        text-decoration: none;
-        transform: translateY(-1px);
-    }
-
-    /* ── SPINNER ──────────────────────────────────── */
-    @keyframes spin { to { transform: rotate(360deg); } }
 
     .spinner {
         width: 36px;
         height: 36px;
-        border: 3px solid var(--border);
-        border-top-color: var(--accent);
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
         margin: 0 auto 16px;
+        border: 3px solid var(--resume-border);
+        border-top-color: var(--resume-primary);
+        border-radius: 50%;
+        animation: resume-spin .8s linear infinite;
     }
 
-    /* ── RESPONSIVE ───────────────────────────────── */
-    @media (max-width: 600px) {
-        .card-top,
-        .preview-area,
-        .card-actions      { padding-left: 20px; padding-right: 20px; }
-        .pdf-canvas-wrapper { max-height: 500px; padding: 12px 8px; }
-        .card-actions      { flex-direction: column; }
-        .btn-resume        { width: 100%; justify-content: center; }
+    @keyframes resume-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* IMAGE PREVIEW */
+
+    .image-preview {
+        width: 100%;
+        max-height: 850px;
+        object-fit: contain;
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 10px;
+        box-shadow: 0 5px 25px rgba(15, 23, 42, 0.12);
+    }
+
+    /* PAGE CONTROLS */
+
+    .page-controls,
+    .zoom-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .page-controls {
+        margin-top: 18px;
+    }
+
+    .zoom-controls {
+        margin-top: 12px;
+    }
+
+    .control-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-height: 36px;
+        padding: 8px 15px;
+        border-radius: 9px;
+        border: 1px solid var(--resume-border);
+        background: #ffffff;
+        color: var(--resume-ink);
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: .2s ease;
+    }
+
+    .control-btn:hover:not(:disabled) {
+        background: var(--resume-ink);
+        border-color: var(--resume-ink);
+        color: #ffffff;
+    }
+
+    .control-btn:disabled {
+        opacity: .4;
+        cursor: not-allowed;
+    }
+
+    .page-info,
+    .zoom-label,
+    #zoomValue {
+        color: var(--resume-muted);
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .page-info {
+        min-width: 100px;
+        text-align: center;
+    }
+
+    .zoom-btn {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        font-size: 18px;
+    }
+
+    #zoomValue {
+        min-width: 45px;
+        color: var(--resume-ink);
+        text-align: center;
+    }
+
+    /* ACTIONS */
+
+    .resume-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 27px 32px;
+        border-top: 1px solid var(--resume-border);
+    }
+
+    .resume-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 19px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        transition: .25s ease;
+    }
+
+    .open-btn {
+        background: var(--resume-ink);
+        color: #ffffff;
+    }
+
+    .open-btn:hover {
+        background: #1e293b;
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    .download-btn {
+        background: var(--resume-primary);
+        color: #ffffff;
+    }
+
+    .download-btn:hover {
+        background: var(--resume-primary-dark);
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    .upload-btn {
+        background: #ffffff;
+        color: var(--resume-ink);
+        border: 1px solid var(--resume-border);
+    }
+
+    .upload-btn:hover {
+        background: var(--resume-soft);
+        color: var(--resume-primary);
+        border-color: #bfdbfe;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    /* EMPTY STATE */
+
+    .empty-state {
+        background: #ffffff;
+        border: 1px solid var(--resume-border);
+        border-radius: 24px;
+        padding: 85px 30px;
+        text-align: center;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+    }
+
+    .empty-icon {
+        width: 75px;
+        height: 75px;
+        margin: 0 auto 22px;
+        border-radius: 20px;
+        background: var(--resume-soft);
+        color: var(--resume-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    .empty-state h2 {
+        margin: 0 0 10px;
+        color: var(--resume-ink);
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+    .empty-state p {
+        max-width: 430px;
+        margin: 0 auto 28px;
+        color: var(--resume-muted);
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .my-resume-page {
+            padding: 40px 15px 60px;
+        }
+
+        .resume-header h1 {
+            font-size: 30px;
+        }
+
+        .card-header-custom {
+            align-items: flex-start;
+            flex-direction: column;
+            padding: 22px;
+        }
+
+        .preview-section {
+            padding: 18px;
+        }
+
+        .resume-actions {
+            padding: 22px;
+            flex-direction: column;
+        }
+
+        .resume-action {
+            width: 100%;
+        }
+
+        .pdf-wrapper {
+            max-height: 600px;
+            padding: 12px 8px;
+        }
+
     }
 
 </style>
 
 
-<!-- ════════════════ HERO (original site style) ════════════════ -->
-<section class="section-hero overlay inner-page bg-image"
-         style="background-image: url('/static/images/hero_1.jpg');
-                background-size: cover;
-                background-position: center;
-                height: 320px;">
+<section class="my-resume-page">
 
-    <div class="container h-100 d-flex align-items-center justify-content-center">
-        <div class="text-center">
-            <h1 style="color:white; font-size:55px; font-weight:800;">
+    <div class="resume-wrapper">
+
+        <!-- PAGE HEADER -->
+
+        <div class="resume-header">
+
+            <div class="resume-badge">
+                📄 Resume Management
+            </div>
+
+            <h1>
                 My Resume
             </h1>
-            <p style="color:white; font-size:18px;">
-                Preview, open and download your uploaded resume
+
+            <p>
+                Preview, open, download, and manage your uploaded resume
+                from one place.
             </p>
+
         </div>
+
+
+        {% if data and data.resume1 %}
+
+            <!-- RESUME CARD -->
+
+            <div class="resume-card">
+
+                <!-- CARD HEADER -->
+
+                <div class="card-header-custom">
+
+                    <div class="card-heading">
+
+                        <div class="heading-icon">
+                            📄
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Resume Preview
+                            </h2>
+
+                            <p>
+                                Your most recently uploaded resume
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if ".pdf" in data.resume1.url|lower %}
+
+                        <span class="file-badge pdf-badge">
+                            📕 PDF Document
+                        </span>
+
+                    {% else %}
+
+                        <span class="file-badge image-badge">
+                            🖼 Image File
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- PREVIEW -->
+
+                <div class="preview-section">
+
+                    {% if ".pdf" in data.resume1.url|lower %}
+
+                        <!-- PDF VIEWER -->
+
+                        <div
+                            class="pdf-wrapper"
+                            id="pdfWrapper">
+
+                            <div
+                                class="pdf-status"
+                                id="pdfStatus">
+
+                                <div class="spinner"></div>
+
+                                Loading your resume...
+
+                            </div>
+
+                            <canvas
+                                id="pdfCanvas"
+                                style="display:none;">
+                            </canvas>
+
+                        </div>
+
+
+                        <!-- PAGE NAVIGATION -->
+
+                        <div class="page-controls">
+
+                            <button
+                                type="button"
+                                class="control-btn"
+                                id="prevBtn"
+                                onclick="changePage(-1)"
+                                disabled>
+
+                                ← Prev
+
+                            </button>
+
+                            <span
+                                class="page-info"
+                                id="pageInfo">
+
+                                Page — of —
+
+                            </span>
+
+                            <button
+                                type="button"
+                                class="control-btn"
+                                id="nextBtn"
+                                onclick="changePage(1)"
+                                disabled>
+
+                                Next →
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- ZOOM -->
+
+                        <div class="zoom-controls">
+
+                            <span class="zoom-label">
+                                Zoom
+                            </span>
+
+                            <button
+                                type="button"
+                                class="control-btn zoom-btn"
+                                onclick="changeZoom(-0.25)">
+
+                                −
+
+                            </button>
+
+                            <span id="zoomValue">
+                                100%
+                            </span>
+
+                            <button
+                                type="button"
+                                class="control-btn zoom-btn"
+                                onclick="changeZoom(0.25)">
+
+                                +
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="control-btn"
+                                onclick="resetZoom()">
+
+                                Reset
+
+                            </button>
+
+                        </div>
+
+
+                    {% else %}
+
+                        <!-- IMAGE VIEWER -->
+
+                        <img
+                            src="{{ data.resume1.url }}"
+                            class="image-preview"
+                            alt="Uploaded Resume">
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- ACTION BUTTONS -->
+
+                <div class="resume-actions">
+
+                    <a
+                        href="{{ data.resume1.url }}"
+                        target="_blank"
+                        class="resume-action open-btn">
+
+                        ↗
+                        Open in New Tab
+
+                    </a>
+
+
+                    <a
+                        href="{{ data.resume1.url }}"
+                        download
+                        class="resume-action download-btn">
+
+                        ↓
+                        Download Resume
+
+                    </a>
+
+
+                    <a
+                        href="/user_uploadresume/"
+                        class="resume-action upload-btn">
+
+                        ↑
+                        Upload New Resume
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+            <!-- EMPTY STATE -->
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📄
+                </div>
+
+                <h2>
+                    No Resume Uploaded
+                </h2>
+
+                <p>
+                    You haven't uploaded a resume yet.
+                    Upload your resume to preview it here and
+                    apply for suitable job opportunities.
+                </p>
+
+                <a
+                    href="/user_uploadresume/"
+                    class="resume-action download-btn">
+
+                    ↑
+                    Upload Resume
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
     </div>
 
 </section>
 
 
-<!-- ════════════════ PAGE BODY ════════════════ -->
-<div class="resume-page">
+<!-- PDF.JS -->
 
-    {% if data and data.resume1 %}
+{% if data and data.resume1 %}
 
-    <div class="resume-card">
+    {% if ".pdf" in data.resume1.url|lower %}
 
-        <!-- CARD TOP -->
-        <div class="card-top">
-            <div class="card-top-left">
-                <h2>Resume Preview</h2>
-                <p>Your most recently uploaded resume</p>
-            </div>
+        <script>
 
-            {% if ".pdf" in data.resume1.url|lower %}
-                <span class="badge badge-pdf">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2.5">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                    </svg>
-                    PDF Document
-                </span>
-            {% else %}
-                <span class="badge badge-img">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
-                    </svg>
-                    Image File
-                </span>
-            {% endif %}
-        </div>
-
-        <!-- PREVIEW AREA -->
-        <div class="preview-area">
-
-            {% if ".pdf" in data.resume1.url|lower %}
-
-                <!-- PDF.js canvas — works entirely in the browser, no external server -->
-                <div class="pdf-canvas-wrapper" id="canvasWrapper">
-                    <div class="pdf-status" id="pdfStatus">
-                        <div class="spinner"></div>
-                        Loading your resume…
-                    </div>
-                    <canvas id="pdfCanvas" style="display:none;"></canvas>
-                </div>
-
-                <!-- Page navigation -->
-                <div class="page-controls">
-                    <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2.5">
-                            <polyline points="15 18 9 12 15 6"/>
-                        </svg>
-                        Prev
-                    </button>
-                    <span class="page-info" id="pageInfo">Page — of —</span>
-                    <button class="page-btn" id="nextBtn" onclick="changePage(1)" disabled>
-                        Next
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2.5">
-                            <polyline points="9 18 15 12 9 6"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Zoom controls -->
-                <div class="zoom-controls">
-                    <span class="zoom-label">Zoom:</span>
-                    <button class="zoom-btn" onclick="changeZoom(-0.25)">−</button>
-                    <span id="zoomValue">100%</span>
-                    <button class="zoom-btn" onclick="changeZoom(0.25)">+</button>
-                    <button class="page-btn" onclick="resetZoom()"
-                            style="padding:6px 14px; font-size:12px;">
-                        Reset
-                    </button>
-                </div>
-
-            {% else %}
-
-                <!-- Image preview -->
-                <img src="{{ data.resume1.url }}"
-                     class="img-preview"
-                     alt="Resume">
-
-            {% endif %}
-
-        </div><!-- /.preview-area -->
-
-        <!-- ACTION BUTTONS -->
-        <div class="card-actions">
-
-            <a href="{{ data.resume1.url }}"
-               target="_blank"
-               class="btn-resume btn-primary">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2.2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                    <polyline points="15 3 21 3 21 9"/>
-                    <line x1="10" y1="14" x2="21" y2="3"/>
-                </svg>
-                Open in New Tab
-            </a>
-
-            <a href="{{ data.resume1.url }}"
-               download
-               class="btn-resume btn-resume-accent">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2.2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                </svg>
-                Download Resume
-            </a>
-
-            <a href="/user_uploadresume/"
-               class="btn-resume btn-outline">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2.2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="17 8 12 3 7 8"/>
-                    <line x1="12" y1="3" x2="12" y2="15"/>
-                </svg>
-                Upload New Resume
-            </a>
-
-        </div>
-
-    </div><!-- /.resume-card -->
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 
-    {% else %}
+            let pdfDoc = null;
+            let currentPage = 1;
 
-    <!-- EMPTY STATE -->
-    <div class="empty-state">
-        <div class="empty-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="12" y1="18" x2="12" y2="12"/>
-                <line x1="9" y1="15" x2="15" y2="15"/>
-            </svg>
-        </div>
-        <h2>No Resume Uploaded</h2>
-        <p>You haven't uploaded a resume yet. Upload one to see a preview here and apply to jobs.</p>
-        <a href="/user_uploadresume/" class="btn-upload">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="17 8 12 3 7 8"/>
-                <line x1="12" y1="3" x2="12" y2="15"/>
-            </svg>
-            Upload Resume
-        </a>
-    </div>
+            /*
+             * 1.5 = 100% display scale
+             */
+            let scale = 1.5;
+
+            let renderTask = null;
+
+
+            const canvas =
+                document.getElementById('pdfCanvas');
+
+            const context =
+                canvas.getContext('2d');
+
+            const statusElement =
+                document.getElementById('pdfStatus');
+
+            const pageInfo =
+                document.getElementById('pageInfo');
+
+            const previousButton =
+                document.getElementById('prevBtn');
+
+            const nextButton =
+                document.getElementById('nextBtn');
+
+            const zoomValue =
+                document.getElementById('zoomValue');
+
+
+            const pdfUrl =
+                "{{ data.resume1.url }}";
+
+
+            /*
+             * LOAD PDF
+             */
+
+            pdfjsLib.getDocument(pdfUrl).promise
+
+                .then(function(pdf) {
+
+                    pdfDoc = pdf;
+
+                    statusElement.style.display = 'none';
+
+                    canvas.style.display = 'block';
+
+                    renderPage(currentPage);
+
+                })
+
+                .catch(function(error) {
+
+                    statusElement.innerHTML = `
+                        <div style="
+                            font-size:40px;
+                            margin-bottom:15px;
+                        ">
+                            ⚠️
+                        </div>
+
+                        <strong>
+                            Could not load the PDF preview.
+                        </strong>
+
+                        <br><br>
+
+                        Please use
+                        <strong>Open in New Tab</strong>
+                        above.
+
+                    `;
+
+                    console.error(
+                        'PDF.js load error:',
+                        error
+                    );
+
+                });
+
+
+            /*
+             * RENDER PAGE
+             */
+
+            function renderPage(pageNumber) {
+
+                if (!pdfDoc) {
+                    return;
+                }
+
+
+                pdfDoc.getPage(pageNumber)
+
+                    .then(function(page) {
+
+                        const viewport =
+                            page.getViewport({
+                                scale: scale
+                            });
+
+
+                        canvas.height =
+                            viewport.height;
+
+                        canvas.width =
+                            viewport.width;
+
+
+                        if (renderTask) {
+
+                            renderTask.cancel();
+
+                        }
+
+
+                        renderTask =
+                            page.render({
+
+                                canvasContext: context,
+
+                                viewport: viewport
+
+                            });
+
+
+                        renderTask.promise
+
+                            .then(function() {
+
+                                renderTask = null;
+
+                            })
+
+                            .catch(function() {
+
+                                /*
+                                 * Ignore cancelled
+                                 * render operations.
+                                 */
+
+                            });
+
+
+                        pageInfo.textContent =
+                            `Page ${pageNumber} of ${pdfDoc.numPages}`;
+
+
+                        previousButton.disabled =
+                            pageNumber <= 1;
+
+
+                        nextButton.disabled =
+                            pageNumber >= pdfDoc.numPages;
+
+
+                        zoomValue.textContent =
+                            Math.round(
+                                (scale / 1.5) * 100
+                            ) + '%';
+
+                    });
+
+            }
+
+
+            /*
+             * PAGE NAVIGATION
+             */
+
+            function changePage(direction) {
+
+                if (!pdfDoc) {
+                    return;
+                }
+
+
+                const nextPage =
+                    currentPage + direction;
+
+
+                if (
+                    nextPage >= 1 &&
+                    nextPage <= pdfDoc.numPages
+                ) {
+
+                    currentPage = nextPage;
+
+                    renderPage(currentPage);
+
+                }
+
+            }
+
+
+            /*
+             * ZOOM
+             */
+
+            function changeZoom(delta) {
+
+                scale =
+                    Math.min(
+                        Math.max(
+                            scale + (delta * 1.5),
+                            0.75
+                        ),
+                        4.5
+                    );
+
+
+                if (pdfDoc) {
+
+                    renderPage(currentPage);
+
+                }
+
+            }
+
+
+            /*
+             * RESET ZOOM
+             */
+
+            function resetZoom() {
+
+                scale = 1.5;
+
+                if (pdfDoc) {
+
+                    renderPage(currentPage);
+
+                }
+
+            }
+
+
+            /*
+             * KEYBOARD SHORTCUTS
+             */
+
+            document.addEventListener(
+                'keydown',
+                function(event) {
+
+                    if (
+                        event.key === 'ArrowRight' ||
+                        event.key === 'ArrowDown'
+                    ) {
+
+                        changePage(1);
+
+                    }
+
+
+                    if (
+                        event.key === 'ArrowLeft' ||
+                        event.key === 'ArrowUp'
+                    ) {
+
+                        changePage(-1);
+
+                    }
+
+
+                    if (
+                        event.key === '+' ||
+                        event.key === '='
+                    ) {
+
+                        changeZoom(0.25);
+
+                    }
+
+
+                    if (event.key === '-') {
+
+                        changeZoom(-0.25);
+
+                    }
+
+                }
+            );
+
+        </script>
 
     {% endif %}
 
-</div><!-- /.resume-page -->
-
-
-<!-- ════════════════ PDF.js SCRIPT ════════════════
-     Runs 100% in the browser — no external server needed.
-     Works perfectly on localhost / 127.0.0.1.
-═════════════════════════════════════════════════ -->
-{% if data and data.resume1 %}
-{% if ".pdf" in data.resume1.url|lower %}
-<script>
-
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-    let pdfDoc   = null;
-    let currPage = 1;
-    let scale    = 1.5;   // base scale — 100% display
-
-    const canvas    = document.getElementById('pdfCanvas');
-    const ctx       = canvas.getContext('2d');
-    const statusEl  = document.getElementById('pdfStatus');
-    const pageInfo  = document.getElementById('pageInfo');
-    const prevBtn   = document.getElementById('prevBtn');
-    const nextBtn   = document.getElementById('nextBtn');
-    const zoomValue = document.getElementById('zoomValue');
-
-    // Django template injects the file URL
-    const pdfUrl = "{{ data.resume1.url }}";
-
-    // ── Load PDF ──
-    pdfjsLib.getDocument(pdfUrl).promise
-        .then(pdf => {
-            pdfDoc = pdf;
-            statusEl.style.display = 'none';
-            canvas.style.display   = 'block';
-            renderPage(currPage);
-        })
-        .catch(err => {
-            statusEl.innerHTML = `
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.5"
-                     style="margin:0 auto 12px; display:block; opacity:0.4;">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8"  x2="12"   y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
-                Could not load the PDF preview.<br>
-                Please use <strong>Open in New Tab</strong> above.<br>
-                <small style="opacity:0.55;">${err.message}</small>
-            `;
-            console.error('PDF.js load error:', err);
-        });
-
-    // ── Render one page ──
-    let renderTask = null;
-
-    function renderPage(num) {
-        pdfDoc.getPage(num).then(page => {
-
-            const viewport = page.getViewport({ scale });
-            canvas.height  = viewport.height;
-            canvas.width   = viewport.width;
-
-            if (renderTask) { renderTask.cancel(); }
-
-            renderTask = page.render({ canvasContext: ctx, viewport });
-            renderTask.promise
-                .then(() => { renderTask = null; })
-                .catch(() => {});   // ignore cancellation errors
-
-            pageInfo.textContent    = `Page ${num} of ${pdfDoc.numPages}`;
-            prevBtn.disabled        = (num <= 1);
-            nextBtn.disabled        = (num >= pdfDoc.numPages);
-            zoomValue.textContent   = Math.round(scale / 1.5 * 100) + '%';
-        });
-    }
-
-    // ── Page navigation ──
-    function changePage(dir) {
-        const next = currPage + dir;
-        if (pdfDoc && next >= 1 && next <= pdfDoc.numPages) {
-            currPage = next;
-            renderPage(currPage);
-        }
-    }
-
-    // ── Zoom ──
-    function changeZoom(delta) {
-        scale = Math.min(Math.max(scale + delta * 1.5, 0.75), 4.5);
-        if (pdfDoc) renderPage(currPage);
-    }
-
-    function resetZoom() {
-        scale = 1.5;
-        if (pdfDoc) renderPage(currPage);
-    }
-
-    // ── Keyboard shortcuts ──
-    document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changePage(1);
-        if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   changePage(-1);
-        if (e.key === '+'          || e.key === '=')          changeZoom(0.25);
-        if (e.key === '-')                                    changeZoom(-0.25);
-    });
-
-</script>
-{% endif %}
 {% endif %}
 
 {% endblock %}
+

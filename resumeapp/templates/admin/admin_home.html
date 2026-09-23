@@ -1,606 +1,1571 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>JobBoard &mdash; Admin</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="Free-Template.co" />
-    <link rel="shortcut icon" href="/static/ftco-32x32.png">
 
-    <link rel="stylesheet" href="/static/css/custom-bs.css">
-    <link rel="stylesheet" href="/static/css/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="/static/fonts/icomoon/style.css">
-    <link rel="stylesheet" href="/static/fonts/line-icons/style.css">
-    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/static/css/animate.min.css">
+<head>
 
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+  <title>ResumeAI &mdash; Admin Dashboard</title>
 
-    <style>
-      /* ── Navbar overrides ── */
-      .site-navbar {
-        background: #ffffff;
-        border-bottom: 1px solid #e5e7eb;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        margin-top: 0 !important;
-        padding: 0 1.5rem;
-        height: 66px;
-        display: flex;
-        align-items: center;
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta name="description" content="ResumeAI Admin Dashboard">
+
+  <meta name="author" content="ResumeAI">
+
+  <link rel="shortcut icon" href="/static/ftco-32x32.png">
+
+
+  <!-- Bootstrap -->
+
+  <link rel="stylesheet" href="/static/css/custom-bs.css">
+
+  <link rel="stylesheet" href="/static/css/bootstrap-select.min.css">
+
+
+  <!-- Icons -->
+
+  <link rel="stylesheet" href="/static/fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="/static/fonts/line-icons/style.css">
+
+
+  <!-- Main CSS -->
+
+  <link rel="stylesheet" href="/static/css/style.css">
+
+
+  <style>
+    /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+    body {
+      background: #f8fafc;
+      color: #1e293b;
+      font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    }
+
+    .admin-wrap {
+      min-height: 100vh;
+    }
+
+
+    /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+    .admin-navbar {
+      height: 68px;
+
+      background: #ffffff;
+
+      border-bottom: 1px solid #e5e7eb;
+
+      box-shadow:
+        0 1px 5px rgba(15, 23, 42, .05);
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 1000;
+    }
+
+
+    .admin-navbar-inner {
+      height: 68px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 0 28px;
+    }
+
+
+    /* Logo */
+
+    .admin-logo {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      text-decoration: none !important;
+    }
+
+
+    .admin-logo-mark {
+      width: 32px;
+
+      height: 32px;
+
+      border-radius: 8px;
+
+      background: #2563eb;
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 15px;
+
+      font-weight: 800;
+    }
+
+
+    .admin-logo-text {
+      color: #0f172a;
+
+      font-size: 20px;
+
+      font-weight: 800;
+
+      letter-spacing: -.5px;
+    }
+
+
+    .admin-badge {
+      font-size: 10px;
+
+      font-weight: 700;
+
+      color: #2563eb;
+
+      background: #eff6ff;
+
+      border: 1px solid #bfdbfe;
+
+      border-radius: 5px;
+
+      padding: 4px 7px;
+
+      text-transform: uppercase;
+
+      letter-spacing: .5px;
+    }
+
+
+    /* Navigation */
+
+    .admin-nav {
+      display: flex;
+
+      align-items: center;
+
+      gap: 4px;
+    }
+
+
+    .admin-nav a {
+      color: #64748b;
+
+      font-size: 14px;
+
+      font-weight: 500;
+
+      text-decoration: none;
+
+      padding: 8px 13px;
+
+      border-radius: 7px;
+
+      transition: .2s;
+    }
+
+
+    .admin-nav a:hover,
+    .admin-nav a.active {
+      color: #2563eb;
+
+      background: #eff6ff;
+    }
+
+
+    /* Dropdown */
+
+    .admin-dropdown {
+      position: relative;
+    }
+
+
+    .admin-dropdown>a {
+      cursor: pointer;
+    }
+
+
+    /* =========================================
+   CLICK DROPDOWN
+========================================= */
+
+    .admin-dropdown {
+      position: relative;
+    }
+
+    .admin-dropdown>a {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+
+    /* Dropdown hidden by default */
+
+    .admin-dropdown-menu {
+      position: absolute;
+
+      top: calc(100% + 8px);
+      left: 0;
+
+      min-width: 190px;
+
+      background: #ffffff;
+
+      border: 1px solid #e5e7eb;
+
+      border-radius: 10px;
+
+      padding: 7px;
+
+      box-shadow:
+        0 10px 30px rgba(15, 23, 42, .10);
+
+      z-index: 2000;
+
+      /* Important */
+      display: none;
+    }
+
+
+    /* Open state */
+
+    .admin-dropdown.open .admin-dropdown-menu {
+      display: block;
+    }
+
+
+    /* Dropdown items */
+
+    .admin-dropdown-menu a {
+      display: flex;
+
+      align-items: center;
+
+      gap: 9px;
+
+      padding: 9px 11px;
+
+      color: #475569;
+
+      font-size: 13px;
+
+      border-radius: 7px;
+
+      text-decoration: none;
+
+      transition: .15s;
+    }
+
+
+    .admin-dropdown-menu a:hover {
+      background: #f8fafc;
+
+      color: #2563eb;
+    }
+
+
+    /* Rotate arrow when opened */
+
+    .admin-dropdown.open .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+
+    /* Smooth arrow */
+
+    .dropdown-arrow {
+      transition: transform .2s ease;
+    }
+
+
+    .status-dot {
+      width: 7px;
+
+      height: 7px;
+
+      border-radius: 50%;
+
+      display: inline-block;
+    }
+
+
+    .pending {
+      background: #f59e0b;
+    }
+
+
+    .approved {
+      background: #10b981;
+    }
+
+
+    .rejected {
+      background: #ef4444;
+    }
+
+
+    /* Logout */
+
+    .admin-logout {
+      background: #2563eb;
+
+      color: white !important;
+
+      border-radius: 7px;
+
+      padding: 8px 15px !important;
+
+      font-size: 13px !important;
+
+      font-weight: 700 !important;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 6px;
+    }
+
+
+    .admin-logout:hover {
+      background: #1d4ed8;
+
+      color: white !important;
+    }
+
+
+    /* =====================================================
+           MOBILE NAV
+        ===================================================== */
+
+    .mobile-admin-menu {
+      display: none;
+
+      font-size: 24px;
+
+      color: #334155;
+
+      cursor: pointer;
+    }
+
+
+    @media(max-width: 991px) {
+
+      .admin-nav {
+        display: none;
       }
 
-      .site-navbar .container-fluid {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        padding: 0;
-      }
-
-      /* Logo */
-      .site-logo a {
-        font-size: 20px;
-        font-weight: 700;
-        color: #111 !important;
-        text-decoration: none;
-        letter-spacing: -0.5px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .site-logo a::before {
-        content: '';
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: #7c3aed;
-        display: inline-block;
-        flex-shrink: 0;
-      }
-
-      /* Admin badge next to logo */
-      .admin-badge {
-        font-size: 10px;
-        font-weight: 700;
-        color: #7c3aed;
-        background: #f5f3ff;
-        border: 1px solid #ddd6fe;
-        border-radius: 5px;
-        padding: 2px 7px;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-      }
-
-      /* Nav list reset */
-      .site-menu {
-        display: flex !important;
-        align-items: center;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        gap: 2px;
-      }
-
-      .site-menu > li { list-style: none; }
-
-      /* Nav links */
-      .site-menu .nav-link,
-      .site-menu > li > a {
-        font-size: 14px;
-        font-weight: 500;
-        color: #6b7280 !important;
-        text-decoration: none;
-        padding: 6px 13px;
-        border-radius: 7px;
-        transition: all 0.15s;
+      .mobile-admin-menu {
         display: block;
-        white-space: nowrap;
       }
 
-      .site-menu .nav-link:hover,
-      .site-menu > li > a:hover,
-      .site-menu .nav-link.active {
-        color: #111 !important;
-        background: #f3f4f6;
+    }
+
+
+    /* =====================================================
+           DASHBOARD HERO
+        ===================================================== */
+
+    .dashboard {
+      padding: 55px 0 80px;
+    }
+
+
+    .dashboard-container {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 0 20px;
+    }
+
+
+    .dashboard-header {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-end;
+
+      margin-bottom: 32px;
+    }
+
+
+    .dashboard-header h1 {
+      font-size: 32px;
+
+      font-weight: 800;
+
+      color: #0f172a;
+
+      margin: 0 0 7px;
+    }
+
+
+    .dashboard-header p {
+      margin: 0;
+
+      color: #64748b;
+
+      font-size: 14px;
+    }
+
+
+    .dashboard-date {
+      color: #64748b;
+
+      font-size: 13px;
+    }
+
+
+    /* =====================================================
+           STAT CARDS
+        ===================================================== */
+
+    .stats-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 18px;
+
+      margin-bottom: 35px;
+    }
+
+
+    .stat-card {
+      background: white;
+
+      border: 1px solid #e5e7eb;
+
+      border-radius: 14px;
+
+      padding: 23px;
+
+      transition: .2s;
+    }
+
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 8px 25px rgba(15, 23, 42, .06);
+    }
+
+
+    .stat-top {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 18px;
+    }
+
+
+    .stat-icon {
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 10px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      background: #eff6ff;
+
+      color: #2563eb;
+
+      font-size: 18px;
+    }
+
+
+    .stat-label {
+      font-size: 13px;
+
+      color: #64748b;
+
+      font-weight: 600;
+
+      margin-bottom: 5px;
+    }
+
+
+    .stat-number {
+      font-size: 28px;
+
+      font-weight: 800;
+
+      color: #0f172a;
+
+      line-height: 1;
+    }
+
+
+    .stat-link {
+      font-size: 11px;
+
+      color: #2563eb;
+
+      font-weight: 700;
+
+      text-decoration: none;
+    }
+
+
+    /* =====================================================
+           MAIN DASHBOARD GRID
+        ===================================================== */
+
+    .dashboard-grid {
+      display: grid;
+
+      grid-template-columns:
+        1.45fr 1fr;
+
+      gap: 22px;
+    }
+
+
+    .dashboard-card {
+      background: white;
+
+      border: 1px solid #e5e7eb;
+
+      border-radius: 14px;
+
+      overflow: hidden;
+    }
+
+
+    .card-header-custom {
+      padding: 21px 23px;
+
+      border-bottom: 1px solid #eef2f7;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+    }
+
+
+    .card-header-custom h3 {
+      margin: 0;
+
+      color: #0f172a;
+
+      font-size: 17px;
+
+      font-weight: 800;
+    }
+
+
+    .card-header-custom a {
+      font-size: 12px;
+
+      color: #2563eb;
+
+      font-weight: 700;
+
+      text-decoration: none;
+    }
+
+
+    .card-body-custom {
+      padding: 22px;
+    }
+
+
+    /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+    .quick-actions {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 12px;
+    }
+
+
+    .quick-action {
+      border: 1px solid #e5e7eb;
+
+      border-radius: 10px;
+
+      padding: 17px;
+
+      text-decoration: none;
+
+      transition: .2s;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+    }
+
+
+    .quick-action:hover {
+      border-color: #bfdbfe;
+
+      background: #f8fbff;
+
+      transform: translateY(-1px);
+    }
+
+
+    .quick-action-icon {
+      width: 38px;
+
+      height: 38px;
+
+      border-radius: 9px;
+
+      background: #eff6ff;
+
+      color: #2563eb;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+    }
+
+
+    .quick-action h4 {
+      margin: 0 0 3px;
+
+      color: #1e293b;
+
+      font-size: 13px;
+
+      font-weight: 700;
+    }
+
+
+    .quick-action p {
+      margin: 0;
+
+      color: #94a3b8;
+
+      font-size: 11px;
+    }
+
+
+    /* =====================================================
+           RECRUITER STATUS
+        ===================================================== */
+
+    .status-row {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 15px 0;
+
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+
+    .status-row:last-child {
+      border-bottom: none;
+    }
+
+
+    .status-name {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      color: #475569;
+
+      font-size: 13px;
+
+      font-weight: 600;
+    }
+
+
+    .status-count {
+      font-size: 16px;
+
+      font-weight: 800;
+
+      color: #0f172a;
+    }
+
+
+    /* =====================================================
+           PLATFORM INFORMATION
+        ===================================================== */
+
+    .platform-box {
+      margin-top: 22px;
+
+      background: linear-gradient(135deg,
+          #0f172a,
+          #1d4ed8);
+
+      border-radius: 14px;
+
+      padding: 28px;
+
+      color: white;
+    }
+
+
+    .platform-box h3 {
+      margin: 0 0 8px;
+
+      color: white;
+
+      font-size: 20px;
+
+      font-weight: 800;
+    }
+
+
+    .platform-box p {
+      color: #cbd5e1;
+
+      font-size: 13px;
+
+      line-height: 1.7;
+
+      margin: 0;
+
+      max-width: 650px;
+    }
+
+
+    /* =====================================================
+           FOOTER
+        ===================================================== */
+
+    .admin-footer {
+      background: #0f172a;
+
+      color: #94a3b8;
+
+      padding: 25px 0;
+
+      font-size: 12px;
+    }
+
+
+    .admin-footer-inner {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 0 20px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+    }
+
+
+    .admin-footer strong {
+      color: white;
+    }
+
+
+    /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+    @media(max-width: 991px) {
+
+      .stats-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
-      /* Dropdown toggle */
-      .site-menu .dropdown-toggle {
-        display: flex;
-        align-items: center;
-        gap: 4px;
+      .dashboard-grid {
+        grid-template-columns: 1fr;
       }
 
-      .site-menu .dropdown-toggle::after {
-        border-top-color: #9ca3af;
+      .dashboard-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 10px;
       }
 
-      /* Dropdown menu */
-      .site-menu .dropdown-menu {
-        border: 0.5px solid #e5e7eb;
-        border-radius: 10px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.09);
-        padding: 6px;
-        min-width: 185px;
-        margin-top: 6px;
+    }
+
+
+    @media(max-width: 576px) {
+
+      .admin-navbar-inner {
+        padding: 0 16px;
       }
 
-      .site-menu .dropdown-item {
-        font-size: 13.5px;
-        font-weight: 500;
-        color: #374151;
-        padding: 8px 12px;
-        border-radius: 6px;
-        transition: background 0.12s;
-        display: flex;
-        align-items: center;
-        gap: 7px;
+      .admin-badge {
+        display: none;
       }
 
-      .site-menu .dropdown-item:hover {
-        background: #f3f4f6;
-        color: #111;
+      .stats-grid {
+        grid-template-columns: 1fr;
       }
 
-      /* Status dots in dropdown */
-      .status-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        flex-shrink: 0;
+      .quick-actions {
+        grid-template-columns: 1fr;
       }
 
-      .status-dot.pending  { background: #f59e0b; }
-      .status-dot.approved { background: #10b981; }
-      .status-dot.rejected { background: #ef4444; }
-
-      /* Divider */
-      .nav-divider {
-        width: 1px;
-        height: 20px;
-        background: #e5e7eb;
-        margin: 0 6px;
-        flex-shrink: 0;
-        align-self: center;
+      .dashboard {
+        padding: 35px 0 55px;
       }
 
-      /* Right-side actions */
-      .right-cta-menu {
-        display: flex;
-        align-items: center;
-        padding: 0;
+      .dashboard-header h1 {
+        font-size: 27px;
       }
 
-      .right-cta-menu .ml-auto {
-        display: flex;
-        align-items: center;
+      .admin-footer-inner {
+        flex-direction: column;
+
         gap: 8px;
-        margin: 0 !important;
+
+        text-align: center;
       }
 
-      /* Logout button */
-      .btn-logout {
-        font-size: 13px !important;
-        font-weight: 600 !important;
-        color: #fff !important;
-        background: #7c3aed !important;
-        border: none !important;
-        border-radius: 7px !important;
-        padding: 7px 16px !important;
-        text-decoration: none;
-        transition: background 0.15s;
-        white-space: nowrap;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-      }
+    }
+  </style>
 
-      .btn-logout:hover {
-        background: #6d28d9 !important;
-        color: #fff !important;
-      }
+</head>
 
-      /* Mobile toggle */
-      .site-menu-toggle { color: #374151; text-decoration: none; }
-    </style>
-  </head>
-  <body id="top">
 
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
+<body>
 
-  <div class="site-wrap">
 
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
+  <div class="admin-wrap">
 
-    <!-- NAVBAR -->
-    <header class="site-navbar">
-      <div class="container-fluid">
 
-        <!-- Logo -->
-        <div class="site-logo col-auto mr-4" style="display:flex;align-items:center;gap:10px;">
-          <a href="{% url 'admin_home' %}">JobBoard</a>
-          <span class="admin-badge">Admin</span>
-        </div>
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-        <!-- Nav links (desktop) -->
-        <nav class="mx-auto site-navigation">
-          <ul class="site-menu js-clone-nav d-none d-xl-flex ml-0 pl-0">
+    <header class="admin-navbar">
 
-            <li>
-              <a href="{% url 'admin_home' %}" class="nav-link active">Home</a>
-            </li>
+      <div class="admin-navbar-inner">
 
-            <!-- Recruiters dropdown -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle"
-                 href="#"
-                 id="recruitersDropdown"
-                 role="button"
-                 data-toggle="dropdown"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                Recruiters
+
+        <!-- LOGO -->
+
+        <a href="{% url 'admin_home' %}" class="admin-logo">
+
+          <span class="admin-logo-mark">
+            R
+          </span>
+
+          <span class="admin-logo-text">
+            ResumeAI
+          </span>
+
+          <span class="admin-badge">
+            Admin
+          </span>
+
+        </a>
+
+
+        <!-- DESKTOP NAV -->
+
+        <nav class="admin-nav">
+
+
+          <a href="{% url 'admin_home' %}" class="active">
+
+            Home
+
+          </a>
+
+
+          <!-- RECRUITERS DROPDOWN -->
+
+          <div class="admin-dropdown" id="recruitersDropdown">
+
+            <a href="javascript:void(0);" id="recruitersToggle" aria-haspopup="true" aria-expanded="false">
+
+              Recruiters
+
+              <span class="icon-keyboard_arrow_down dropdown-arrow" style="font-size:10px;">
+              </span>
+
+            </a>
+
+
+            <div class="admin-dropdown-menu">
+
+              <a href="{% url 'admin_viewpending' %}">
+
+                <span class="status-dot pending"></span>
+
+                Pending
+
               </a>
-              <div class="dropdown-menu" aria-labelledby="recruitersDropdown">
-                <a class="dropdown-item" href="{% url 'admin_viewpending' %}">
-                  <span class="status-dot pending"></span> Pending
-                </a>
-                <a class="dropdown-item" href="{% url 'admin_viewapproved' %}">
-                  <span class="status-dot approved"></span> Approved
-                </a>
-                <a class="dropdown-item" href="{% url 'admin_viewrejected' %}">
-                  <span class="status-dot rejected"></span> Rejected
-                </a>
 
-              </div>
-              
-            </li>
-            <a href="{% url 'view_users' %}" class="nav-link">View Users</a>
-          </ul>
+
+              <a href="{% url 'admin_viewapproved' %}">
+
+                <span class="status-dot approved"></span>
+
+                Approved
+
+              </a>
+
+
+              <a href="{% url 'admin_viewrejected' %}">
+
+                <span class="status-dot rejected"></span>
+
+                Rejected
+
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- USERS -->
+
+          <a href="{% url 'view_users' %}">
+
+            Users
+
+          </a>
+
+
         </nav>
 
-        <!-- Right side -->
-        <div class="right-cta-menu d-flex align-items-center col-auto ml-auto">
-          <div class="ml-auto">
 
-            <a href="/logout/" class="btn-logout d-none d-lg-inline-flex">
-              <span class="icon-lock_outline" style="font-size:13px"></span> Log Out
-            </a>
+        <!-- RIGHT SIDE -->
 
-            <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none ml-2">
-              <span class="icon-menu h3 m-0 p-0"></span>
-            </a>
+        <div>
 
-          </div>
+          <a href="/logout/" class="admin-logout">
+
+            <span class="icon-lock_outline" style="font-size:13px;">
+            </span>
+
+            Log Out
+
+          </a>
+
         </div>
 
+
       </div>
+
     </header>
 
-    <!-- HOME -->
     {% block content %}
-    <section class="home-section section-hero overlay bg-image" style="background-image: url('/static/images/hero_1.jpg');" id="home-section">
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-md-12">
-            <div class="mb-5 text-center">
-              <h1 class="text-white font-weight-bold">The Easiest Way To Get Your Dream Job</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate est, consequuntur perferendis.</p>
-            </div>
-            <form method="post" class="search-jobs-form"></form>
-          </div>
-        </div>
-      </div>
-      <a href="#next" class="scroll-button smoothscroll">
-        <span class="icon-keyboard_arrow_down"></span>
-      </a>
-    </section>
 
-    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2 text-white">JobBoard Site Stats</h2>
-            <p class="lead text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita unde officiis recusandae sequi excepturi corrupti.</p>
-          </div>
-        </div>
-        <div class="row pb-0 block__19738 section-counter">
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="1930">0</strong>
-            </div>
-            <span class="caption">Candidates</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="54">0</strong>
-            </div>
-            <span class="caption">Jobs Posted</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="120">0</strong>
-            </div>
-            <span class="caption">Jobs Filled</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="550">0</strong>
-            </div>
-            <span class="caption">Companies</span>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- =====================================================
+         DASHBOARD
+    ====================================================== -->
 
-    <section class="site-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2">43,167 Job Listed</h2>
-          </div>
-        </div>
+    <main class="dashboard">
 
-        <ul class="job-listings mb-5">
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_1.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Product Designer</h2><strong>Adidas</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> New York, New York</div>
-              <div class="job-listing-meta"><span class="badge badge-danger">Part Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_2.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Digital Marketing Director</h2><strong>Sprint</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> Overland Park, Kansas</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_3.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Back-end Engineer (Python)</h2><strong>Amazon</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> Overland Park, Kansas</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_4.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Senior Art Director</h2><strong>Microsoft</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> Anywhere</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_5.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Product Designer</h2><strong>Puma</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> San Mateo, CA</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_1.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Product Designer</h2><strong>Adidas</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> New York, New York</div>
-              <div class="job-listing-meta"><span class="badge badge-danger">Part Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_2.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Digital Marketing Director</h2><strong>Sprint</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> Overland Park, Kansas</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-        </ul>
+      <div class="dashboard-container">
 
-        <div class="row pagination-wrap">
-          <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
-            <span>Showing 1-7 Of 43,167 Jobs</span>
-          </div>
-          <div class="col-md-6 text-center text-md-right">
-            <div class="custom-pagination ml-auto">
-              <a href="#" class="prev">Prev</a>
-              <div class="d-inline-block">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-              </div>
-              <a href="#" class="next">Next</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <h2 class="text-white">Looking For A Job?</h2>
-            <p class="mb-0 text-white lead">Lorem ipsum dolor sit amet consectetur adipisicing elit tempora adipisci impedit.</p>
-          </div>
-          <div class="col-md-3 ml-auto">
-            <a href="#" class="btn btn-warning btn-block btn-lg">Sign Up</a>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- HEADER -->
 
-    <section class="site-section py-4">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-12 text-center mt-4 mb-5">
-            <div class="row justify-content-center">
-              <div class="col-md-7">
-                <h2 class="section-title mb-2">Company We've Helped</h2>
-                <p class="lead">Porro error reiciendis commodi beatae omnis similique voluptate rerum ipsam fugit mollitia ipsum facilis expedita tempora suscipit iste</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_mailchimp.svg" alt="Mailchimp" class="img-fluid logo-1"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_paypal.svg" alt="PayPal" class="img-fluid logo-2"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_stripe.svg" alt="Stripe" class="img-fluid logo-3"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_visa.svg" alt="Visa" class="img-fluid logo-4"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_apple.svg" alt="Apple" class="img-fluid logo-5"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_tinder.svg" alt="Tinder" class="img-fluid logo-6"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_sony.svg" alt="Sony" class="img-fluid logo-7"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_airbnb.svg" alt="Airbnb" class="img-fluid logo-8"></div>
-        </div>
-      </div>
-    </section>
+        <div class="dashboard-header">
 
-    <section class="bg-light pt-5 testimony-full">
-      <div class="owl-carousel single-carousel">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 align-self-center text-center text-lg-left">
-              <blockquote>
-                <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-                <p><cite> &mdash; Corey Woods, @Dribbble</cite></p>
-              </blockquote>
-            </div>
-            <div class="col-lg-6 align-self-end text-center text-lg-right">
-              <img src="/static/images/person_transparent_2.png" alt="Testimonial" class="img-fluid mb-0">
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 align-self-center text-center text-lg-left">
-              <blockquote>
-                <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-                <p><cite> &mdash; Chris Peters, @Google</cite></p>
-              </blockquote>
-            </div>
-            <div class="col-lg-6 align-self-end text-center text-lg-right">
-              <img src="/static/images/person_transparent.png" alt="Testimonial" class="img-fluid mb-0">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+          <div>
 
-    <section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
-            <h2 class="text-white">Get The Mobile Apps</h2>
-            <p class="mb-5 lead text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit tempora adipisci impedit.</p>
-            <p class="mb-0">
-              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-apple mr-3"></span>App Store</a>
-              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-android mr-3"></span>Play Store</a>
+            <h1>
+              Admin Dashboard
+            </h1>
+
+            <p>
+              Manage recruiters, users and recruitment
+              activities from one place.
             </p>
+
           </div>
-          <div class="col-md-6 ml-auto align-self-end">
-            <img src="/static/images/apps.png" alt="Mobile apps" class="img-fluid">
+
+
+          <div class="dashboard-date">
+
+            ResumeAI Administration
+
           </div>
+
         </div>
+
+
+
+        <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+        <div class="stats-grid">
+
+
+          <!-- USERS -->
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-icon">
+
+                <span class="icon-users"></span>
+
+              </div>
+
+              <a href="{% url 'view_users' %}" class="stat-link">
+
+                View
+
+              </a>
+
+            </div>
+
+
+            <div class="stat-label">
+              Registered Users
+            </div>
+
+            <div class="stat-number">
+              {{ user_count|default:"0" }}
+            </div>
+
+          </div>
+
+
+
+          <!-- RECRUITERS -->
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-icon">
+
+                <span class="icon-briefcase"></span>
+
+              </div>
+
+              <a href="{% url 'admin_viewapproved' %}" class="stat-link">
+
+                View
+
+              </a>
+
+            </div>
+
+
+            <div class="stat-label">
+              Approved Recruiters
+            </div>
+
+            <div class="stat-number">
+              {{ approved_count|default:"0" }}
+            </div>
+
+          </div>
+
+
+
+          <!-- PENDING -->
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-icon">
+
+                <span class="icon-clock-o"></span>
+
+              </div>
+
+              <a href="{% url 'admin_viewpending' %}" class="stat-link">
+
+                Review
+
+              </a>
+
+            </div>
+
+
+            <div class="stat-label">
+              Pending Recruiters
+            </div>
+
+            <div class="stat-number">
+              {{ pending_count|default:"0" }}
+            </div>
+
+          </div>
+
+
+
+          <!-- JOBS -->
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-icon">
+
+                <span class="icon-list"></span>
+
+              </div>
+
+            </div>
+
+
+            <div class="stat-label">
+              Total Jobs
+            </div>
+
+            <div class="stat-number">
+              {{ job_count|default:"0" }}
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+                 DASHBOARD CONTENT
+            ================================================== -->
+
+        <div class="dashboard-grid">
+
+
+          <!-- QUICK ACTIONS -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header-custom">
+
+              <h3>
+                Quick Actions
+              </h3>
+
+            </div>
+
+
+            <div class="card-body-custom">
+
+              <div class="quick-actions">
+
+
+                <a href="{% url 'admin_viewpending' %}" class="quick-action">
+
+                  <div class="quick-action-icon">
+
+                    <span class="icon-clock-o"></span>
+
+                  </div>
+
+                  <div>
+
+                    <h4>
+                      Pending Recruiters
+                    </h4>
+
+                    <p>
+                      Review registration requests
+                    </p>
+
+                  </div>
+
+                </a>
+
+
+
+                <a href="{% url 'admin_viewapproved' %}" class="quick-action">
+
+                  <div class="quick-action-icon">
+
+                    <span class="icon-check"></span>
+
+                  </div>
+
+                  <div>
+
+                    <h4>
+                      Approved Recruiters
+                    </h4>
+
+                    <p>
+                      View active recruiters
+                    </p>
+
+                  </div>
+
+                </a>
+
+
+
+                <a href="{% url 'admin_viewrejected' %}" class="quick-action">
+
+                  <div class="quick-action-icon">
+
+                    <span class="icon-close"></span>
+
+                  </div>
+
+                  <div>
+
+                    <h4>
+                      Rejected Recruiters
+                    </h4>
+
+                    <p>
+                      View rejected accounts
+                    </p>
+
+                  </div>
+
+                </a>
+
+
+
+                <a href="{% url 'view_users' %}" class="quick-action">
+
+                  <div class="quick-action-icon">
+
+                    <span class="icon-users"></span>
+
+                  </div>
+
+                  <div>
+
+                    <h4>
+                      Manage Users
+                    </h4>
+
+                    <p>
+                      View registered job seekers
+                    </p>
+
+                  </div>
+
+                </a>
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- RECRUITER STATUS -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header-custom">
+
+              <h3>
+                Recruiter Overview
+              </h3>
+
+            </div>
+
+
+            <div class="card-body-custom">
+
+
+              <div class="status-row">
+
+                <div class="status-name">
+
+                  <span class="status-dot pending"></span>
+
+                  Pending
+
+                </div>
+
+                <span class="status-count">
+
+                  {{ pending_count|default:"0" }}
+
+                </span>
+
+              </div>
+
+
+              <div class="status-row">
+
+                <div class="status-name">
+
+                  <span class="status-dot approved"></span>
+
+                  Approved
+
+                </div>
+
+                <span class="status-count">
+
+                  {{ approved_count|default:"0" }}
+
+                </span>
+
+              </div>
+
+
+              <div class="status-row">
+
+                <div class="status-name">
+
+                  <span class="status-dot rejected"></span>
+
+                  Rejected
+
+                </div>
+
+                <span class="status-count">
+
+                  {{ rejected_count|default:"0" }}
+
+                </span>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+                 PLATFORM INFORMATION
+            ================================================== -->
+
+        <div class="platform-box">
+
+          <h3>
+            ResumeAI Administration
+          </h3>
+
+          <p>
+
+            Manage the recruitment platform, review recruiter
+            registrations, monitor registered users and maintain
+            a controlled recruitment environment through the
+            administrator dashboard.
+
+          </p>
+
+        </div>
+
+
       </div>
-    </section>
+
+    </main>
+
     {% endblock %}
 
-    <footer class="site-footer">
-      <a href="#top" class="smoothscroll scroll-top">
-        <span class="icon-keyboard_arrow_up"></span>
-      </a>
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Search Trending</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Graphic Design</a></li>
-              <li><a href="#">Web Developers</a></li>
-              <li><a href="#">Python</a></li>
-              <li><a href="#">HTML5</a></li>
-              <li><a href="#">CSS3</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Company</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Career</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Resources</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Support</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Support</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Contact Us</h3>
-            <div class="footer-social">
-              <a href="#"><span class="icon-facebook"></span></a>
-              <a href="#"><span class="icon-twitter"></span></a>
-              <a href="#"><span class="icon-instagram"></span></a>
-              <a href="#"><span class="icon-linkedin"></span></a>
-            </div>
-          </div>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="admin-footer">
+
+      <div class="admin-footer-inner">
+
+        <div>
+
+          <strong>
+            ResumeAI
+          </strong>
+
+          &nbsp; Admin Dashboard
+
         </div>
-        <div class="row text-center">
-          <div class="col-12">
-            <p class="copyright"><small>
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-            </small></p>
-          </div>
+
+
+        <div>
+
+          &copy;
+
+          <script>
+            document.write(
+              new Date().getFullYear()
+            );
+          </script>
+
+          ResumeAI. All rights reserved.
+
         </div>
+
       </div>
+
     </footer>
 
-  </div><!-- .site-wrap -->
 
-  <!-- ── SCRIPTS (correct order, no duplicates) ── -->
+  </div>
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const dropdown = document.getElementById("recruitersDropdown");
+      const toggle = document.getElementById("recruitersToggle");
+
+      if (!dropdown || !toggle) {
+        return;
+      }
+
+
+      /* =========================================
+         TOGGLE DROPDOWN
+      ========================================= */
+
+      toggle.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        const isOpen = dropdown.classList.contains("open");
+
+
+        /* Close dropdown */
+
+        if (isOpen) {
+
+          dropdown.classList.remove("open");
+
+          toggle.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        }
+
+        /* Open dropdown */
+
+        else {
+
+          dropdown.classList.add("open");
+
+          toggle.setAttribute(
+            "aria-expanded",
+            "true"
+          );
+
+        }
+
+      });
+
+
+      /* =========================================
+         CLOSE WHEN CLICKING OUTSIDE
+      ========================================= */
+
+      document.addEventListener("click", function (event) {
+
+        if (!dropdown.contains(event.target)) {
+
+          dropdown.classList.remove("open");
+
+          toggle.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        }
+
+      });
+
+
+      /* =========================================
+         CLOSE AFTER SELECTING MENU ITEM
+      ========================================= */
+
+      const menuItems =
+        dropdown.querySelectorAll(
+          ".admin-dropdown-menu a"
+        );
+
+
+      menuItems.forEach(function (item) {
+
+        item.addEventListener("click", function () {
+
+          dropdown.classList.remove("open");
+
+          toggle.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        });
+
+      });
+
+    });
+
+  </script>
+
+  <!-- =====================================================
+     SCRIPTS
+====================================================== -->
+
   <script src="/static/js/jquery.min.js"></script>
-  <script src="/static/js/bootstrap.bundle.min.js"></script>
-  <script src="/static/js/isotope.pkgd.min.js"></script>
-  <script src="/static/js/stickyfill.min.js"></script>
-  <script src="/static/js/jquery.fancybox.min.js"></script>
-  <script src="/static/js/jquery.easing.1.3.js"></script>
-  <script src="/static/js/jquery.waypoints.min.js"></script>
-  <script src="/static/js/jquery.animateNumber.min.js"></script>
-  <script src="/static/js/owl.carousel.min.js"></script>
-  <script src="/static/js/bootstrap-select.min.js"></script>
-  <script src="/static/js/custom.js"></script>
 
-  </body>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+
+  <script src="/static/js/bootstrap-select.min.js"></script>
+
+</body>
+
 </html>

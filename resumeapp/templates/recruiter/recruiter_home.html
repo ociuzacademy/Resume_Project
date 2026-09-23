@@ -1,651 +1,2309 @@
 {% load static %}
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>JobBoard &mdash; Recruiter</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="Free-Template.co" />
-    <link rel="shortcut icon" href="/static/ftco-32x32.png">
 
-    <link rel="stylesheet" href="/static/css/custom-bs.css">
-    <link rel="stylesheet" href="/static/css/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="/static/fonts/icomoon/style.css">
-    <link rel="stylesheet" href="/static/fonts/line-icons/style.css">
-    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/static/css/animate.min.css">
+<head>
 
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ResumeAI | Recruiter Dashboard</title>
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 
     <style>
-      /* ── Navbar overrides ── */
-      .site-navbar {
-        background: #ffffff;
-        border-bottom: 1px solid #e5e7eb;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        margin-top: 0 !important;
-        padding: 0 1.5rem;
-        height: 66px;
-        display: flex;
-        align-items: center;
-      }
 
-      .site-navbar .container-fluid {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        padding: 0;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      /* Logo */
-      .site-logo a {
-        font-size: 20px;
-        font-weight: 700;
-        color: #111 !important;
-        text-decoration: none;
-        letter-spacing: -0.5px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
 
-      .site-logo a::before {
-        content: '';
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: #2563eb;
-        display: inline-block;
-        flex-shrink: 0;
-      }
+        html {
+            scroll-behavior: smooth;
+        }
 
-      /* Nav list reset */
-      .site-menu {
-        display: flex !important;
-        align-items: center;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        gap: 2px;
-      }
 
-      .site-menu > li {
-        list-style: none;
-      }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f6f8fc;
+            color: #172033;
+            line-height: 1.6;
+        }
 
-      /* Nav links */
-      .site-menu .nav-link,
-      .site-menu > li > a {
-        font-size: 14px;
-        font-weight: 500;
-        color: #6b7280 !important;
-        text-decoration: none;
-        padding: 6px 13px;
-        border-radius: 7px;
-        transition: all 0.15s;
-        display: block;
-        white-space: nowrap;
-      }
 
-      .site-menu .nav-link:hover,
-      .site-menu > li > a:hover,
-      .site-menu .nav-link.active {
-        color: #111 !important;
-        background: #f3f4f6;
-      }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-      /* Dropdown toggle caret */
-      .site-menu .dropdown-toggle {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
 
-      .site-menu .dropdown-toggle::after {
-        border-top-color: #9ca3af;
-      }
+        /* =========================================
+           NAVBAR
+        ========================================= */
 
-      /* Dropdown menu */
-      .site-menu .dropdown-menu {
-        border: 0.5px solid #e5e7eb;
-        border-radius: 10px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.09);
-        padding: 6px;
-        min-width: 185px;
-        margin-top: 6px;
-      }
+        .navbar {
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #e8ebf1;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-      .site-menu .dropdown-item {
-        font-size: 13.5px;
-        font-weight: 500;
-        color: #374151;
-        padding: 8px 12px;
-        border-radius: 6px;
-        transition: background 0.12s;
-      }
 
-      .site-menu .dropdown-item:hover {
-        background: #f3f4f6;
-        color: #111;
-      }
+        .nav-container {
+            width: min(1250px, 92%);
+            margin: auto;
 
-      /* Divider */
-      .nav-divider {
-        width: 1px;
-        height: 20px;
-        background: #e5e7eb;
-        margin: 0 6px;
-        flex-shrink: 0;
-        align-self: center;
-      }
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-      /* Right-side actions */
-      .right-cta-menu {
-        display: flex;
-        align-items: center;
-        gap: 0;
-        padding: 0;
-      }
 
-      .right-cta-menu .ml-auto {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 0 !important;
-      }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
-      /* Profile chip */
-      .profile-icon {
-        display: inline-flex !important;
-        align-items: center;
-        gap: 7px;
-        padding: 4px 10px 4px 4px !important;
-        border-radius: 8px;
-        text-decoration: none !important;
-        transition: background 0.15s;
-        width: auto !important;
-        height: auto !important;
-        overflow: visible !important;
-      }
+            font-size: 22px;
+            font-weight: 800;
 
-      .profile-icon:hover { background: #f3f4f6; }
+            color: #111827;
+        }
 
-      .profile-icon img {
-        width: 30px !important;
-        height: 30px !important;
-        border-radius: 50% !important;
-        object-fit: cover;
-        flex-shrink: 0;
-      }
 
-      .profile-icon span {
-        font-size: 13.5px;
-        font-weight: 500;
-        color: #374151;
-        white-space: nowrap;
-      }
+        .logo-icon {
+            width: 39px;
+            height: 39px;
 
-      /* Post a Job button */
-      .btn-post-job {
-        font-size: 13px;
-        font-weight: 600;
-        color: #2563eb !important;
-        background: #eff6ff;
-        border: 1px solid #bfdbfe !important;
-        border-radius: 7px !important;
-        padding: 6px 14px !important;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        transition: all 0.15s;
-        white-space: nowrap;
-      }
+            border-radius: 11px;
 
-      .btn-post-job:hover {
-        background: #dbeafe;
-        color: #1d4ed8 !important;
-      }
+            background: linear-gradient(
+                135deg,
+                #5b5bf7,
+                #7c3aed
+            );
 
-      /* Logout button */
-      .btn-logout {
-        font-size: 13px !important;
-        font-weight: 600 !important;
-        color: #fff !important;
-        background: #2563eb !important;
-        border: none !important;
-        border-radius: 7px !important;
-        padding: 7px 16px !important;
-        text-decoration: none;
-        transition: background 0.15s;
-        white-space: nowrap;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-      }
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-      .btn-logout:hover {
-        background: #1d4ed8 !important;
-        color: #fff !important;
-      }
+            color: white;
 
-      /* Mobile toggle */
-      .site-menu-toggle { color: #374151; text-decoration: none; }
+            box-shadow:
+                0 7px 20px rgba(91,91,247,0.25);
+        }
+
+
+        .logo span {
+            color: #5b5bf7;
+        }
+
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        .nav-link {
+            padding: 9px 13px;
+
+            border-radius: 8px;
+
+            color: #667085;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #f1f2ff;
+            color: #5b5bf7;
+        }
+
+
+        /* DROPDOWN */
+
+        .dropdown {
+            position: relative;
+        }
+
+
+        .dropdown-toggle {
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+
+        .dropdown-menu {
+            position: absolute;
+
+            top: 43px;
+            left: 0;
+
+            width: 210px;
+
+            background: white;
+
+            border: 1px solid #e7eaf0;
+
+            border-radius: 12px;
+
+            padding: 7px;
+
+            box-shadow:
+                0 18px 45px rgba(25,35,60,0.12);
+
+            display: none;
+        }
+
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 11px 12px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            color: #4b5563;
+        }
+
+
+        .dropdown-item:hover {
+            background: #f3f4ff;
+            color: #5b5bf7;
+        }
+
+
+        /* RIGHT */
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .post-job-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            background: #5b5bf7;
+
+            color: white;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+
+        .post-job-btn:hover {
+            background: #4949dc;
+            transform: translateY(-1px);
+        }
+
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 4px 10px 4px 4px;
+
+            border-radius: 9px;
+        }
+
+
+        .profile:hover {
+            background: #f5f6f8;
+        }
+
+
+        .profile img {
+            width: 34px;
+            height: 34px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+        }
+
+
+        .profile-name {
+            font-size: 12px;
+            font-weight: 700;
+
+            color: #344054;
+        }
+
+
+        .logout {
+            color: #ef4444;
+
+            font-size: 12px;
+
+            padding: 8px;
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(91,91,247,0.10),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(124,58,237,0.08),
+                    transparent 30%
+                ),
+                #ffffff;
+
+            padding: 55px 0 45px;
+        }
+
+
+        .container {
+            width: min(1250px, 92%);
+            margin: auto;
+        }
+
+
+        .hero-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.3fr
+                0.7fr;
+
+            gap: 50px;
+
+            align-items: center;
+        }
+
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 12px;
+
+            border-radius: 50px;
+
+            background: #f1f2ff;
+
+            color: #5b5bf7;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            margin-bottom: 16px;
+        }
+
+
+        .hero-title {
+            font-size: clamp(
+                35px,
+                4.5vw,
+                55px
+            );
+
+            line-height: 1.08;
+
+            letter-spacing: -2px;
+
+            font-weight: 800;
+
+            color: #111827;
+
+            margin-bottom: 17px;
+        }
+
+
+        .hero-title span {
+            color: #5b5bf7;
+        }
+
+
+        .hero-description {
+            max-width: 650px;
+
+            color: #687386;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .primary-btn {
+            background: #5b5bf7;
+            color: white;
+
+            padding: 12px 18px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+
+        .primary-btn:hover {
+            background: #4949dc;
+        }
+
+
+        .secondary-btn {
+            background: white;
+
+            border: 1px solid #dfe4ec;
+
+            color: #344054;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+
+        .secondary-btn:hover {
+            border-color: #5b5bf7;
+            color: #5b5bf7;
+        }
+
+
+        /* HERO CARD */
+
+        .hero-card {
+            background: white;
+
+            border: 1px solid #e6eaf0;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 20px 55px rgba(25,35,60,0.09);
+        }
+
+
+        .hero-card-title {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero-card-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 11px;
+
+            background: #f0f0ff;
+
+            color: #5b5bf7;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .hero-card-title h3 {
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+
+        .hero-card-title p {
+            font-size: 10px;
+            color: #8992a1;
+        }
+
+
+        .hero-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #eef0f4;
+        }
+
+
+        .hero-stat:last-child {
+            border-bottom: none;
+        }
+
+
+        .hero-stat-label {
+            color: #7a8494;
+            font-size: 11px;
+        }
+
+
+        .hero-stat-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1f2937;
+        }
+
+
+        /* =========================================
+           SECTION
+        ========================================= */
+
+        .section {
+            padding: 50px 0;
+        }
+
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+
+
+        .section-label {
+            color: #5b5bf7;
+
+            text-transform: uppercase;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .section-title {
+            font-size: 26px;
+
+            font-weight: 800;
+
+            color: #172033;
+        }
+
+
+        .section-description {
+            color: #7b8595;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+
+        /* =========================================
+           STAT CARDS
+        ========================================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+        }
+
+
+        .stat-card {
+            background: white;
+
+            border: 1px solid #e7ebf1;
+
+            border-radius: 14px;
+
+            padding: 21px;
+
+            transition: 0.25s;
+        }
+
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 14px 35px rgba(30,40,70,0.07);
+        }
+
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 16px;
+        }
+
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 11px;
+
+            background: #f1f2ff;
+
+            color: #5b5bf7;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .stat-arrow {
+            color: #a1a8b3;
+
+            font-size: 11px;
+        }
+
+
+        .stat-number {
+            font-size: 27px;
+
+            font-weight: 800;
+
+            color: #172033;
+
+            display: block;
+        }
+
+
+        .stat-label {
+            color: #7b8594;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================================
+           CONTENT GRID
+        ========================================= */
+
+        .dashboard-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.5fr
+                1fr;
+
+            gap: 20px;
+        }
+
+
+        .dashboard-card {
+            background: white;
+
+            border: 1px solid #e7ebf1;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+        }
+
+
+        .card-header {
+            padding: 20px 21px;
+
+            border-bottom: 1px solid #edf0f4;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .card-header h3 {
+            font-size: 14px;
+
+            font-weight: 800;
+
+            color: #202938;
+        }
+
+
+        .view-all {
+            font-size: 10px;
+
+            font-weight: 700;
+
+            color: #5b5bf7;
+        }
+
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           JOB LIST
+        ========================================= */
+
+        .job-item {
+            padding: 17px 21px;
+
+            border-bottom: 1px solid #f0f2f5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+
+        .job-item:last-child {
+            border-bottom: none;
+        }
+
+
+        .job-info {
+            min-width: 0;
+        }
+
+
+        .job-title {
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #273142;
+
+            margin-bottom: 4px;
+        }
+
+
+        .job-meta {
+            display: flex;
+
+            gap: 13px;
+
+            flex-wrap: wrap;
+
+            color: #8992a1;
+
+            font-size: 10px;
+        }
+
+
+        .job-meta span {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 4px;
+        }
+
+
+        .job-badge {
+            padding: 5px 8px;
+
+            background: #ecfdf5;
+
+            color: #059669;
+
+            border-radius: 50px;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           APPLICATIONS
+        ========================================= */
+
+        .application-item {
+            padding: 15px 21px;
+
+            border-bottom: 1px solid #f0f2f5;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .application-item:last-child {
+            border-bottom: none;
+        }
+
+
+        .candidate-avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            background: #f0f0ff;
+        }
+
+
+        .candidate-info {
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        .candidate-name {
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #273142;
+
+            margin-bottom: 2px;
+        }
+
+
+        .candidate-job {
+            color: #8992a1;
+
+            font-size: 9px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .status {
+            padding: 5px 8px;
+
+            border-radius: 50px;
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            text-transform: capitalize;
+        }
+
+
+        .status.applied {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+
+        .status.shortlisted {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+
+        .status.rejected {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+
+        /* =========================================
+           QUICK ACTIONS
+        ========================================= */
+
+        .actions-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+        }
+
+
+        .action-card {
+            background: white;
+
+            border: 1px solid #e7ebf1;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            transition: 0.2s;
+        }
+
+
+        .action-card:hover {
+            border-color: #d7d8ff;
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 30px rgba(30,40,70,0.06);
+        }
+
+
+        .action-icon {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 10px;
+
+            background: #f1f2ff;
+
+            color: #5b5bf7;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 13px;
+        }
+
+
+        .action-title {
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: #273142;
+
+            margin-bottom: 3px;
+        }
+
+
+        .action-description {
+            font-size: 9px;
+
+            color: #8992a1;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           RECRUITER PROFILE CTA
+        ========================================= */
+
+        .profile-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    #5555ed,
+                    #7138c8
+                );
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            color: white;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        .profile-card h2 {
+            font-size: 22px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .profile-card p {
+            font-size: 11px;
+
+            opacity: 0.85;
+
+            max-width: 600px;
+        }
+
+
+        .profile-btn {
+            background: white;
+
+            color: #5555ed;
+
+            padding: 11px 17px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .footer {
+            background: #111827;
+
+            color: white;
+
+            padding: 42px 0 22px;
+
+            margin-top: 30px;
+        }
+
+
+        .footer-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.5fr
+                1fr
+                1fr
+                1fr;
+
+            gap: 40px;
+
+            padding-bottom: 30px;
+
+            border-bottom:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
+        }
+
+
+        .footer-logo {
+            font-size: 20px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
+
+        .footer-logo span {
+            color: #8b8bff;
+        }
+
+
+        .footer-description {
+            color: #9ca5b5;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+
+            max-width: 300px;
+        }
+
+
+        .footer-title {
+            font-size: 11px;
+
+            font-weight: 800;
+
+            margin-bottom: 12px;
+        }
+
+
+        .footer-links {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+
+        .footer-links a {
+            color: #9ca5b5;
+
+            font-size: 10px;
+        }
+
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+
+        .footer-bottom {
+            padding-top: 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #737d8d;
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================
+           EMPTY STATE
+        ========================================= */
+
+        .empty-state {
+            padding: 35px 20px;
+
+            text-align: center;
+
+            color: #8992a1;
+
+            font-size: 11px;
+        }
+
+
+        .empty-state i {
+            font-size: 25px;
+
+            margin-bottom: 10px;
+
+            color: #c3c8d2;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1050px) {
+
+            .nav-menu {
+                display: none;
+            }
+
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .hero-content {
+                text-align: center;
+            }
+
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .actions-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .footer-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .post-job-btn {
+                display: none;
+            }
+
+
+            .profile-name {
+                display: none;
+            }
+
+
+            .hero {
+                padding: 40px 0;
+            }
+
+
+            .hero-title {
+                font-size: 36px;
+                letter-spacing: -1px;
+            }
+
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .profile-card {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .footer-bottom {
+                flex-direction: column;
+
+                gap: 8px;
+
+                text-align: center;
+            }
+        }
+
     </style>
-  </head>
-  <body id="top">
 
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+
+        <!-- LOGO -->
+
+        <a href="{% url 'recruiter_home' %}"
+           class="logo">
+
+            <div class="logo-icon">
+
+                <i class="fa-solid fa-file-lines"></i>
+
+            </div>
+
+            Resume<span>AI</span>
+
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="nav-menu">
+
+
+            <a href="{% url 'recruiter_home' %}"
+               class="nav-link active">
+
+                Home
+
+            </a>
+
+
+            <a href="{% url 'recruiter_viewjob' %}"
+               class="nav-link">
+
+                Job Listings
+
+            </a>
+
+
+            <div class="dropdown">
+
+                <div class="nav-link dropdown-toggle">
+
+                    Applications
+
+                    <i class="fa-solid fa-chevron-down"
+                       style="font-size:8px;"></i>
+
+                </div>
+
+
+                <div class="dropdown-menu">
+
+                    <a href="{% url 'recruiter_view_pending_applicants' %}"
+                       class="dropdown-item">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                        Pending
+
+                    </a>
+
+
+                    <a href="{% url 'recruiter_view_shortlisted_applicants' %}"
+                       class="dropdown-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Shortlisted
+
+                    </a>
+
+
+                    <a href="{% url 'recruiter_view_rejected_applicants' %}"
+                       class="dropdown-item">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                        Rejected
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <a href="{% url 'recruiter_viewprofile' %}"
+               class="nav-link">
+
+                Profile
+
+            </a>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="nav-right">
+
+
+            <a href="{% url 'recruiter_addjob' %}"
+               class="post-job-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Post a Job
+
+            </a>
+
+
+            <a href="{% url 'recruiter_viewprofile' %}"
+               class="profile">
+
+
+                {% if recruiter.profile_pic %}
+
+                    <img src="{{ recruiter.profile_pic.url }}"
+                         alt="Profile">
+
+                {% else %}
+
+                    <img src="{% static 'images/profile-icon.jpeg' %}"
+                         alt="Profile">
+
+                {% endif %}
+
+
+                <span class="profile-name">
+
+                    {{ recruiter.name }}
+
+                </span>
+
+            </a>
+
+
+            <a href="{% url 'logout' %}"
+               class="logout"
+               title="Logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+            </a>
+
+        </div>
+
     </div>
-  </div>
 
-  <div class="site-wrap">
+</nav>
 
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
+{% block content %}
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-grid">
+
+
+            <div>
+
+                <div class="hero-label">
+
+                    <i class="fa-solid fa-building"></i>
+
+                    Recruiter Dashboard
+
+                </div>
+
+
+                <h1 class="hero-title">
+
+                    Find the right
+                    <span>talent.</span>
+
+                    <br>
+
+                    Build your team.
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    Welcome back,
+                    <strong>{{ recruiter.name }}</strong>.
+
+                    Manage your job postings, review candidates,
+                    track applications and build your team
+                    with ResumeAI.
+
+                </p>
+
+
+                <div class="hero-actions">
+
+
+                    <a href="{% url 'recruiter_addjob' %}"
+                       class="primary-btn">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Post a New Job
+
+                    </a>
+
+
+                    <a href="{% url 'recruiter_viewjob' %}"
+                       class="secondary-btn">
+
+                        <i class="fa-solid fa-briefcase"></i>
+
+                        View Job Listings
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SUMMARY CARD -->
+
+            <div class="hero-card">
+
+
+                <div class="hero-card-title">
+
+                    <div class="hero-card-icon">
+
+                        <i class="fa-solid fa-chart-pie"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Recruitment Overview
+                        </h3>
+
+                        <p>
+                            Your current hiring activity
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <span class="hero-stat-label">
+                        Jobs Posted
+                    </span>
+
+                    <span class="hero-stat-value">
+                        {{ job_count }}
+                    </span>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <span class="hero-stat-label">
+                        Applications
+                    </span>
+
+                    <span class="hero-stat-value">
+                        {{ application_count }}
+                    </span>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <span class="hero-stat-label">
+                        Pending Review
+                    </span>
+
+                    <span class="hero-stat-value">
+                        {{ pending_count }}
+                    </span>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <span class="hero-stat-label">
+                        Shortlisted
+                    </span>
+
+                    <span class="hero-stat-value">
+                        {{ shortlisted_count }}
+                    </span>
+
+                </div>
+
+            </div>
+
         </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
+
     </div>
 
-    <!-- NAVBAR -->
-    <header class="site-navbar">
-      <div class="container-fluid">
+</section>
 
-        <!-- Logo -->
-        <div class="site-logo col-auto mr-4">
-          <a href="/recruiter_home/">JobBoard</a>
-        </div>
 
-        <!-- Nav links (desktop) -->
-        <nav class="mx-auto site-navigation">
-          <ul class="site-menu js-clone-nav d-none d-xl-flex ml-0 pl-0">
 
-            <li>
-              <a href="/recruiter_home/" class="nav-link active">Home</a>
-            </li>
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
 
-            <li>
-              <a href="/recruiter_viewjob/" class="nav-link">Job Listing</a>
-            </li>
+<section class="section">
 
-            <!-- Shortlist dropdown -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle"
-                 href="#"
-                 id="shortlistDropdown"
-                 role="button"
-                 data-toggle="dropdown"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                Shortlist
-              </a>
-              <div class="dropdown-menu" aria-labelledby="shortlistDropdown">
-                <a class="dropdown-item" href="/recruiter_view_pending_applicants/">
-                  <span class="icon-clock mr-2" style="font-size:13px"></span>Pending
-                </a>
-                <a class="dropdown-item" href="/recruiter_view_shortlisted_applicants/">
-                  <span class="icon-check mr-2" style="font-size:13px"></span>Shortlisted
-                </a>
-                <a class="dropdown-item" href="/recruiter_view_rejected_applicants">
-                  <span class="icon-close mr-2" style="font-size:13px"></span>Rejected
-                </a>
-              </div>
-            </li>
+    <div class="container">
 
-            <div class="nav-divider"></div>
 
-            <li>
-              <a href="/recruiter_viewprofile/" class="nav-link">{{ recruiter.name }}</a>
-            </li>
+        <div class="section-header">
 
-          </ul>
-        </nav>
-
-        <!-- Right side -->
-        <div class="right-cta-menu d-flex align-items-center col-auto ml-auto">
-          <div class="ml-auto">
-
-            <a class="profile-icon" href="/recruiter_viewprofile/">
-              <img src="/static/images/profile-icon.jpeg" alt="Profile photo">
-              <span>{{request.session.name}}</span>
-            </a>
-
-            <a href="/recruiter_addjob/" class="btn-post-job d-none d-lg-inline-flex">
-              <span class="icon-add" style="font-size:13px"></span> Post a Job
-            </a>
-
-            <a href="/logout/" class="btn-logout d-none d-lg-inline-flex">
-              <span class="icon-lock_outline" style="font-size:13px"></span> Log Out
-            </a>
-
-            <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none ml-2">
-              <span class="icon-menu h3 m-0 p-0"></span>
-            </a>
-
-          </div>
-        </div>
-
-      </div>
-    </header>
-
-    <!-- HOME -->
-    {% block content %}
-    <section class="home-section section-hero overlay bg-image" style="background-image: url('/static/images/hero_1.jpg');" id="home-section">
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-md-12">
-            <div class="mb-5 text-center">
-              <h1 class="text-white font-weight-bold">The Easiest Way To Get Your Dream Job</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate est, consequuntur perferendis.</p>
+            <div class="section-label">
+                Recruitment Analytics
             </div>
-            <form method="post" class="search-jobs-form"></form>
-          </div>
-        </div>
-      </div>
-      <a href="#next" class="scroll-button smoothscroll">
-        <span class="icon-keyboard_arrow_down"></span>
-      </a>
-    </section>
 
-    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2 text-white">JobBoard Site Stats</h2>
-            <p class="lead text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita unde officiis recusandae sequi excepturi corrupti.</p>
-          </div>
-        </div>
-        <div class="row pb-0 block__19738 section-counter">
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="1930">0</strong>
-            </div>
-            <span class="caption">Candidates</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="54">0</strong>
-            </div>
-            <span class="caption">Jobs Posted</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="120">0</strong>
-            </div>
-            <span class="caption">Jobs Filled</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="550">0</strong>
-            </div>
-            <span class="caption">Companies</span>
-          </div>
-        </div>
-      </div>
-    </section>
+            <h2 class="section-title">
+                Hiring Overview
+            </h2>
 
-    <section class="site-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2">43,167 Job Listed</h2>
-          </div>
-        </div>
-
-        <ul class="job-listings mb-5">
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_1.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Product Designer</h2><strong>Adidas</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> New York, New York</div>
-              <div class="job-listing-meta"><span class="badge badge-danger">Part Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_2.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Digital Marketing Director</h2><strong>Sprint</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> Overland Park, Kansas</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_3.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Back-end Engineer (Python)</h2><strong>Amazon</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> Overland Park, Kansas</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_4.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Senior Art Director</h2><strong>Microsoft</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> Anywhere</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_5.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Product Designer</h2><strong>Puma</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> San Mateo, CA</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_1.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Product Designer</h2><strong>Adidas</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> New York, New York</div>
-              <div class="job-listing-meta"><span class="badge badge-danger">Part Time</span></div>
-            </div>
-          </li>
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo"><img src="/static/images/job_logo_2.jpg" alt="Job logo" class="img-fluid"></div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0"><h2>Digital Marketing Director</h2><strong>Sprint</strong></div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25"><span class="icon-room"></span> Overland Park, Kansas</div>
-              <div class="job-listing-meta"><span class="badge badge-success">Full Time</span></div>
-            </div>
-          </li>
-        </ul>
-
-        <div class="row pagination-wrap">
-          <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
-            <span>Showing 1-7 Of 43,167 Jobs</span>
-          </div>
-          <div class="col-md-6 text-center text-md-right">
-            <div class="custom-pagination ml-auto">
-              <a href="#" class="prev">Prev</a>
-              <div class="d-inline-block">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-              </div>
-              <a href="#" class="next">Next</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <h2 class="text-white">Looking For A Job?</h2>
-            <p class="mb-0 text-white lead">Lorem ipsum dolor sit amet consectetur adipisicing elit tempora adipisci impedit.</p>
-          </div>
-          <div class="col-md-3 ml-auto">
-            <a href="#" class="btn btn-warning btn-block btn-lg">Sign Up</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="site-section py-4">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-12 text-center mt-4 mb-5">
-            <div class="row justify-content-center">
-              <div class="col-md-7">
-                <h2 class="section-title mb-2">Company We've Helped</h2>
-                <p class="lead">Porro error reiciendis commodi beatae omnis similique voluptate rerum ipsam fugit mollitia ipsum facilis expedita tempora suscipit iste</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_mailchimp.svg" alt="Mailchimp" class="img-fluid logo-1"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_paypal.svg" alt="PayPal" class="img-fluid logo-2"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_stripe.svg" alt="Stripe" class="img-fluid logo-3"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_visa.svg" alt="Visa" class="img-fluid logo-4"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_apple.svg" alt="Apple" class="img-fluid logo-5"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_tinder.svg" alt="Tinder" class="img-fluid logo-6"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_sony.svg" alt="Sony" class="img-fluid logo-7"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_airbnb.svg" alt="Airbnb" class="img-fluid logo-8"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="bg-light pt-5 testimony-full">
-      <div class="owl-carousel single-carousel">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 align-self-center text-center text-lg-left">
-              <blockquote>
-                <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-                <p><cite> &mdash; Corey Woods, @Dribbble</cite></p>
-              </blockquote>
-            </div>
-            <div class="col-lg-6 align-self-end text-center text-lg-right">
-              <img src="/static/images/person_transparent_2.png" alt="Testimonial" class="img-fluid mb-0">
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 align-self-center text-center text-lg-left">
-              <blockquote>
-                <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-                <p><cite> &mdash; Chris Peters, @Google</cite></p>
-              </blockquote>
-            </div>
-            <div class="col-lg-6 align-self-end text-center text-lg-right">
-              <img src="/static/images/person_transparent.png" alt="Testimonial" class="img-fluid mb-0">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
-            <h2 class="text-white">Get The Mobile Apps</h2>
-            <p class="mb-5 lead text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit tempora adipisci impedit.</p>
-            <p class="mb-0">
-              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-apple mr-3"></span>App Store</a>
-              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-android mr-3"></span>Play Store</a>
+            <p class="section-description">
+                Track your recruitment activity from your dashboard.
             </p>
-          </div>
-          <div class="col-md-6 ml-auto align-self-end">
-            <img src="/static/images/apps.png" alt="Mobile apps" class="img-fluid">
-          </div>
-        </div>
-      </div>
-    </section>
-    {% endblock %}
 
-    <footer class="site-footer">
-      <a href="#top" class="smoothscroll scroll-top">
-        <span class="icon-keyboard_arrow_up"></span>
-      </a>
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Search Trending</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Graphic Design</a></li>
-              <li><a href="#">Web Developers</a></li>
-              <li><a href="#">Python</a></li>
-              <li><a href="#">HTML5</a></li>
-              <li><a href="#">CSS3</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Company</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Career</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Resources</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Support</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Support</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Contact Us</h3>
-            <div class="footer-social">
-              <a href="#"><span class="icon-facebook"></span></a>
-              <a href="#"><span class="icon-twitter"></span></a>
-              <a href="#"><span class="icon-instagram"></span></a>
-              <a href="#"><span class="icon-linkedin"></span></a>
+        </div>
+
+
+        <div class="stats-grid">
+
+
+            <!-- JOBS -->
+
+            <a href="{% url 'recruiter_viewjob' %}"
+               class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+
+                        <i class="fa-solid fa-briefcase"></i>
+
+                    </div>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square stat-arrow"></i>
+
+                </div>
+
+
+                <span class="stat-number">
+                    {{ job_count }}
+                </span>
+
+                <span class="stat-label">
+                    Jobs Posted
+                </span>
+
+            </a>
+
+
+
+            <!-- APPLICATIONS -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+                </div>
+
+
+                <span class="stat-number">
+                    {{ application_count }}
+                </span>
+
+                <span class="stat-label">
+                    Total Applications
+                </span>
+
             </div>
-          </div>
+
+
+
+            <!-- PENDING -->
+
+            <a href="{% url 'recruiter_view_pending_applicants' %}"
+               class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                    </div>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square stat-arrow"></i>
+
+                </div>
+
+
+                <span class="stat-number">
+                    {{ pending_count }}
+                </span>
+
+                <span class="stat-label">
+                    Pending Applications
+                </span>
+
+            </a>
+
+
+
+            <!-- SHORTLISTED -->
+
+            <a href="{% url 'recruiter_view_shortlisted_applicants' %}"
+               class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+
+                        <i class="fa-solid fa-user-check"></i>
+
+                    </div>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square stat-arrow"></i>
+
+                </div>
+
+
+                <span class="stat-number">
+                    {{ shortlisted_count }}
+                </span>
+
+                <span class="stat-label">
+                    Shortlisted Candidates
+                </span>
+
+            </a>
+
         </div>
-        <div class="row text-center">
-          <div class="col-12">
-            <p class="copyright"><small>
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-            </small></p>
-          </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RECENT DATA
+===================================================== -->
+
+<section class="section"
+         style="padding-top: 5px;">
+
+    <div class="container">
+
+
+        <div class="dashboard-grid">
+
+
+            <!-- RECENT JOBS -->
+
+            <div class="dashboard-card">
+
+
+                <div class="card-header">
+
+                    <h3>
+                        Recent Job Postings
+                    </h3>
+
+
+                    <a href="{% url 'recruiter_viewjob' %}"
+                       class="view-all">
+
+                        View All
+
+                    </a>
+
+                </div>
+
+
+                {% for job in recent_jobs %}
+
+                    <div class="job-item">
+
+
+                        <div class="job-info">
+
+                            <div class="job-title">
+
+                                {{ job.jobtitle }}
+
+                            </div>
+
+
+                            <div class="job-meta">
+
+                                <span>
+
+                                    <i class="fa-solid fa-location-dot"></i>
+
+                                    {{ job.joblocation }}
+
+                                </span>
+
+
+                                <span>
+
+                                    <i class="fa-solid fa-calendar"></i>
+
+                                    {{ job.jobdate1 }}
+
+                                </span>
+
+
+                                <span>
+
+                                    <i class="fa-solid fa-user-group"></i>
+
+                                    {{ job.jobvacancy }} vacancies
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="job-badge">
+
+                            {{ job.jobtype }}
+
+                        </span>
+
+                    </div>
+
+
+                {% empty %}
+
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-briefcase"></i>
+
+                        <p>
+                            No jobs posted yet.
+                        </p>
+
+                        <br>
+
+                        <a href="{% url 'recruiter_addjob' %}"
+                           class="primary-btn">
+
+                            Post Your First Job
+
+                        </a>
+
+                    </div>
+
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- RECENT APPLICATIONS -->
+
+            <div class="dashboard-card">
+
+
+                <div class="card-header">
+
+                    <h3>
+                        Recent Applications
+                    </h3>
+
+
+                    <a href="{% url 'recruiter_view_pending_applicants' %}"
+                       class="view-all">
+
+                        View All
+
+                    </a>
+
+                </div>
+
+
+                {% for application in recent_applications %}
+
+                    <div class="application-item">
+
+
+                        {% if application.user.profile_pic %}
+
+                            <img src="{{ application.user.profile_pic.url }}"
+                                 class="candidate-avatar"
+                                 alt="Candidate">
+
+                        {% else %}
+
+                            <img src="{% static 'images/profile-icon.jpeg' %}"
+                                 class="candidate-avatar"
+                                 alt="Candidate">
+
+                        {% endif %}
+
+
+                        <div class="candidate-info">
+
+                            <div class="candidate-name">
+
+                                {{ application.user.name }}
+
+                            </div>
+
+
+                            <div class="candidate-job">
+
+                                {{ application.job.jobtitle }}
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="status {{ application.status }}">
+
+                            {{ application.status }}
+
+                        </span>
+
+                    </div>
+
+
+                {% empty %}
+
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-users"></i>
+
+                        <p>
+                            No applications yet.
+                        </p>
+
+                    </div>
+
+
+                {% endfor %}
+
+            </div>
+
         </div>
-      </div>
-    </footer>
 
-  </div><!-- .site-wrap -->
+    </div>
 
-  <!-- ── SCRIPTS (correct order, no duplicates) ── -->
-  <script src="/static/js/jquery.min.js"></script>
-  <script src="/static/js/bootstrap.bundle.min.js"></script>
-  <script src="/static/js/isotope.pkgd.min.js"></script>
-  <script src="/static/js/stickyfill.min.js"></script>
-  <script src="/static/js/jquery.fancybox.min.js"></script>
-  <script src="/static/js/jquery.easing.1.3.js"></script>
-  <script src="/static/js/jquery.waypoints.min.js"></script>
-  <script src="/static/js/jquery.animateNumber.min.js"></script>
-  <script src="/static/js/owl.carousel.min.js"></script>
-  <script src="/static/js/bootstrap-select.min.js"></script>
-  <script src="/static/js/custom.js"></script>
+</section>
 
-  </body>
+
+
+<!-- =====================================================
+     QUICK ACTIONS
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Quick Access
+            </div>
+
+            <h2 class="section-title">
+                Manage Recruitment
+            </h2>
+
+            <p class="section-description">
+                Access your most important recruitment actions quickly.
+            </p>
+
+        </div>
+
+
+        <div class="actions-grid">
+
+
+            <!-- POST JOB -->
+
+            <a href="{% url 'recruiter_addjob' %}"
+               class="action-card">
+
+                <div class="action-icon">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </div>
+
+
+                <div class="action-title">
+                    Post a Job
+                </div>
+
+
+                <div class="action-description">
+
+                    Create a new job vacancy and
+                    start receiving applications.
+
+                </div>
+
+            </a>
+
+
+
+            <!-- JOBS -->
+
+            <a href="{% url 'recruiter_viewjob' %}"
+               class="action-card">
+
+                <div class="action-icon">
+
+                    <i class="fa-solid fa-list"></i>
+
+                </div>
+
+
+                <div class="action-title">
+                    Manage Jobs
+                </div>
+
+
+                <div class="action-description">
+
+                    View and manage your existing
+                    job postings.
+
+                </div>
+
+            </a>
+
+
+
+            <!-- PENDING -->
+
+            <a href="{% url 'recruiter_view_pending_applicants' %}"
+               class="action-card">
+
+                <div class="action-icon">
+
+                    <i class="fa-solid fa-user-clock"></i>
+
+                </div>
+
+
+                <div class="action-title">
+                    Review Candidates
+                </div>
+
+
+                <div class="action-description">
+
+                    Review applications waiting
+                    for your decision.
+
+                </div>
+
+            </a>
+
+
+
+            <!-- PROFILE -->
+
+            <a href="{% url 'recruiter_viewprofile' %}"
+               class="action-card">
+
+                <div class="action-icon">
+
+                    <i class="fa-solid fa-building-user"></i>
+
+                </div>
+
+
+                <div class="action-title">
+                    Company Profile
+                </div>
+
+
+                <div class="action-description">
+
+                    Update your recruiter and
+                    company information.
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CTA
+===================================================== -->
+
+<div class="container">
+
+    <section class="profile-card">
+
+
+        <div>
+
+            <h2>
+                Build your next great team.
+            </h2>
+
+
+            <p>
+
+                Create a compelling job posting,
+                review qualified candidates and
+                move your recruitment process forward.
+
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'recruiter_addjob' %}"
+           class="profile-btn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Post a New Job
+
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div class="container">
+
+
+        <div class="footer-grid">
+
+
+            <div>
+
+                <div class="footer-logo">
+
+                    Resume<span>AI</span>
+
+                </div>
+
+
+                <p class="footer-description">
+
+                    An AI-powered recruitment platform
+                    designed to connect employers with
+                    qualified candidates and simplify
+                    the hiring process.
+
+                </p>
+
+            </div>
+
+
+
+            <div>
+
+                <div class="footer-title">
+                    Recruitment
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a href="{% url 'recruiter_addjob' %}">
+                        Post a Job
+                    </a>
+
+                    <a href="{% url 'recruiter_viewjob' %}">
+                        Job Listings
+                    </a>
+
+                    <a href="{% url 'recruiter_view_pending_applicants' %}">
+                        Applications
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div>
+
+                <div class="footer-title">
+                    Candidates
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a href="{% url 'recruiter_view_pending_applicants' %}">
+                        Pending
+                    </a>
+
+                    <a href="{% url 'recruiter_view_shortlisted_applicants' %}">
+                        Shortlisted
+                    </a>
+
+                    <a href="{% url 'recruiter_view_rejected_applicants' %}">
+                        Rejected
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div>
+
+                <div class="footer-title">
+                    Account
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a href="{% url 'recruiter_viewprofile' %}">
+                        Company Profile
+                    </a>
+
+                    <a href="{% url 'recruiter_home' %}">
+                        Dashboard
+                    </a>
+
+                    <a href="{% url 'logout' %}">
+                        Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 ResumeAI. All rights reserved.
+            </span>
+
+
+            <span>
+                AI-Powered Recruitment Platform
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+
 </html>
+

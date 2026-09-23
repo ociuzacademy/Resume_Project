@@ -1,54 +1,587 @@
+
 {% extends 'index.html' %}
+
 {% block content %}
-    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');" id="home-section">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-7">
-              <h1 class="text-white font-weight-bold">Login</h1>
-              <div class="custom-breadcrumbs">
-                <a href="/">Home</a> <span class="mx-2 slash">/</span>
-                <span class="text-white"><strong>Login</strong></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="site-section" id="next-section">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-              <form action="/login/" class="" method="post">
-                {% csrf_token %}
-  
-                <div class="row form-group">
-                  <div class="col-md-6 mb-3 mb-md-0">
-                    <label class="text-black" for="lname">Email</label>
-                    <input type="email" id="lname" class="form-control" name="email" required>
-                  </div>
+
+<style>
+
+    /* =========================================
+       LOGIN PAGE
+    ========================================= */
+
+    .login-page {
+        background: #f8fafc;
+        padding: 80px 0 100px;
+        min-height: calc(100vh - 72px);
+
+        display: flex;
+        align-items: center;
+    }
+
+    .login-wrapper {
+        max-width: 950px;
+        margin: auto;
+    }
+
+
+    /* =========================================
+       LEFT INFORMATION PANEL
+    ========================================= */
+
+    .login-info {
+        background: linear-gradient(
+            135deg,
+            #0f172a,
+            #1d4ed8
+        );
+
+        border-radius: 18px 0 0 18px;
+
+        padding: 55px 42px;
+
+        min-height: 470px;
+
+        color: white;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+
+    .login-badge {
+        display: inline-block;
+
+        width: fit-content;
+
+        background: rgba(255,255,255,.12);
+
+        border: 1px solid rgba(255,255,255,.2);
+
+        color: #bfdbfe;
+
+        padding: 7px 13px;
+
+        border-radius: 20px;
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        margin-bottom: 22px;
+    }
+
+
+    .login-info h1 {
+        font-size: 38px;
+
+        font-weight: 800;
+
+        line-height: 1.2;
+
+        margin-bottom: 18px;
+
+        color: white;
+    }
+
+
+    .login-info h1 span {
+        color: #93c5fd;
+    }
+
+
+    .login-info > p {
+        color: #cbd5e1;
+
+        line-height: 1.8;
+
+        font-size: 15px;
+
+        margin-bottom: 30px;
+
+        max-width: 400px;
+    }
+
+
+    /* =========================================
+       LOGIN BENEFITS
+    ========================================= */
+
+    .login-feature {
+        display: flex;
+
+        align-items: center;
+
+        margin-bottom: 18px;
+    }
+
+
+    .login-feature-icon {
+        width: 40px;
+
+        height: 40px;
+
+        min-width: 40px;
+
+        border-radius: 10px;
+
+        background: rgba(255,255,255,.1);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        color: #93c5fd;
+
+        margin-right: 13px;
+    }
+
+
+    .login-feature span {
+        color: #e2e8f0;
+
+        font-size: 14px;
+
+        font-weight: 600;
+    }
+
+
+    /* =========================================
+       LOGIN FORM CARD
+    ========================================= */
+
+    .login-form-card {
+        background: white;
+
+        border: 1px solid #e5e7eb;
+
+        border-radius: 0 18px 18px 0;
+
+        padding: 50px 45px;
+
+        min-height: 470px;
+
+        box-shadow:
+            0 15px 40px rgba(15,23,42,.06);
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+    }
+
+
+    .login-heading {
+        margin-bottom: 30px;
+    }
+
+
+    .login-heading h2 {
+        font-size: 29px;
+
+        font-weight: 800;
+
+        color: #0f172a;
+
+        margin-bottom: 8px;
+    }
+
+
+    .login-heading p {
+        color: #64748b;
+
+        font-size: 14px;
+
+        margin: 0;
+    }
+
+
+    /* =========================================
+       FORM LABELS
+    ========================================= */
+
+    .login-label {
+        display: block;
+
+        color: #334155;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        margin-bottom: 7px;
+    }
+
+
+    /* =========================================
+       INPUTS
+    ========================================= */
+
+    .login-input {
+        width: 100%;
+
+        height: 48px;
+
+        border: 1px solid #dbe2ea;
+
+        border-radius: 8px;
+
+        padding: 0 14px;
+
+        font-size: 14px;
+
+        color: #1e293b;
+
+        background: #fff;
+
+        transition: .2s;
+    }
+
+
+    .login-input:focus {
+        border-color: #2563eb;
+
+        box-shadow:
+            0 0 0 3px rgba(37,99,235,.1);
+
+        outline: none;
+    }
+
+
+    /* =========================================
+       LOGIN BUTTON
+    ========================================= */
+
+    .login-submit {
+        width: 100%;
+
+        height: 48px;
+
+        border: none;
+
+        border-radius: 8px;
+
+        background: #2563eb;
+
+        color: white;
+
+        font-size: 14px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition: .2s;
+
+        margin-top: 8px;
+    }
+
+
+    .login-submit:hover {
+        background: #1d4ed8;
+    }
+
+
+    /* =========================================
+       REGISTER LINKS
+    ========================================= */
+
+    .register-note {
+        text-align: center;
+
+        margin-top: 22px;
+
+        color: #64748b;
+
+        font-size: 13px;
+    }
+
+
+    .register-note a {
+        color: #2563eb;
+
+        font-weight: 700;
+
+        text-decoration: none;
+    }
+
+
+    .register-note a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media(max-width: 991px) {
+
+        .login-info {
+            border-radius: 18px 18px 0 0;
+
+            min-height: auto;
+
+            padding: 40px 35px;
+        }
+
+        .login-form-card {
+            border-radius: 0 0 18px 18px;
+
+            min-height: auto;
+
+            padding: 40px 35px;
+        }
+
+    }
+
+
+    @media(max-width: 576px) {
+
+        .login-page {
+            padding: 40px 15px 60px;
+        }
+
+        .login-info {
+            padding: 32px 25px;
+        }
+
+        .login-form-card {
+            padding: 32px 22px;
+        }
+
+        .login-info h1 {
+            font-size: 30px;
+        }
+
+        .login-heading h2 {
+            font-size: 25px;
+        }
+
+    }
+
+</style>
+
+
+<!-- =========================================
+     LOGIN PAGE
+========================================= -->
+
+<section class="login-page">
+
+    <div class="container">
+
+        <div class="login-wrapper">
+
+            <div class="row no-gutters">
+
+
+                <!-- =================================
+                     LEFT SIDE
+                ================================== -->
+
+                <div class="col-lg-5">
+
+                    <div class="login-info">
+
+                        <span class="login-badge">
+                            RESUMEAI
+                        </span>
+
+
+                        <h1>
+                            Welcome <span>Back.</span>
+                        </h1>
+
+
+                        <p>
+                            Sign in to your ResumeAI account and
+                            continue your journey toward the right
+                            career opportunity.
+                        </p>
+
+
+                        <div class="login-feature">
+
+                            <div class="login-feature-icon">
+
+                                <span class="icon-search"></span>
+
+                            </div>
+
+                            <span>
+                                Discover relevant job opportunities
+                            </span>
+
+                        </div>
+
+
+                        <div class="login-feature">
+
+                            <div class="login-feature-icon">
+
+                                <span class="icon-user"></span>
+
+                            </div>
+
+                            <span>
+                                Manage your professional profile
+                            </span>
+
+                        </div>
+
+
+                        <div class="login-feature">
+
+                            <div class="login-feature-icon">
+
+                                <span class="icon-file-text"></span>
+
+                            </div>
+
+                            <span>
+                                Track your job applications
+                            </span>
+
+                        </div>
+
+
+                        <div class="login-feature">
+
+                            <div class="login-feature-icon">
+
+                                <span class="icon-briefcase"></span>
+
+                            </div>
+
+                            <span>
+                                Connect with recruiters
+                            </span>
+
+                        </div>
+
+                    </div>
+
                 </div>
-  
-               
-  
-                
-                  <div class="row form-group">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label class="text-black" for="lname" >Password</label>
-                        <input type="password" id="lname" class="form-control" name="pswd"  required>
-                      </div>
-                  </div>
-                  <br>
-  
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <input type="submit" value="Login" class="btn btn-primary btn-md text-white">
-                  </div>
+
+
+                <!-- =================================
+                     LOGIN FORM
+                ================================== -->
+
+                <div class="col-lg-7">
+
+                    <div class="login-form-card">
+
+
+                        <div class="login-heading">
+
+                            <h2>
+                                Sign In
+                            </h2>
+
+                            <p>
+                                Enter your account details to continue.
+                            </p>
+
+                        </div>
+
+
+                        <form action="/login/"
+                              method="post">
+
+                            {% csrf_token %}
+
+
+                            <!-- EMAIL -->
+
+                            <div class="form-group mb-4">
+
+                                <label class="login-label"
+                                       for="email">
+
+                                    Email Address
+
+                                </label>
+
+                                <input type="email"
+                                       id="email"
+                                       class="login-input"
+                                       name="email"
+                                       placeholder="Enter your email address"
+                                       required>
+
+                            </div>
+
+
+                            <!-- PASSWORD -->
+
+                            <div class="form-group mb-4">
+
+                                <label class="login-label"
+                                       for="pswd">
+
+                                    Password
+
+                                </label>
+
+                                <input type="password"
+                                       id="pswd"
+                                       class="login-input"
+                                       name="pswd"
+                                       placeholder="Enter your password"
+                                       required>
+
+                            </div>
+
+
+                            <!-- LOGIN BUTTON -->
+
+                            <button type="submit"
+                                    class="login-submit">
+
+                                Sign In
+
+                            </button>
+
+
+                            <!-- REGISTER LINKS -->
+
+                            <div class="register-note">
+
+                                Don't have an account?
+
+                                <br>
+
+                                <a href="{% url 'user_register' %}">
+                                    Create Job Seeker Account
+                                </a>
+
+                                &nbsp; | &nbsp;
+
+                                <a href="{% url 'recruiter_register' %}">
+                                    Create Recruiter Account
+                                </a>
+
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
                 </div>
-  
-    
-              </form>
+
+
             </div>
+
         </div>
+
     </div>
-  </section>
-            {%  endblock %}
+
+</section>
+
+{% endblock %}

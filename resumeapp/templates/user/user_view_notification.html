@@ -1,71 +1,409 @@
 {% extends 'user_home.html' %}
+
 {% block content %}
+
 <style>
-  /* Define a custom class with the desired color */
-  .custom-badge-color {
-    background-color: #89ba16; /* Your desired color */
-    color: #fff; /* Text color, adjust as needed for contrast */
-  }
 
-  /* Additional styles for improved aesthetics */
-  .section-hero {
-    position: relative;
-    text-align: center;
-    color: #fff;
-  }
+    /* =========================================
+       NOTIFICATIONS PAGE
+    ========================================= */
 
-  .inner-title2 h2 {
-    font-weight: bold;
-    color: #fff;
-    text-align: center;
-    margin-top: 30px;
-  }
+    .notifications-section {
+        padding: 65px 0 90px;
+        background: #f8fafc;
+        min-height: calc(100vh - 80px);
+    }
 
-  .notification-container {
-    margin-top: 50px;
-  }
 
-  .notification-item {
-    background-color: #f8f9fa;
-    border: 1px solid #ced4da;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+    /* =========================================
+       PAGE HEADER
+    ========================================= */
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 42px;
+    }
+
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 16px;
+        background: #eff6ff;
+        color: #2563eb;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .3px;
+        margin-bottom: 14px;
+    }
+
+    .page-header h2 {
+        color: #0f172a;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 9px;
+    }
+
+    .page-header p {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0;
+    }
+
+
+    /* =========================================
+       NOTIFICATION CARD
+    ========================================= */
+
+    .notification-list {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .notification-item {
+        position: relative;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 24px;
+        margin-bottom: 17px;
+        box-shadow: 0 7px 25px rgba(15, 23, 42, 0.05);
+        transition: .25s ease;
+        overflow: hidden;
+    }
+
+    .notification-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: #2563eb;
+    }
+
+    .notification-item:hover {
+        transform: translateY(-3px);
+        border-color: #dbeafe;
+        box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+    }
+
+
+    /* =========================================
+       NOTIFICATION HEADER
+    ========================================= */
+
+    .notification-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+
+    .notification-icon {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        border-radius: 13px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+    }
+
+    .notification-content {
+        flex: 1;
+    }
+
+    .notification-message {
+        color: #0f172a;
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+
+    /* =========================================
+       APPLICATION DETAILS
+    ========================================= */
+
+    .application-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-left: 59px;
+    }
+
+    .detail-box {
+        background: #f8fafc;
+        border: 1px solid #eef2f7;
+        border-radius: 11px;
+        padding: 12px 14px;
+    }
+
+    .detail-label {
+        display: block;
+        color: #94a3b8;
+        font-size: 9px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+        margin-bottom: 4px;
+    }
+
+    .detail-value {
+        color: #334155;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+
+    /* =========================================
+       TIME
+    ========================================= */
+
+    .notification-time {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin: 15px 0 0 59px;
+        color: #94a3b8;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+
+    /* =========================================
+       EMPTY STATE
+    ========================================= */
+
+    .empty-box {
+        max-width: 700px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 65px 30px;
+        border: 1px solid #e2e8f0;
+        border-radius: 22px;
+        text-align: center;
+        box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+    }
+
+    .empty-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 18px;
+        border-radius: 20px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+
+    .empty-box h3 {
+        color: #0f172a;
+        font-size: 20px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .empty-box p {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0;
+    }
+
+
+    /* =========================================
+       HERO
+    ========================================= */
+
+    .notification-hero {
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (max-width: 767px) {
+
+        .notifications-section {
+            padding: 45px 15px 70px;
+        }
+
+        .page-header h2 {
+            font-size: 30px;
+        }
+
+        .notification-item {
+            padding: 20px;
+        }
+
+        .application-details {
+            grid-template-columns: 1fr;
+            margin-left: 0;
+        }
+
+        .notification-time {
+            margin-left: 0;
+        }
+
+        .notification-header {
+            gap: 11px;
+        }
+
+    }
+
 </style>
 
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
-  <div class="block no-padding gray">
+
+<!-- =========================================
+     HERO SECTION
+========================================= -->
+
+
+<!-- =========================================
+     NOTIFICATIONS
+========================================= -->
+
+<section class="notifications-section">
+
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="inner2">
-            <div class="inner-title2">
-              
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div class="page-badge">
+                🔔 Application Updates
             </div>
-          </div>
+
+            <h2>
+                User Notifications
+            </h2>
+
+            <p>
+                View important updates and messages related to your applications.
+            </p>
+
         </div>
-      </div>
+
+
+        {% if notifications %}
+
+            <div class="notification-list">
+
+                {% for notification in notifications %}
+
+                <!-- =================================
+                     NOTIFICATION ITEM
+                ================================== -->
+
+                <div class="notification-item">
+
+                    <div class="notification-header">
+
+                        <div class="notification-icon">
+                            🔔
+                        </div>
+
+                        <div class="notification-content">
+
+                            <p class="notification-message">
+                                {{ notification.message }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- APPLICATION DETAILS -->
+
+                    <div class="application-details">
+
+                        <div class="detail-box">
+
+                            <span class="detail-label">
+                                Application
+                            </span>
+
+                            <span class="detail-value">
+                                {{ notification.application.job.jobtitle }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span class="detail-label">
+                                Company
+                            </span>
+
+                            <span class="detail-value">
+                                {{ notification.application.job.company.name }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTIFICATION TIME -->
+
+                    <div class="notification-time">
+
+                        🕐
+                        {{ notification.timezone }}
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <!-- =================================
+                 EMPTY STATE
+            ================================== -->
+
+            <div class="empty-box">
+
+                <div class="empty-icon">
+                    🔔
+                </div>
+
+                <h3>
+                    No Notifications Yet
+                </h3>
+
+                <p>
+                    You don't have any notifications at the moment.
+                    We'll show important application updates here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
     </div>
-  </div>
+
 </section>
 
-<div class="container notification-container">
-    <h2>User Notifications</h2>
-    {% if notifications %}
-        <ul class="list-unstyled">
-            {% for notification in notifications %}
-                <li class="notification-item">
-                    <strong>{{ notification.message }}</strong>
-                    <p><strong>Application:</strong> {{ notification.application.job.jobtitle }}</p>
-                    <p><strong>Company:</strong> {{ notification.application.job.company.name }}</p>
-                    <p>{{ notification.timezone }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No notifications available.</p>
-    {% endif %}
-</div><br><br><br><br><br><br>
 {% endblock %}
+

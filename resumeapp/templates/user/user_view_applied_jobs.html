@@ -1,203 +1,424 @@
 {% extends 'user_home.html' %}
+
 {% block content %}
 
 <style>
 
-    .applied-section{
-        padding:80px 0;
-        background:#f8fafc;
-        min-height:100vh;
+    /* ================================
+       APPLIED JOBS PAGE
+    ================================= */
+
+    .applied-section {
+        padding: 65px 0 90px;
+        background: #f8fafc;
+        min-height: calc(100vh - 80px);
     }
 
-    .page-title{
-        text-align:center;
-        margin-bottom:50px;
+    /* PAGE HEADER */
+
+    .page-title {
+        text-align: center;
+        margin-bottom: 42px;
     }
 
-    .page-title h2{
-        font-size:42px;
-        font-weight:700;
-        color:#1e293b;
-        margin-bottom:10px;
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 16px;
+        background: #eff6ff;
+        color: #2563eb;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .3px;
+        margin-bottom: 14px;
     }
 
-    .page-title p{
-        color:#64748b;
-        font-size:16px;
+    .page-title h2 {
+        font-size: 36px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 9px;
     }
 
-    .job-card{
-        background:#ffffff;
-        border-radius:20px;
-        padding:35px;
-        margin-bottom:30px;
-        box-shadow:0 10px 30px rgba(0,0,0,0.06);
-        transition:0.3s ease;
-        border:1px solid #e2e8f0;
+    .page-title p {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0;
     }
 
-    .job-card:hover{
-        transform:translateY(-5px);
-        box-shadow:0 15px 35px rgba(0,0,0,0.1);
+
+    /* APPLICATION CARD */
+
+    .job-card {
+        position: relative;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+        transition: .25s ease;
+        overflow: hidden;
     }
 
-    .job-title{
-        font-size:28px;
-        font-weight:700;
-        color:#0f172a;
-        margin-bottom:15px;
+    .job-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: #2563eb;
     }
 
-    .company-name{
-        color:#2563eb;
-        font-weight:600;
-        font-size:17px;
+    .job-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.09);
+        border-color: #dbeafe;
     }
 
-    .job-details{
-        margin-top:18px;
+
+    /* JOB HEADER */
+
+    .job-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 18px;
     }
 
-    .job-details p{
-        margin-bottom:10px;
-        color:#475569;
-        font-size:15px;
+    .company-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 13px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 800;
     }
 
-    .job-details span{
-        font-weight:600;
-        color:#0f172a;
+    .job-title {
+        font-size: 23px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 5px;
+        line-height: 1.3;
     }
 
-    .location-box{
-        display:flex;
-        align-items:center;
-        color:#334155;
-        font-weight:500;
-        margin-top:15px;
-        font-size:15px;
+    .company-name {
+        color: #2563eb;
+        font-size: 14px;
+        font-weight: 700;
     }
 
-    .location-box i{
-        color:#22c55e;
-        margin-right:8px;
-        font-size:18px;
+
+    /* JOB DETAILS */
+
+    .job-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 20px;
     }
 
-    .job-type{
-        display:inline-block;
-        background:#dcfce7;
-        color:#15803d;
-        padding:8px 18px;
-        border-radius:30px;
-        font-size:14px;
-        font-weight:600;
-        margin-top:20px;
+    .detail-item {
+        padding: 13px 15px;
+        background: #f8fafc;
+        border: 1px solid #eef2f7;
+        border-radius: 11px;
     }
 
-    .status-btn{
-        padding:10px 22px;
-        border:none;
-        border-radius:10px;
-        color:white;
-        font-weight:600;
-        font-size:14px;
-        text-transform:capitalize;
-        cursor:default;
+    .detail-label {
+        display: block;
+        color: #94a3b8;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        margin-bottom: 4px;
     }
 
-    .pending-btn{
-        background:#f59e0b;
+    .detail-value {
+        color: #334155;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.5;
     }
 
-    .shortlisted-btn{
-        background:#16a34a;
+
+    /* LOCATION */
+
+    .location-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 600;
+        margin-top: 16px;
     }
 
-    .rejected-btn{
-        background:#dc2626;
+    .location-icon {
+        color: #16a34a;
+        font-size: 16px;
     }
 
-    .cancel-btn{
-        background:#ef4444;
-        color:white;
-        border:none;
-        padding:12px 24px;
-        border-radius:10px;
-        font-weight:600;
-        transition:0.3s ease;
+
+    /* JOB TYPE */
+
+    .job-type {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 15px;
+        padding: 7px 13px;
+        background: #f0fdf4;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: capitalize;
     }
 
-    .cancel-btn:hover{
-        background:#dc2626;
+
+    /* STATUS AREA */
+
+    .status-area {
+        height: 100%;
+        min-height: 190px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        padding-left: 25px;
+        border-left: 1px solid #e2e8f0;
     }
 
-    .action-box{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin-top:20px;
+    .status-label {
+        color: #94a3b8;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .7px;
+        margin-bottom: 10px;
     }
 
-    .empty-box{
-        background:white;
-        padding:60px;
-        border-radius:20px;
-        text-align:center;
-        box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    .status-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 9px 17px;
+        border: none;
+        border-radius: 50px;
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 12px;
+        text-transform: capitalize;
+        cursor: default;
     }
 
-    .empty-box h3{
-        color:#0f172a;
-        font-weight:700;
-        margin-bottom:10px;
+    .pending-btn {
+        background: #f59e0b;
     }
 
-    .empty-box p{
-        color:#64748b;
+    .shortlisted-btn {
+        background: #16a34a;
+    }
+
+    .rejected-btn {
+        background: #dc2626;
+    }
+
+
+    /* STATUS DOT */
+
+    .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.9);
+    }
+
+
+    /* CANCEL */
+
+    .cancel-form {
+        margin-top: 14px;
+    }
+
+    .cancel-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 9px 15px;
+        border: 1px solid #fecaca;
+        border-radius: 9px;
+        background: #fff1f2;
+        color: #dc2626;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: .2s ease;
+    }
+
+    .cancel-btn:hover {
+        background: #fee2e2;
+        border-color: #fca5a5;
+    }
+
+
+    /* EMPTY STATE */
+
+    .empty-box {
+        background: #ffffff;
+        padding: 65px 30px;
+        border: 1px solid #e2e8f0;
+        border-radius: 22px;
+        text-align: center;
+        box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+    }
+
+    .empty-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 18px;
+        border-radius: 20px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+
+    .empty-box h3 {
+        color: #0f172a;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .empty-box p {
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 22px;
+    }
+
+    .browse-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 20px;
+        border-radius: 10px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: .2s ease;
+    }
+
+    .browse-btn:hover {
+        background: #1d4ed8;
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+
+    /* HERO */
+
+    .applied-hero {
+        height: 280px;
+        background-size: cover;
+        background-position: center;
+    }
+
+
+    /* RESPONSIVE */
+
+    @media (max-width: 991px) {
+
+        .status-area {
+            min-height: auto;
+            border-left: none;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 25px;
+            padding: 22px 0 0;
+            align-items: flex-start;
+        }
+
+    }
+
+
+    @media (max-width: 767px) {
+
+        .applied-section {
+            padding: 45px 15px 70px;
+        }
+
+        .page-title h2 {
+            font-size: 30px;
+        }
+
+        .page-title {
+            margin-bottom: 30px;
+        }
+
+        .job-card {
+            padding: 22px;
+        }
+
+        .job-details {
+            grid-template-columns: 1fr;
+        }
+
+        .job-title {
+            font-size: 20px;
+        }
+
+        .applied-hero {
+            height: 230px;
+        }
+
     }
 
 </style>
 
 
-<!-- HERO SECTION -->
-
-<section class="section-hero overlay inner-page bg-image"
-         style="background-image: url('/static/images/hero_1.jpg');
-                height:300px;
-                background-size:cover;
-                background-position:center;">
-
-    <div class="container h-100 d-flex align-items-center justify-content-center">
-
-        <div class="text-center">
-
-            <h1 style="color:white; font-size:50px; font-weight:800;">
-                Applied Jobs
-            </h1>
-
-            <p style="color:white; font-size:18px;">
-                Track all your job applications in one place
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
+<!-- ================================
+     HERO
+================================= -->
 
 
+<!-- ================================
+     APPLICATIONS
+================================= -->
 
 <section class="applied-section">
 
     <div class="container">
 
+        <!-- PAGE TITLE -->
+
         <div class="page-title">
 
-            <h2>Your Applications</h2>
+            <div class="page-badge">
+                📋 My Applications
+            </div>
+
+            <h2>
+                Your Applications
+            </h2>
 
             <p>
-                View your application status and manage your applied jobs
+                Review the jobs you have applied for and monitor your application status.
             </p>
 
         </div>
@@ -211,41 +432,115 @@
 
                 <div class="row align-items-center">
 
-                    <!-- LEFT SIDE -->
+                    <!-- ================================
+                         JOB INFORMATION
+                    ================================= -->
 
                     <div class="col-lg-8">
 
-                        <h3 class="job-title">
-                            {{ i.job.title }}
-                        </h3>
+                        <div class="job-header">
 
-                        <div class="company-name">
-                            {{ i.job.company.name }}
+                            <div class="company-icon">
+                                💼
+                            </div>
+
+                            <div>
+
+                                <!-- IMPORTANT:
+                                     Model field is jobtitle, not title -->
+
+                                <h3 class="job-title">
+                                    {{ i.job.jobtitle }}
+                                </h3>
+
+                                <div class="company-name">
+                                    {{ i.job.company.name }}
+                                </div>
+
+                            </div>
+
                         </div>
+
 
                         <div class="job-details">
 
-                            <p>
-                                <span>Skills Required:</span>
-                                {{ i.job.jobskills }}
-                            </p>
+                            <!-- EXPERIENCE -->
 
-                            <p>
-                                <span>Experience:</span>
-                                {{ i.job.jobexp1 }} -
-                                {{ i.job.jobexp2 }} Years
-                            </p>
+                            <div class="detail-item">
 
-                            <p>
-                                <span>Apply Before:</span>
-                                {{ i.job.jobdate2 }}
-                            </p>
+                                <span class="detail-label">
+                                    Experience
+                                </span>
+
+                                <div class="detail-value">
+                                    {{ i.job.jobexp1 }} -
+                                    {{ i.job.jobexp2 }} Years
+                                </div>
+
+                            </div>
+
+
+                            <!-- APPLY BEFORE -->
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Apply Before
+                                </span>
+
+                                <div class="detail-value">
+                                    {{ i.job.jobdate2 }}
+                                </div>
+
+                            </div>
+
+
+                            <!-- SKILLS -->
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Skills Required
+                                </span>
+
+                                <div class="detail-value">
+                                    {{ i.job.jobskills }}
+                                </div>
+
+                            </div>
+
+
+                            <!-- LOCATION -->
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Location
+                                </span>
+
+                                <div class="detail-value">
+                                    {{ i.job.joblocation }}
+                                </div>
+
+                            </div>
 
                         </div>
+
+
+                        <!-- LOCATION -->
 
                         <div class="location-box">
-                            📍 {{ i.job.joblocation }}
+
+                            <span class="location-icon">
+                                📍
+                            </span>
+
+                            {{ i.job.joblocation }}
+
                         </div>
+
+
+                        <!-- JOB TYPE -->
 
                         <div class="job-type">
                             {{ i.job.jobtype }}
@@ -254,51 +549,92 @@
                     </div>
 
 
-                    <!-- RIGHT SIDE -->
+                    <!-- ================================
+                         APPLICATION STATUS
+                    ================================= -->
 
-                    <div class="col-lg-4 text-lg-right mt-4 mt-lg-0">
+                    <div class="col-lg-4">
 
-                        {% if i.status == 'applied' %}
+                        <div class="status-area">
 
-                            <div class="mb-3">
-                                <button class="status-btn pending-btn">
-                                    Applied
-                                </button>
+                            <div class="status-label">
+                                Application Status
                             </div>
 
-                            <form method="post"
-                                  action="/user_cancel_application/{{ i.id }}/">
 
-                                {% csrf_token %}
+                            {% if i.status == 'applied' %}
 
-                                <button type="submit"
-                                        class="cancel-btn">
+                                <button
+                                    type="button"
+                                    class="status-btn pending-btn">
 
-                                    Cancel Application
+                                    <span class="status-dot"></span>
+
+                                    Applied
 
                                 </button>
 
-                            </form>
 
-                        {% elif i.status == 'shortlisted' %}
+                                <form
+                                    method="post"
+                                    action="/user_cancel_application/{{ i.id }}/"
+                                    class="cancel-form">
 
-                            <button class="status-btn shortlisted-btn">
-                                Shortlisted
-                            </button>
+                                    {% csrf_token %}
 
-                        {% elif i.status == 'rejected' %}
+                                    <button
+                                        type="submit"
+                                        class="cancel-btn"
+                                        onclick="return confirm('Are you sure you want to cancel this application?');">
 
-                            <button class="status-btn rejected-btn">
-                                Rejected
-                            </button>
+                                        Cancel Application
 
-                        {% else %}
+                                    </button>
 
-                            <button class="status-btn pending-btn">
-                                {{ i.status }}
-                            </button>
+                                </form>
 
-                        {% endif %}
+
+                            {% elif i.status == 'shortlisted' %}
+
+                                <button
+                                    type="button"
+                                    class="status-btn shortlisted-btn">
+
+                                    <span class="status-dot"></span>
+
+                                    Shortlisted
+
+                                </button>
+
+
+                            {% elif i.status == 'rejected' %}
+
+                                <button
+                                    type="button"
+                                    class="status-btn rejected-btn">
+
+                                    <span class="status-dot"></span>
+
+                                    Rejected
+
+                                </button>
+
+
+                            {% else %}
+
+                                <button
+                                    type="button"
+                                    class="status-btn pending-btn">
+
+                                    <span class="status-dot"></span>
+
+                                    {{ i.status }}
+
+                                </button>
+
+                            {% endif %}
+
+                        </div>
 
                     </div>
 
@@ -308,24 +644,40 @@
 
             {% endfor %}
 
+
         {% else %}
+
+
+            <!-- ================================
+                 EMPTY STATE
+            ================================= -->
 
             <div class="empty-box">
 
-                <h3>No Applied Jobs Yet</h3>
+                <div class="empty-icon">
+                    📄
+                </div>
+
+                <h3>
+                    No Applied Jobs Yet
+                </h3>
 
                 <p>
-                    You haven’t applied to any jobs yet.
+                    You haven't applied to any jobs yet.
+                    Start exploring available opportunities.
                 </p>
 
-                <a href="/user_view_jobs/"
-                   class="btn btn-primary mt-3">
+                <a
+                    href="/user_view_jobs/"
+                    class="browse-btn">
 
+                    🔎
                     Browse Jobs
 
                 </a>
 
             </div>
+
 
         {% endif %}
 
@@ -334,3 +686,4 @@
 </section>
 
 {% endblock %}
+

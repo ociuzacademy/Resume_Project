@@ -1,733 +1,2157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>JobBoard &mdash; Website Template by Colorlib</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="Free-Template.co" />
-    <link rel="shortcut icon" href="/static/ftco-32x32.png">
 
-    <link rel="stylesheet" href="/static/css/custom-bs.css">
-    <link rel="stylesheet" href="/static/css/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="/static/fonts/icomoon/style.css">
-    <link rel="stylesheet" href="/static/fonts/line-icons/style.css">
-    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/static/css/animate.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>ResumeAI | User Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
-      /* ── Navbar overrides ── */
-      .site-navbar {
-        background: #ffffff;
-        border-bottom: 1px solid #e5e7eb;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        margin-top: 0 !important;
-        padding: 0 1.5rem;
-        height: 66px;
-        display: flex;
-        align-items: center;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      .site-navbar .container-fluid {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        padding: 0;
-      }
+        html {
+            scroll-behavior: smooth;
+        }
 
-      /* Logo */
-      .site-logo a {
-        font-size: 20px;
-        font-weight: 700;
-        color: #111 !important;
-        text-decoration: none;
-        letter-spacing: -0.5px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f6f8fc;
+            color: #182230;
+            line-height: 1.6;
+        }
 
-      .site-logo a::before {
-        content: '';
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: #2563eb;
-        display: inline-block;
-        flex-shrink: 0;
-      }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-      /* Nav links */
-      .site-menu {
-        display: flex !important;
-        align-items: center;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        gap: 2px;
-      }
+        button {
+            font-family: inherit;
+        }
 
-      .site-menu > li {
-        list-style: none;
-      }
+        /* =========================
+           NAVBAR
+        ========================= */
 
-      .site-menu .nav-link,
-      .site-menu > li > a {
-        font-size: 14px;
-        font-weight: 500;
-        color: #6b7280 !important;
-        text-decoration: none;
-        padding: 6px 13px;
-        border-radius: 7px;
-        transition: all 0.15s;
-        display: block;
-      }
+        .navbar {
+            width: 100%;
+            height: 76px;
+            background: #ffffff;
+            border-bottom: 1px solid #e9edf3;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-      .site-menu .nav-link:hover,
-      .site-menu > li > a:hover {
-        color: #111 !important;
-        background: #f3f4f6;
-      }
+        .nav-container {
+            width: min(1200px, 92%);
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-      /* Dropdown toggle */
-      .site-menu .dropdown-toggle {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 800;
+            color: #111827;
+        }
 
-      .site-menu .dropdown-toggle::after {
-        border-top-color: #9ca3af;
-      }
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #5b5bf7, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 7px 20px rgba(91, 91, 247, 0.25);
+        }
 
-      /* Dropdown menu */
-      .site-menu .dropdown-menu {
-        border: 0.5px solid #e5e7eb;
-        border-radius: 10px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.09);
-        padding: 6px;
-        min-width: 185px;
-        margin-top: 6px;
-      }
+        .logo span {
+            color: #5b5bf7;
+        }
 
-      .site-menu .dropdown-item {
-        font-size: 13.5px;
-        font-weight: 500;
-        color: #374151;
-        padding: 8px 12px;
-        border-radius: 6px;
-        transition: background 0.12s;
-      }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
 
-      .site-menu .dropdown-item:hover {
-        background: #f3f4f6;
-        color: #111;
-      }
+        .nav-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #596273;
+            transition: 0.25s;
+        }
 
-      /* Nav divider */
-      .nav-divider {
-        width: 1px;
-        height: 20px;
-        background: #e5e7eb;
-        margin: 0 6px;
-        flex-shrink: 0;
-      }
+        .nav-link:hover {
+            color: #5b5bf7;
+        }
 
-      /* Bell / notification */
-      .nav-bell {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #6b7280;
-        text-decoration: none;
-        transition: all 0.15s;
-        font-size: 17px;
-        position: relative;
-      }
+        .nav-link.active {
+            color: #5b5bf7;
+        }
 
-      .nav-bell:hover {
-        background: #f3f4f6;
-        color: #111;
-      }
+        /* =========================
+   NAVIGATION DROPDOWN
+========================= */
 
-      /* Right-side actions */
-      .right-cta-menu {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 0;
-      }
+        .dropdown {
+            position: relative;
+        }
 
-      .right-cta-menu .ml-auto {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 0 !important;
-      }
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            user-select: none;
+        }
 
-      /* Upload resume button */
-      .btn-upload {
-        font-size: 13px;
-        font-weight: 600;
-        color: #2563eb !important;
-        background: #eff6ff;
-        border: 1px solid #bfdbfe !important;
-        border-radius: 7px !important;
-        padding: 6px 14px !important;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        transition: all 0.15s;
-        white-space: nowrap;
-      }
+        .dropdown-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
 
-      .btn-upload:hover {
-        background: #dbeafe;
-        color: #1d4ed8 !important;
-      }
+        .dropdown.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
 
-      /* Profile chip */
-      .profile-icon {
-        display: inline-flex !important;
-        align-items: center;
-        gap: 7px;
-        padding: 4px 10px 4px 4px !important;
-        border-radius: 8px;
-        text-decoration: none !important;
-        transition: background 0.15s;
-        width: auto !important;
-        height: auto !important;
-        overflow: visible !important;
-      }
+        .dropdown-menu {
+            position: absolute;
+            top: 45px;
+            left: 0;
+            min-width: 200px;
 
-      .profile-icon:hover {
-        background: #f3f4f6;
-      }
+            background: #ffffff;
+            border: 1px solid #e7eaf0;
+            border-radius: 12px;
 
-      .profile-icon img {
-        width: 30px !important;
-        height: 30px !important;
-        border-radius: 50% !important;
-        object-fit: cover;
-        flex-shrink: 0;
-      }
+            box-shadow: 0 15px 40px rgba(20, 30, 50, 0.14);
 
-      .profile-icon span {
-        font-size: 13.5px;
-        font-weight: 500;
-        color: #374151;
-        white-space: nowrap;
-      }
+            padding: 8px;
 
-      /* Logout button */
-      .btn-logout {
-        font-size: 13px !important;
-        font-weight: 600 !important;
-        color: #fff !important;
-        background: #2563eb !important;
-        border: none !important;
-        border-radius: 7px !important;
-        padding: 7px 16px !important;
-        text-decoration: none;
-        transition: background 0.15s;
-        white-space: nowrap;
-      }
+            display: none;
+            z-index: 2000;
+        }
 
-      .btn-logout:hover {
-        background: #1d4ed8 !important;
-        color: #fff !important;
-      }
+        .dropdown.open .dropdown-menu {
+            display: block;
+        }
 
-      /* Mobile toggle */
-      .site-menu-toggle {
-        color: #374151;
-        text-decoration: none;
-      }
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            width: 100%;
+            padding: 11px 12px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+            font-weight: 600;
+            color: #4b5563;
+
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item i {
+            width: 18px;
+            text-align: center;
+            color: #5b5bf7;
+        }
+
+        .dropdown-item:hover {
+            background: #f3f4ff;
+            color: #5b5bf7;
+        }
+
+        /* Mobile */
+        @media (max-width: 800px) {
+            .dropdown-menu {
+                position: static;
+                margin-top: 8px;
+                width: 100%;
+                box-shadow: none;
+            }
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .notification {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #e7eaf0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            color: #5d6675;
+            transition: 0.25s;
+        }
+
+        .notification:hover {
+            background: #f3f4ff;
+            color: #5b5bf7;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 4px;
+            border-radius: 50px;
+            background: #ef4444;
+            color: white;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .upload-btn {
+            padding: 10px 17px;
+            border-radius: 9px;
+            background: #5b5bf7;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+        }
+
+        .upload-btn:hover {
+            background: #4949dc;
+            transform: translateY(-1px);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding-left: 5px;
+        }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #eeeeff;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #202938;
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .logout-link {
+            color: #ef4444;
+            font-size: 13px;
+            margin-left: 4px;
+        }
+
+        .logout-link:hover {
+            color: #dc2626;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            padding: 70px 0 55px;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(91, 91, 247, 0.08), transparent 30%),
+                radial-gradient(circle at 90% 30%, rgba(124, 58, 237, 0.07), transparent 28%),
+                #ffffff;
+        }
+
+        .hero-container {
+            width: min(1200px, 92%);
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border-radius: 50px;
+            background: #f0f0ff;
+            color: #5b5bf7;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 18px;
+        }
+
+        .hero-title {
+            font-size: clamp(38px, 5vw, 62px);
+            line-height: 1.08;
+            letter-spacing: -2px;
+            color: #111827;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero-title span {
+            color: #5b5bf7;
+        }
+
+        .hero-text {
+            max-width: 650px;
+            color: #687386;
+            font-size: 16px;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+            background: #5b5bf7;
+            color: white;
+            padding: 13px 21px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+        }
+
+        .primary-btn:hover {
+            background: #4949dc;
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background: white;
+            color: #374151;
+            border: 1px solid #dfe4ec;
+            padding: 12px 21px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+        }
+
+        .secondary-btn:hover {
+            border-color: #5b5bf7;
+            color: #5b5bf7;
+        }
+
+        /* AI CARD */
+
+        .ai-card {
+            background: #ffffff;
+            border: 1px solid #e7eaf1;
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 20px 55px rgba(30, 40, 70, 0.09);
+        }
+
+        .ai-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .ai-title-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 12px;
+            background: #f0f0ff;
+            color: #5b5bf7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .ai-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #1f2937;
+        }
+
+        .ai-subtitle {
+            font-size: 11px;
+            color: #8a93a2;
+        }
+
+        .ai-status {
+            background: #ecfdf5;
+            color: #059669;
+            padding: 5px 9px;
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .score-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0 25px;
+        }
+
+        .score-circle {
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at center, white 58%, transparent 59%),
+                conic-gradient(#5b5bf7 var(--profile-completion, 0%), #eceef5 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 31px;
+            font-weight: 800;
+            color: #1f2937;
+        }
+
+        .score-info {
+            text-align: center;
+        }
+
+        .score-heading {
+            font-size: 17px;
+            font-weight: 800;
+            color: #202938;
+            margin-bottom: 5px;
+        }
+
+        .score-description {
+            color: #7a8494;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .ai-bottom {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .ai-mini {
+            background: #f8f9fc;
+            padding: 13px;
+            border-radius: 10px;
+        }
+
+        .ai-mini-label {
+            display: block;
+            color: #8992a1;
+            font-size: 10px;
+            margin-bottom: 3px;
+        }
+
+        .ai-mini-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: #283243;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-container {
+            width: min(1200px, 92%);
+            margin: auto;
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 28px;
+        }
+
+        .section-label {
+            color: #5b5bf7;
+            text-transform: uppercase;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            margin-bottom: 7px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #172033;
+            font-weight: 800;
+        }
+
+        .section-description {
+            color: #7b8595;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           QUICK ACTIONS
+        ========================= */
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 17px;
+        }
+
+        .quick-card {
+            background: white;
+            border: 1px solid #e9edf3;
+            border-radius: 14px;
+            padding: 23px;
+            transition: 0.25s;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-4px);
+            border-color: #d8d8ff;
+            box-shadow: 0 15px 35px rgba(30, 40, 70, 0.07);
+        }
+
+        .quick-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 11px;
+            background: #f1f2ff;
+            color: #5b5bf7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .quick-number {
+            display: block;
+            font-size: 26px;
+            font-weight: 800;
+            color: #172033;
+        }
+
+        .quick-label {
+            color: #7d8796;
+            font-size: 11px;
+        }
+
+        /* =========================
+           PROFILE
+        ========================= */
+
+        .profile-card {
+            background: white;
+            border: 1px solid #e7ebf2;
+            border-radius: 18px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-large-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f1f2ff;
+        }
+
+        .profile-info h3 {
+            font-size: 19px;
+            color: #1d2736;
+            margin-bottom: 4px;
+        }
+
+        .profile-info p {
+            color: #8992a0;
+            font-size: 12px;
+        }
+
+        .profile-edit {
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #5b5bf7;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .profile-progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .profile-progress-header span {
+            font-size: 12px;
+            color: #6c7686;
+            font-weight: 600;
+        }
+
+        .profile-progress-header strong {
+            color: #5b5bf7;
+            font-size: 17px;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 9px;
+            border-radius: 50px;
+            background: #edf0f5;
+            overflow: hidden;
+        }
+
+        .resume-progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #5b5bf7, #7c3aed);
+            border-radius: 50px;
+            transition: width 0.5s ease;
+        }
+
+        .profile-hint {
+            font-size: 11px;
+            color: #8992a0;
+            margin-top: 10px;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features-section {
+            background: #ffffff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature-card {
+            border: 1px solid #e8ebf1;
+            border-radius: 16px;
+            padding: 27px;
+            background: #ffffff;
+            transition: 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(25, 35, 60, 0.07);
+        }
+
+        .feature-icon {
+            width: 47px;
+            height: 47px;
+            border-radius: 13px;
+            background: #f2f2ff;
+            color: #5b5bf7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 17px;
+        }
+
+        .feature-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #202938;
+            margin-bottom: 7px;
+        }
+
+        .feature-text {
+            font-size: 12px;
+            color: #7c8695;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           HOW IT WORKS
+        ========================= */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .step {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid #e8ebf1;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .step-number {
+            width: 34px;
+            height: 34px;
+            background: #5b5bf7;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 17px;
+        }
+
+        .step h3 {
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: #202938;
+        }
+
+        .step p {
+            color: #7b8594;
+            font-size: 12px;
+        }
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            margin: 20px 0 70px;
+            border-radius: 22px;
+            padding: 50px;
+            background: linear-gradient(135deg, #5555ed, #7138c8);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cta::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            right: -70px;
+            top: -90px;
+        }
+
+        .cta h2 {
+            font-size: 27px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta p {
+            font-size: 12px;
+            opacity: 0.86;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn {
+            background: white;
+            color: #5555ed;
+            padding: 13px 20px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-btn:hover {
+            background: #f5f5ff;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            background: #111827;
+            color: white;
+            padding: 50px 0 25px;
+        }
+
+        .footer-container {
+            width: min(1200px, 92%);
+            margin: auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .footer-logo span {
+            color: #8b8bff;
+        }
+
+        .footer-description {
+            color: #9ca5b5;
+            font-size: 11px;
+            max-width: 300px;
+            line-height: 1.8;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .footer-links a {
+            color: #9ca5b5;
+            font-size: 11px;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #788294;
+            font-size: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-links a {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #2b3444;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .social-links a:hover {
+            background: #5b5bf7;
+            border-color: #5b5bf7;
+            color: white;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1050px) {
+
+            .nav-menu {
+                gap: 17px;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-text {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .quick-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .profile-card {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-top {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            .nav-menu {
+                display: none;
+            }
+
+            .upload-btn {
+                display: none;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .hero {
+                padding: 50px 0;
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .cta {
+                flex-direction: column;
+                text-align: center;
+                padding: 35px 25px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-left {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ai-bottom {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 34px;
+                letter-spacing: -1px;
+            }
+        }
     </style>
-  </head>
-  <body id="top">
+</head>
 
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
+<body data-profile-completion="{{ profile_completion|default:0 }}">
 
-  <div class="site-wrap">
 
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
+    <!-- =========================================================
+     NAVBAR
+========================================================= -->
 
-    <!-- NAVBAR -->
-    <header class="site-navbar">
-      <div class="container-fluid">
+    <nav class="navbar">
 
-        <!-- Logo -->
-        <div class="site-logo col-auto mr-4">
-          <a href="{% url 'user_home' %}">JobBoard</a>
-        </div>
+        <div class="nav-container">
 
-        <!-- Nav links (desktop) -->
-        <nav class="mx-auto site-navigation">
-          <ul class="site-menu js-clone-nav d-none d-xl-flex ml-0 pl-0">
+            <a href="{% url 'user_home' %}" class="logo">
 
-            <li>
-              <a href="{% url 'user_home' %}" class="nav-link">Home</a>
-            </li>
+                <div class="logo-icon">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
 
-            <li>
-              <a href="{% url 'user_view_jobs' %}" class="nav-link">Jobs</a>
-            </li>
+                Resume<span>AI</span>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle"
-                 href="#"
-                 id="navbarDropdownMenuLink"
-                 role="button"
-                 data-toggle="dropdown"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                More
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'user_view_applied_jobs' %}">
-                  <span class="icon-briefcase mr-2" style="font-size:13px"></span>Applied Jobs
+            </a>
+
+
+            <div class="nav-menu">
+
+                <a href="{% url 'user_home' %}" class="nav-link active">
+                    Home
                 </a>
-                <a class="dropdown-item" href="{% url 'user_view_resume' %}">
-                  <span class="icon-file-text mr-2" style="font-size:13px"></span>View Resume
+
+
+                <a href="{% url 'user_view_jobs' %}" class="nav-link">
+                    Jobs
                 </a>
-              </div>
-            </li>
 
-            <div class="nav-divider"></div>
 
-            <li class="nav-item">
-              <a class="nav-bell" href="{% url 'user_view_notification' %}" title="Notifications">
-                <span class="icon-bell"></span>
-              </a>
-            </li>
+                <div class="dropdown">
 
-          </ul>
-        </nav>
+                    <div class="dropdown">
 
-        <!-- Right side -->
-        <div class="right-cta-menu d-flex align-items-center col-auto ml-auto">
-          <div class="ml-auto">
+                        <div class="nav-link dropdown-toggle" id="moreDropdown" role="button" aria-expanded="false">
 
-            <a href="{% url 'user_uploadresume' %}" class="btn-upload d-none d-lg-inline-flex">
-              <span class="icon-add" style="font-size:13px"></span> Upload Resume
-            </a>
+                            More
 
-            <a class="profile-icon" href="{% url 'user_viewprofile' %}">
-              <img src="/static/images/profile-icon.jpeg" alt="Profile photo">
-              <span>{{request.session.name}}</span>
-            </a>
+                            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
 
-            <a href="{% url 'logout' %}" class="btn-logout d-none d-lg-inline-block">Log Out</a>
+                        </div>
 
-            <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none ml-2">
-              <span class="icon-menu h3 m-0 p-0"></span>
-            </a>
+                        <div class="dropdown-menu" id="moreDropdownMenu">
 
-          </div>
+                            <a href="{% url 'user_view_applied_jobs' %}" class="dropdown-item">
+
+                                <i class="fa-solid fa-briefcase"></i>
+
+                                <span>Applied Jobs</span>
+
+                            </a>
+
+
+                            <a href="{% url 'user_view_resume' %}" class="dropdown-item">
+
+                                <i class="fa-solid fa-file"></i>
+
+                                <span>View Resume</span>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="nav-right">
+
+                <a href="{% url 'user_view_notification' %}" class="notification">
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    {% if notification_count > 0 %}
+
+                    <span class="notification-badge">
+                        {{ notification_count }}
+                    </span>
+
+                    {% endif %}
+
+                </a>
+
+
+                <a href="{% url 'user_uploadresume' %}" class="upload-btn">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    Upload Resume
+
+                </a>
+
+
+                <div class="user-profile">
+
+                    {% if user.profile_pic %}
+
+                    <img src="{{ user.profile_pic.url }}" class="user-avatar" alt="Profile">
+
+                    {% else %}
+
+                    <img src="/static/images/profile-icon.jpeg" class="user-avatar" alt="Profile">
+
+                    {% endif %}
+
+
+                    <span class="user-name">
+
+                        {{ user.name }}
+
+                    </span>
+
+
+                    <a href="{% url 'logout' %}" class="logout-link" title="Logout">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
-      </div>
-    </header>
+    </nav>
 
-    <!-- HOME -->
     {% block content %}
-    <section class="home-section section-hero overlay bg-image" style="background-image: url('/static/images/hero_1.jpg');" id="home-section">
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-md-12">
-            <div class="mb-5 text-center">
-              <h1 class="text-white font-weight-bold">The Easiest Way To Get Your Dream Job</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate est, consequuntur perferendis.</p>
+
+    <!-- =========================================================
+     HERO
+========================================================= -->
+
+    <section class="hero">
+
+        <div class="hero-container">
+
+
+            <div class="hero-content">
+
+                <div class="hero-label">
+
+                    <i class="fa-solid fa-sparkles"></i>
+
+                    AI-Powered Career Platform
+
+                </div>
+
+
+                <h1 class="hero-title">
+
+                    Build your career.
+                    <br>
+
+                    Find your next
+                    <span>opportunity.</span>
+
+                </h1>
+
+
+                <p class="hero-text">
+
+                    Welcome back,
+
+                    <strong>{{ user.name }}</strong>.
+
+                    Discover relevant jobs, manage your resume,
+                    track applications and build a stronger
+                    professional profile with ResumeAI.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a href="{% url 'user_view_jobs' %}" class="primary-btn">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        Explore Jobs
+
+                    </a>
+
+
+                    <a href="{% url 'user_uploadresume' %}" class="secondary-btn">
+
+                        <i class="fa-solid fa-file-arrow-up"></i>
+
+                        Update Resume
+
+                    </a>
+
+                </div>
+
             </div>
-            <form method="post" class="search-jobs-form"></form>
-          </div>
+
+
+
+            <!-- AI ANALYSIS CARD -->
+
+            <div class="ai-card">
+
+                <div class="ai-card-header">
+
+                    <div class="ai-title-area">
+
+                        <div class="ai-icon">
+
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="ai-title">
+                                AI Resume Analysis
+                            </div>
+
+                            <div class="ai-subtitle">
+                                Your career profile status
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="ai-status">
+
+                        <i class="fa-solid fa-circle" style="font-size:6px;"></i>
+
+                        Active
+
+                    </span>
+
+                </div>
+
+
+                <div class="score-wrapper">
+
+                    <div class="score-circle">
+
+                        {{ profile_completion }}%
+
+                    </div>
+
+                </div>
+
+
+                <div class="score-info">
+
+                    <div class="score-heading">
+
+                        Profile Completion
+
+                    </div>
+
+
+                    <div class="score-description">
+
+                        Complete your professional profile
+                        to improve your career opportunities.
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-bottom">
+
+                    <div class="ai-mini">
+
+                        <span class="ai-mini-label">
+                            Resumes
+                        </span>
+
+                        <span class="ai-mini-value">
+                            {{ resume_count }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="ai-mini">
+
+                        <span class="ai-mini-label">
+                            Skills
+                        </span>
+
+                        <span class="ai-mini-value">
+                            {{ skill_count }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-      </div>
-      <a href="#next" class="scroll-button smoothscroll">
-        <span class="icon-keyboard_arrow_down"></span>
-      </a>
+
     </section>
 
-    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2 text-white">JobBoard Site Stats</h2>
-            <p class="lead text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita unde officiis recusandae sequi excepturi corrupti.</p>
-          </div>
+
+
+    <!-- =========================================================
+     QUICK ACTIONS
+========================================================= -->
+
+    <section class="section">
+
+        <div class="main-container">
+
+            <div class="section-heading">
+
+                <div class="section-label">
+                    Dashboard
+                </div>
+
+                <h2 class="section-title">
+                    Your Career Overview
+                </h2>
+
+                <p class="section-description">
+                    Quickly access your career activity and application information.
+                </p>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+
+                <!-- AVAILABLE JOBS -->
+
+                <a href="{% url 'user_view_jobs' %}" class="quick-card">
+
+                    <div class="quick-icon">
+
+                        <i class="fa-solid fa-briefcase"></i>
+
+                    </div>
+
+
+                    <span class="quick-number">
+                        {{ job_count }}
+                    </span>
+
+
+                    <span class="quick-label">
+                        Available Jobs
+                    </span>
+
+                </a>
+
+
+
+                <!-- APPLIED JOBS -->
+
+                <a href="{% url 'user_view_applied_jobs' %}" class="quick-card">
+
+                    <div class="quick-icon">
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                    </div>
+
+
+                    <span class="quick-number">
+                        {{ applied_job_count }}
+                    </span>
+
+
+                    <span class="quick-label">
+                        Jobs Applied
+                    </span>
+
+                </a>
+
+
+
+                <!-- RESUMES -->
+
+                <a href="{% url 'user_view_resume' %}" class="quick-card">
+
+                    <div class="quick-icon">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                    </div>
+
+
+                    <span class="quick-number">
+                        {{ resume_count }}
+                    </span>
+
+
+                    <span class="quick-label">
+                        Uploaded Resumes
+                    </span>
+
+                </a>
+
+
+
+                <!-- NOTIFICATIONS -->
+
+                <a href="{% url 'user_view_notification' %}" class="quick-card">
+
+                    <div class="quick-icon">
+
+                        <i class="fa-solid fa-bell"></i>
+
+                    </div>
+
+
+                    <span class="quick-number">
+                        {{ notification_count }}
+                    </span>
+
+
+                    <span class="quick-label">
+                        Notifications
+                    </span>
+
+                </a>
+
+            </div>
+
         </div>
-        <div class="row pb-0 block__19738 section-counter">
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="1930">0</strong>
-            </div>
-            <span class="caption">Candidates</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="54">0</strong>
-            </div>
-            <span class="caption">Jobs Posted</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="120">0</strong>
-            </div>
-            <span class="caption">Jobs Filled</span>
-          </div>
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="550">0</strong>
-            </div>
-            <span class="caption">Companies</span>
-          </div>
-        </div>
-      </div>
+
     </section>
 
-    <section class="site-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2">43,167 Job Listed</h2>
-          </div>
+
+
+    <!-- =========================================================
+     CAREER PROFILE
+========================================================= -->
+
+    <section class="section" style="padding-top: 5px;">
+
+        <div class="main-container">
+
+            <div class="section-heading">
+
+                <div class="section-label">
+                    Your Profile
+                </div>
+
+                <h2 class="section-title">
+                    Career Profile
+                </h2>
+
+                <p class="section-description">
+                    Keep your professional information complete and up to date.
+                </p>
+
+            </div>
+
+
+            <div class="profile-card">
+
+
+                <div class="profile-left">
+
+                    {% if user.profile_pic %}
+
+                    <img src="{{ user.profile_pic.url }}" class="profile-large-avatar" alt="Profile Picture">
+
+                    {% else %}
+
+                    <img src="/static/images/profile-icon.jpeg" class="profile-large-avatar" alt="Profile Picture">
+
+                    {% endif %}
+
+
+                    <div class="profile-info">
+
+                        <h3>
+                            {{ user.name }}
+                        </h3>
+
+
+                        <p>
+                            {{ user.qualification|default:"Professional Profile" }}
+                        </p>
+
+
+                        <a href="{% url 'user_viewprofile' %}" class="profile-edit">
+
+                            Edit Profile
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="profile-progress">
+
+                    <div class="profile-progress-header">
+
+                        <span>
+                            Profile Completion
+                        </span>
+
+                        <strong>
+                            {{ profile_completion }}%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-track">
+
+                        <div class="resume-progress-bar">
+                        </div>
+
+                    </div>
+
+
+                    {% if profile_completion < 100 %} <p class="profile-hint">
+
+                        Complete your profile to present
+                        yourself better to employers.
+
+                        </p>
+
+                        {% else %}
+
+                        <p class="profile-hint">
+
+                            Your profile is complete.
+
+                        </p>
+
+                        {% endif %}
+
+                </div>
+
+            </div>
+
         </div>
 
-        <ul class="job-listings mb-5">
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo">
-              <img src="/static/images/job_logo_1.jpg" alt="Job logo" class="img-fluid">
-            </div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                <h2>Product Designer</h2>
-                <strong>Adidas</strong>
-              </div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                <span class="icon-room"></span> New York, New York
-              </div>
-              <div class="job-listing-meta">
-                <span class="badge badge-danger">Part Time</span>
-              </div>
-            </div>
-          </li>
-
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo">
-              <img src="/static/images/job_logo_2.jpg" alt="Job logo" class="img-fluid">
-            </div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                <h2>Digital Marketing Director</h2>
-                <strong>Sprint</strong>
-              </div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                <span class="icon-room"></span> Overland Park, Kansas
-              </div>
-              <div class="job-listing-meta">
-                <span class="badge badge-success">Full Time</span>
-              </div>
-            </div>
-          </li>
-
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo">
-              <img src="/static/images/job_logo_3.jpg" alt="Job logo" class="img-fluid">
-            </div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                <h2>Back-end Engineer (Python)</h2>
-                <strong>Amazon</strong>
-              </div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                <span class="icon-room"></span> Overland Park, Kansas
-              </div>
-              <div class="job-listing-meta">
-                <span class="badge badge-success">Full Time</span>
-              </div>
-            </div>
-          </li>
-
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo">
-              <img src="/static/images/job_logo_4.jpg" alt="Job logo" class="img-fluid">
-            </div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                <h2>Senior Art Director</h2>
-                <strong>Microsoft</strong>
-              </div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                <span class="icon-room"></span> Anywhere
-              </div>
-              <div class="job-listing-meta">
-                <span class="badge badge-success">Full Time</span>
-              </div>
-            </div>
-          </li>
-
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo">
-              <img src="/static/images/job_logo_5.jpg" alt="Job logo" class="img-fluid">
-            </div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                <h2>Product Designer</h2>
-                <strong>Puma</strong>
-              </div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                <span class="icon-room"></span> San Mateo, CA
-              </div>
-              <div class="job-listing-meta">
-                <span class="badge badge-success">Full Time</span>
-              </div>
-            </div>
-          </li>
-
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo">
-              <img src="/static/images/job_logo_1.jpg" alt="Job logo" class="img-fluid">
-            </div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                <h2>Product Designer</h2>
-                <strong>Adidas</strong>
-              </div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                <span class="icon-room"></span> New York, New York
-              </div>
-              <div class="job-listing-meta">
-                <span class="badge badge-danger">Part Time</span>
-              </div>
-            </div>
-          </li>
-
-          <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="job-single.html"></a>
-            <div class="job-listing-logo">
-              <img src="/static/images/job_logo_2.jpg" alt="Job logo" class="img-fluid">
-            </div>
-            <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-              <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                <h2>Digital Marketing Director</h2>
-                <strong>Sprint</strong>
-              </div>
-              <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                <span class="icon-room"></span> Overland Park, Kansas
-              </div>
-              <div class="job-listing-meta">
-                <span class="badge badge-success">Full Time</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-
-        <div class="row pagination-wrap">
-          <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
-            <span>Showing 1-7 Of 43,167 Jobs</span>
-          </div>
-          <div class="col-md-6 text-center text-md-right">
-            <div class="custom-pagination ml-auto">
-              <a href="#" class="prev">Prev</a>
-              <div class="d-inline-block">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-              </div>
-              <a href="#" class="next">Next</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <h2 class="text-white">Looking For A Job?</h2>
-            <p class="mb-0 text-white lead">Lorem ipsum dolor sit amet consectetur adipisicing elit tempora adipisci impedit.</p>
-          </div>
-          <div class="col-md-3 ml-auto">
-            <a href="#" class="btn btn-warning btn-block btn-lg">Sign Up</a>
-          </div>
+
+
+    <!-- =========================================================
+     FEATURES
+========================================================= -->
+
+    <section class="section features-section">
+
+        <div class="main-container">
+
+            <div class="section-heading">
+
+                <div class="section-label">
+                    ResumeAI
+                </div>
+
+                <h2 class="section-title">
+                    Everything You Need for Your Career
+                </h2>
+
+                <p class="section-description">
+                    Manage your job search and professional profile from one place.
+                </p>
+
+            </div>
+
+
+            <div class="features-grid">
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                    </div>
+
+                    <h3 class="feature-title">
+                        Find Relevant Jobs
+                    </h3>
+
+                    <p class="feature-text">
+
+                        Explore available job opportunities
+                        and find positions that match your
+                        qualifications and skills.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="fa-solid fa-file-circle-check"></i>
+
+                    </div>
+
+                    <h3 class="feature-title">
+                        Manage Your Resume
+                    </h3>
+
+                    <p class="feature-text">
+
+                        Upload and manage your resumes
+                        so you can use the right resume
+                        when applying for opportunities.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                    </div>
+
+                    <h3 class="feature-title">
+                        Track Applications
+                    </h3>
+
+                    <p class="feature-text">
+
+                        Keep track of the jobs you have
+                        applied for and monitor your
+                        application progress.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="fa-solid fa-user-tie"></i>
+
+                    </div>
+
+                    <h3 class="feature-title">
+                        Build Your Profile
+                    </h3>
+
+                    <p class="feature-text">
+
+                        Maintain your professional details,
+                        qualification, skills and personal
+                        information.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="fa-solid fa-bell"></i>
+
+                    </div>
+
+                    <h3 class="feature-title">
+                        Stay Updated
+                    </h3>
+
+                    <p class="feature-text">
+
+                        Receive notifications related to
+                        your applications and important
+                        career updates.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="fa-solid fa-robot"></i>
+
+                    </div>
+
+                    <h3 class="feature-title">
+                        AI-Powered Insights
+                    </h3>
+
+                    <p class="feature-text">
+
+                        Use AI-assisted career features
+                        to improve your resume and
+                        professional profile.
+
+                    </p>
+
+                </div>
+
+            </div>
+
         </div>
-      </div>
+
     </section>
 
-    <section class="site-section py-4">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-12 text-center mt-4 mb-5">
-            <div class="row justify-content-center">
-              <div class="col-md-7">
-                <h2 class="section-title mb-2">Company We've Helped</h2>
-                <p class="lead">Porro error reiciendis commodi beatae omnis similique voluptate rerum ipsam fugit mollitia ipsum facilis expedita tempora suscipit iste</p>
-              </div>
+
+
+    <!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+
+    <section class="section">
+
+        <div class="main-container">
+
+            <div class="section-heading">
+
+                <div class="section-label">
+                    Simple Process
+                </div>
+
+                <h2 class="section-title">
+                    Start Your Career Journey
+                </h2>
+
+                <p class="section-description">
+                    Follow a simple process to discover opportunities and apply.
+                </p>
+
             </div>
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_mailchimp.svg" alt="Mailchimp" class="img-fluid logo-1"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_paypal.svg" alt="PayPal" class="img-fluid logo-2"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_stripe.svg" alt="Stripe" class="img-fluid logo-3"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_visa.svg" alt="Visa" class="img-fluid logo-4"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_apple.svg" alt="Apple" class="img-fluid logo-5"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_tinder.svg" alt="Tinder" class="img-fluid logo-6"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_sony.svg" alt="Sony" class="img-fluid logo-7"></div>
-          <div class="col-6 col-lg-3 col-md-6 text-center"><img src="/static/images/logo_airbnb.svg" alt="Airbnb" class="img-fluid logo-8"></div>
+
+
+            <div class="steps">
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Build Your Profile
+                    </h3>
+
+                    <p>
+
+                        Add your personal details,
+                        qualification, skills and
+                        professional information.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Upload Your Resume
+                    </h3>
+
+                    <p>
+
+                        Upload your latest resume
+                        and keep your career documents
+                        ready for applications.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Apply for Jobs
+                    </h3>
+
+                    <p>
+
+                        Explore available opportunities
+                        and submit applications for
+                        suitable positions.
+
+                    </p>
+
+                </div>
+
+            </div>
+
         </div>
-      </div>
+
     </section>
 
-    <section class="bg-light pt-5 testimony-full">
-      <div class="owl-carousel single-carousel">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 align-self-center text-center text-lg-left">
-              <blockquote>
-                <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-                <p><cite> &mdash; Corey Woods, @Dribbble</cite></p>
-              </blockquote>
-            </div>
-            <div class="col-lg-6 align-self-end text-center text-lg-right">
-              <img src="/static/images/person_transparent_2.png" alt="Testimonial" class="img-fluid mb-0">
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 align-self-center text-center text-lg-left">
-              <blockquote>
-                <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-                <p><cite> &mdash; Chris Peters, @Google</cite></p>
-              </blockquote>
-            </div>
-            <div class="col-lg-6 align-self-end text-center text-lg-right">
-              <img src="/static/images/person_transparent.png" alt="Testimonial" class="img-fluid mb-0">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('/static/images/hero_1.jpg');">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
-            <h2 class="text-white">Get The Mobile Apps</h2>
-            <p class="mb-5 lead text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit tempora adipisci impedit.</p>
-            <p class="mb-0">
-              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-apple mr-3"></span>App Store</a>
-              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-android mr-3"></span>Play Store</a>
-            </p>
-          </div>
-          <div class="col-md-6 ml-auto align-self-end">
-            <img src="/static/images/apps.png" alt="Mobile apps" class="img-fluid">
-          </div>
-        </div>
-      </div>
-    </section>
+
+    <!-- =========================================================
+     CTA
+========================================================= -->
+
+    <div class="main-container">
+
+        <section class="cta">
+
+            <div>
+
+                <h2>
+                    Ready to find your next opportunity?
+                </h2>
+
+                <p>
+                    Explore available jobs and take the next step in your career.
+                </p>
+
+            </div>
+
+
+            <a href="{% url 'user_view_jobs' %}" class="cta-btn">
+
+                Explore Jobs
+
+                <i class="fa-solid fa-arrow-right" style="margin-left:6px;"></i>
+
+            </a>
+
+        </section>
+
+    </div>
+
     {% endblock %}
 
-    <footer class="site-footer">
-      <a href="#top" class="smoothscroll scroll-top">
-        <span class="icon-keyboard_arrow_up"></span>
-      </a>
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Search Trending</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Graphic Design</a></li>
-              <li><a href="#">Web Developers</a></li>
-              <li><a href="#">Python</a></li>
-              <li><a href="#">HTML5</a></li>
-              <li><a href="#">CSS3</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Company</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Career</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Resources</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Support</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Support</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Contact Us</h3>
-            <div class="footer-social">
-              <a href="#"><span class="icon-facebook"></span></a>
-              <a href="#"><span class="icon-twitter"></span></a>
-              <a href="#"><span class="icon-instagram"></span></a>
-              <a href="#"><span class="icon-linkedin"></span></a>
+    <!-- =========================================================
+     FOOTER
+========================================================= -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+
+            <div class="footer-top">
+
+
+                <div>
+
+                    <div class="footer-logo">
+
+                        Resume<span>AI</span>
+
+                    </div>
+
+
+                    <p class="footer-description">
+
+                        A modern AI-powered recruitment and
+                        career management platform designed
+                        to connect talented candidates with
+                        career opportunities.
+
+                    </p>
+
+                </div>
+
+
+
+                <div>
+
+                    <div class="footer-title">
+                        Platform
+                    </div>
+
+
+                    <div class="footer-links">
+
+                        <a href="{% url 'user_home' %}">
+                            Home
+                        </a>
+
+                        <a href="{% url 'user_view_jobs' %}">
+                            Find Jobs
+                        </a>
+
+                        <a href="{% url 'user_view_resume' %}">
+                            My Resume
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <div>
+
+                    <div class="footer-title">
+                        Career
+                    </div>
+
+
+                    <div class="footer-links">
+
+                        <a href="{% url 'user_view_applied_jobs' %}">
+                            Applied Jobs
+                        </a>
+
+                        <a href="{% url 'user_uploadresume' %}">
+                            Upload Resume
+                        </a>
+
+                        <a href="{% url 'user_viewprofile' %}">
+                            My Profile
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <div>
+
+                    <div class="footer-title">
+                        Account
+                    </div>
+
+
+                    <div class="footer-links">
+
+                        <a href="{% url 'user_view_notification' %}">
+                            Notifications
+                        </a>
+
+                        <a href="{% url 'user_viewprofile' %}">
+                            Profile
+                        </a>
+
+                        <a href="{% url 'logout' %}">
+                            Logout
+                        </a>
+
+                    </div>
+
+                </div>
+
             </div>
-          </div>
+
+
+
+            <div class="footer-bottom">
+
+                <div>
+
+                    © 2026 ResumeAI.
+                    All rights reserved.
+
+                </div>
+
+
+                <div class="social-links">
+
+                    <a href="#">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
-        <div class="row text-center">
-          <div class="col-12">
-            <p class="copyright"><small>
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-            </small></p>
-          </div>
-        </div>
-      </div>
+
     </footer>
 
-  </div><!-- .site-wrap -->
+    <script>
+        const profileCompletion = Number.parseFloat(document.body.dataset.profileCompletion) || 0;
+        const scoreCircle = document.querySelector('.score-circle');
+        const progressBar = document.querySelector('.resume-progress-bar');
 
-  <!-- ── SCRIPTS (correct order, no duplicates) ── -->
-  <script src="/static/js/jquery.min.js"></script>
-  <script src="/static/js/bootstrap.bundle.min.js"></script>
-  <script src="/static/js/isotope.pkgd.min.js"></script>
-  <script src="/static/js/stickyfill.min.js"></script>
-  <script src="/static/js/jquery.fancybox.min.js"></script>
-  <script src="/static/js/jquery.easing.1.3.js"></script>
-  <script src="/static/js/jquery.waypoints.min.js"></script>
-  <script src="/static/js/jquery.animateNumber.min.js"></script>
-  <script src="/static/js/owl.carousel.min.js"></script>
-  <script src="/static/js/bootstrap-select.min.js"></script>
-  <script src="/static/js/custom.js"></script>
+        if (scoreCircle) {
+            scoreCircle.style.setProperty('--profile-completion', `${profileCompletion}%`);
+        }
 
-  </body>
+        if (progressBar) {
+            progressBar.style.width = `${profileCompletion}%`;
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const dropdown = document.querySelector(".dropdown");
+            const toggle = document.querySelector(".dropdown-toggle");
+
+            if (!dropdown || !toggle) {
+                return;
+            }
+
+            toggle.addEventListener("click", function (event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                const isOpen = dropdown.classList.contains("open");
+
+                // Close all dropdowns
+                document.querySelectorAll(".dropdown").forEach(function (item) {
+                    item.classList.remove("open");
+
+                    const itemToggle = item.querySelector(".dropdown-toggle");
+
+                    if (itemToggle) {
+                        itemToggle.setAttribute("aria-expanded", "false");
+                    }
+                });
+
+                // Open current dropdown
+                if (!isOpen) {
+
+                    dropdown.classList.add("open");
+
+                    toggle.setAttribute("aria-expanded", "true");
+
+                }
+
+            });
+
+
+            // Close when clicking outside
+            document.addEventListener("click", function (event) {
+
+                if (!dropdown.contains(event.target)) {
+
+                    dropdown.classList.remove("open");
+
+                    toggle.setAttribute("aria-expanded", "false");
+
+                }
+
+            });
+
+
+            // Close after selecting a menu item
+            dropdown.querySelectorAll(".dropdown-item").forEach(function (item) {
+
+                item.addEventListener("click", function () {
+
+                    dropdown.classList.remove("open");
+
+                    toggle.setAttribute("aria-expanded", "false");
+
+                });
+
+            });
+
+        });
+    </script>
+
+</body>
+
 </html>

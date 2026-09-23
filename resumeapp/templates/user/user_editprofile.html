@@ -4,290 +4,610 @@
 
 <style>
 
-    .edit-page{
-        padding:80px 0;
-        background:#f8fafc;
-        min-height:100vh;
+    .edit-profile-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
     }
 
-    .edit-card{
-        max-width:850px;
-        margin:auto;
-        background:white;
-        border-radius:25px;
-        overflow:hidden;
-        box-shadow:0 10px 35px rgba(0,0,0,0.08);
+    .edit-profile-wrapper {
+        max-width: 900px;
+        margin: auto;
     }
 
-    .edit-header{
-        background:#0f172a;
-        padding:50px 40px;
-        text-align:center;
+    /* PAGE HEADER */
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
     }
 
-    .edit-header h2{
-        color:white;
-        font-size:38px;
-        font-weight:800;
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
     }
 
-    .edit-body{
-        padding:45px;
+    .page-header h1 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 38px;
+        font-weight: 800;
     }
 
-    .profile-preview{
-        text-align:center;
-        margin-bottom:30px;
+    .page-header p {
+        margin: 0;
+        color: #64748b;
+        font-size: 15px;
     }
 
-    .profile-preview img{
-        width:140px;
-        height:140px;
-        border-radius:50%;
-        object-fit:cover;
-        border:5px solid #dbeafe;
+    /* CARD */
+
+    .edit-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
     }
 
-    .form-group{
-        margin-bottom:22px;
+    /* CARD HEADER */
+
+    .card-header-custom {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 28px 35px;
+        border-bottom: 1px solid #e2e8f0;
     }
 
-    .form-group label{
-        display:block;
-        margin-bottom:8px;
-        font-weight:700;
-        color:#0f172a;
+    .header-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 14px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
     }
 
-    .form-control{
-        width:100%;
-        padding:14px;
-        border:1px solid #cbd5e1;
-        border-radius:12px;
-        font-size:15px;
+    .card-header-custom h2 {
+        margin: 0 0 4px;
+        color: #0f172a;
+        font-size: 20px;
+        font-weight: 800;
     }
 
-    textarea.form-control{
-        min-height:120px;
-        resize:none;
+    .card-header-custom p {
+        margin: 0;
+        color: #64748b;
+        font-size: 13px;
     }
 
-    .save-btn{
-        width:100%;
-        padding:15px;
-        background:#2563eb;
-        color:white;
-        border:none;
-        border-radius:12px;
-        font-size:16px;
-        font-weight:700;
-        transition:0.3s ease;
+    /* FORM */
+
+    .edit-body {
+        padding: 35px;
     }
 
-    .save-btn:hover{
-        background:#1d4ed8;
+    .profile-preview-section {
+        text-align: center;
+        padding: 25px;
+        margin-bottom: 30px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+    }
+
+    .profile-image-wrapper {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 15px;
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid #ffffff;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.12);
+    }
+
+    .profile-placeholder {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        font-weight: 800;
+        border: 5px solid #ffffff;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.12);
+    }
+
+    .profile-preview-section h4 {
+        margin: 0 0 5px;
+        color: #0f172a;
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+    .profile-preview-section p {
+        margin: 0;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    /* FORM GRID */
+
+    .form-section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+
+    .form-section-title h3 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .form-label span {
+        color: #ef4444;
+    }
+
+    .form-control-custom {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid #cbd5e1;
+        border-radius: 11px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 14px;
+        outline: none;
+        transition: .2s ease;
+    }
+
+    .form-control-custom:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .form-control-custom::placeholder {
+        color: #94a3b8;
+    }
+
+    textarea.form-control-custom {
+        min-height: 130px;
+        resize: vertical;
+        line-height: 1.6;
+    }
+
+    .file-input {
+        padding: 10px 12px;
+        cursor: pointer;
+    }
+
+    .form-help {
+        display: block;
+        margin-top: 6px;
+        color: #94a3b8;
+        font-size: 11px;
+    }
+
+    /* ACTIONS */
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 32px;
+        padding-top: 25px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        transition: .25s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .save-btn {
+        background: #2563eb;
+        color: #ffffff;
+    }
+
+    .save-btn:hover {
+        background: #1d4ed8;
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .cancel-btn {
+        background: #f1f5f9;
+        color: #334155;
+    }
+
+    .cancel-btn:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .edit-profile-page {
+            padding: 40px 15px 60px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+        }
+
+        .card-header-custom {
+            padding: 22px;
+        }
+
+        .edit-body {
+            padding: 22px;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full-width {
+            grid-column: auto;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .action-btn {
+            width: 100%;
+        }
+
     }
 
 </style>
 
 
-
-<!-- HERO -->
-
-<section class="section-hero overlay inner-page bg-image"
-         style="background-image:url('/static/images/hero_1.jpg');
-                background-size:cover;
-                background-position:center;
-                height:320px;">
-
-    <div class="container h-100 d-flex align-items-center justify-content-center">
-
-        <div class="text-center">
-
-            <h1 style="color:white; font-size:52px; font-weight:800;">
-                Edit Profile
-            </h1>
-
-            <p style="color:white; font-size:18px;">
-                Update your account information
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<section class="edit-page">
+<section class="edit-profile-page">
 
     <div class="container">
 
-        <div class="edit-card">
+        <div class="edit-profile-wrapper">
 
-            <div class="edit-header">
+            <!-- PAGE HEADER -->
 
-                <h2>
+            <div class="page-header">
 
-                    Edit Your Profile
+                <div class="page-badge">
+                    👤 Account Settings
+                </div>
 
-                </h2>
+                <h1>
+                    Edit Profile
+                </h1>
+
+                <p>
+                    Update your personal information and keep your ResumeAI
+                    profile up to date.
+                </p>
 
             </div>
 
 
+            <!-- EDIT CARD -->
 
-            <div class="edit-body">
+            <div class="edit-card">
 
-                <form method="post"
-                      action="/user_editprofile/"
-                      enctype="multipart/form-data">
+                <!-- CARD HEADER -->
 
-                    {% csrf_token %}
+                <div class="card-header-custom">
 
+                    <div class="header-icon">
+                        ✏️
+                    </div>
 
+                    <div>
 
-                    <div class="profile-preview">
+                        <h2>
+                            Profile Information
+                        </h2>
 
-                        {% if user_profile.profile_pic %}
-
-                            <img src="{{ user_profile.profile_pic.url }}">
-
-                        {% else %}
-
-                            <img src="/static/pr.png">
-
-                        {% endif %}
+                        <p>
+                            Update the information associated with your account.
+                        </p>
 
                     </div>
 
+                </div>
 
 
-                    <div class="form-group">
+                <!-- FORM BODY -->
 
-                        <label>
+                <div class="edit-body">
 
-                            Profile Picture
+                    <form
+                        method="post"
+                        action="/user_editprofile/"
+                        enctype="multipart/form-data">
 
-                        </label>
-
-                        <input type="file"
-                               name="profile_pic"
-                               class="form-control">
-
-                    </div>
+                        {% csrf_token %}
 
 
+                        <!-- PROFILE PHOTO -->
 
-                    <div class="form-group">
+                        <div class="profile-preview-section">
 
-                        <label>
+                            <div class="profile-image-wrapper">
 
-                            Name
+                                {% if user_profile.profile_pic %}
 
-                        </label>
+                                    <img
+                                        src="{{ user_profile.profile_pic.url }}"
+                                        class="profile-image"
+                                        alt="Profile Picture">
 
-                        <input type="text"
-                               name="name"
-                               value="{{ user_profile.name }}"
-                               class="form-control">
+                                {% else %}
 
-                    </div>
+                                    <div class="profile-placeholder">
 
+                                        {{ user_profile.name|first|upper }}
 
+                                    </div>
 
-                    <div class="form-group">
+                                {% endif %}
 
-                        <label>
+                            </div>
 
-                            Bio
+                            <h4>
+                                Profile Picture
+                            </h4>
 
-                        </label>
+                            <p>
+                                Upload a clear profile photo to personalize your account.
+                            </p>
 
-                        <textarea name="bio"
-                                  class="form-control">{{ user_profile.bio }}</textarea>
-
-                    </div>
-
-
-
-                    <div class="form-group">
-
-                        <label>
-
-                            Address
-
-                        </label>
-
-                        <input type="text"
-                               name="adrs"
-                               value="{{ user_profile.adrs }}"
-                               class="form-control">
-
-                    </div>
+                        </div>
 
 
+                        <!-- PROFILE PHOTO INPUT -->
 
-                    <div class="form-group">
+                        <div class="form-section-title">
 
-                        <label>
+                            <div class="section-icon">
+                                📷
+                            </div>
 
-                            Phone
+                            <h3>
+                                Personal Details
+                            </h3>
 
-                        </label>
-
-                        <input type="text"
-                               name="phn"
-                               value="{{ user_profile.phn }}"
-                               class="form-control">
-
-                    </div>
+                        </div>
 
 
+                        <div class="form-grid">
 
-                    <div class="form-group">
+                            <!-- PROFILE PICTURE -->
 
-                        <label>
+                            <div class="form-group full-width">
 
-                            Gender
+                                <label class="form-label">
+                                    Profile Picture
+                                </label>
 
-                        </label>
+                                <input
+                                    type="file"
+                                    name="profile_pic"
+                                    class="form-control-custom file-input"
+                                    accept="image/*">
 
-                        <input type="text"
-                               name="gender"
-                               value="{{ user_profile.gender }}"
-                               class="form-control">
+                                <small class="form-help">
+                                    Select an image file for your profile picture.
+                                </small>
 
-                    </div>
-
-
-
-                    <div class="form-group">
-
-                        <label>
-
-                            Place
-
-                        </label>
-
-                        <input type="text"
-                               name="plc"
-                               value="{{ user_profile.plc }}"
-                               class="form-control">
-
-                    </div>
+                            </div>
 
 
+                            <!-- NAME -->
 
-                    <button type="submit"
-                            class="save-btn">
+                            <div class="form-group">
 
-                        Save Changes
+                                <label class="form-label">
+                                    Full Name
+                                </label>
 
-                    </button>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value="{{ user_profile.name }}"
+                                    class="form-control-custom"
+                                    placeholder="Enter your full name">
 
-                </form>
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="form-group">
+
+                                <label class="form-label">
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="phn"
+                                    value="{{ user_profile.phn }}"
+                                    class="form-control-custom"
+                                    placeholder="Enter your phone number">
+
+                            </div>
+
+
+                            <!-- GENDER -->
+
+                            <div class="form-group">
+
+                                <label class="form-label">
+                                    Gender
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="gender"
+                                    value="{{ user_profile.gender }}"
+                                    class="form-control-custom"
+                                    placeholder="Enter your gender">
+
+                            </div>
+
+
+                            <!-- PLACE -->
+
+                            <div class="form-group">
+
+                                <label class="form-label">
+                                    Place
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="plc"
+                                    value="{{ user_profile.plc }}"
+                                    class="form-control-custom"
+                                    placeholder="Enter your place">
+
+                            </div>
+
+
+                            <!-- ADDRESS -->
+
+                            <div class="form-group full-width">
+
+                                <label class="form-label">
+                                    Address
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="adrs"
+                                    value="{{ user_profile.adrs }}"
+                                    class="form-control-custom"
+                                    placeholder="Enter your address">
+
+                            </div>
+
+
+                            <!-- BIO -->
+
+                            <div class="form-group full-width">
+
+                                <label class="form-label">
+                                    Bio
+                                </label>
+
+                                <textarea
+                                    name="bio"
+                                    class="form-control-custom"
+                                    placeholder="Tell employers a little about yourself...">{{ user_profile.bio }}</textarea>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="form-actions">
+
+                            <a
+                                href="/user_home/"
+                                class="action-btn cancel-btn">
+
+                                Cancel
+
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="action-btn save-btn">
+
+                                ✓
+                                Save Changes
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
 
             </div>
 
@@ -298,3 +618,4 @@
 </section>
 
 {% endblock %}
+

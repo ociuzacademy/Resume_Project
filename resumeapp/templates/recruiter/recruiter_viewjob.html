@@ -2,152 +2,482 @@
 
 {% block content %}
 
-<section class="section-hero overlay inner-page bg-image"
-    style="background-image: url('/static/images/hero_1.jpg'); padding: 90px 0;">
+<style>
+
+    .manage-jobs-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
+    }
+
+    .jobs-wrapper {
+        max-width: 1150px;
+        margin: auto;
+    }
+
+    /* HEADER */
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .page-header h1 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .page-header p {
+        max-width: 680px;
+        margin: auto;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* JOB CARD */
+
+    .job-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 22px;
+        padding: 28px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+        transition: all .25s ease;
+    }
+
+    .job-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 38px rgba(15, 23, 42, 0.10);
+    }
+
+    /* JOB TOP */
+
+    .job-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .job-main {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .job-icon {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        border-radius: 15px;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    .job-main h2 {
+        margin: 0 0 6px;
+        color: #0f172a;
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    .company-name {
+        color: #2563eb;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .job-type {
+        display: inline-flex;
+        padding: 8px 13px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    /* DETAILS */
+
+    .job-details {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding: 22px 0;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .detail-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        border-radius: 10px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+
+    .detail-content span {
+        display: block;
+        color: #94a3b8;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+        margin-bottom: 3px;
+    }
+
+    .detail-content strong {
+        display: block;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    /* ACTIONS */
+
+    .job-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 11px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        transition: .25s ease;
+    }
+
+    .view-btn {
+        background: #f1f5f9;
+        color: #334155;
+    }
+
+    .view-btn:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .applicants-btn {
+        background: #2563eb;
+        color: #ffffff;
+    }
+
+    .applicants-btn:hover {
+        background: #1d4ed8;
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    /* EMPTY STATE */
+
+    .empty-box {
+        text-align: center;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 80px 30px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .empty-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        border-radius: 20px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+
+    .empty-box h3 {
+        margin-bottom: 10px;
+        color: #0f172a;
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .empty-box p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .manage-jobs-page {
+            padding: 40px 15px 60px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+        }
+
+        .job-card {
+            padding: 22px;
+        }
+
+        .job-top {
+            flex-direction: column;
+        }
+
+        .job-details {
+            grid-template-columns: 1fr;
+        }
+
+        .job-actions {
+            flex-direction: column;
+        }
+
+        .action-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+
+<section class="manage-jobs-page">
 
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
 
-                <h1 class="text-white fw-bold">
-                    Manage Job Posts
-                </h1>
+        <div class="jobs-wrapper">
 
-                <p class="text-white mt-3">
-                    View and manage all jobs posted by your company
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div class="page-badge">
+                    💼 Job Management
+                </div>
+
+                <h1>Manage Job Posts</h1>
+
+                <p>
+                    View your published job posts, review job details,
+                    and manage applicants for each position.
                 </p>
 
             </div>
-        </div>
-    </div>
 
-</section>
 
-<section class="site-section py-5">
+            <!-- JOB LIST -->
 
-    <div class="container">
+            {% if recruiter_joblist %}
 
-        <!-- Section Title -->
-        <div class="row mb-5 justify-content-center">
-            <div class="col-md-8 text-center">
+                {% for i in recruiter_joblist %}
 
-                <h2 class="section-title mb-3 fw-bold">
-                    Jobs Posted
-                </h2>
+                    <div class="job-card">
 
-                <p class="text-muted">
-                    Track applications, review job details, and manage recruitment activities.
-                </p>
+                        <!-- JOB HEADER -->
 
-            </div>
-        </div>
+                        <div class="job-top">
 
-        <!-- Job List -->
-        <div class="row">
+                            <div class="job-main">
 
-            {% for i in recruiter_joblist %}
-
-            <div class="col-lg-12 mb-4">
-
-                <div class="card shadow-sm border-0 rounded-4">
-
-                    <div class="card-body p-4">
-
-                        <div class="row align-items-center">
-
-                            <!-- Left Content -->
-                            <div class="col-lg-8">
-
-                                <div class="mb-3">
-
-                                    <h3 class="fw-bold text-dark mb-2">
-                                        {{ i.jobtitle }}
-                                    </h3>
-
-                                    <h6 class="text-primary fw-semibold">
-                                        {{ company_name }}
-                                    </h6>
-
+                                <div class="job-icon">
+                                    💼
                                 </div>
 
-                                <div class="row">
+                                <div>
 
-                                    <div class="col-md-6 mb-2">
+                                    <h2>
+                                        {{ i.jobtitle }}
+                                    </h2>
 
-                                        <p class="mb-1">
-                                            <strong>Experience:</strong>
-                                            {{ i.jobexp1 }} - {{ i.jobexp2 }} Years
-                                        </p>
-
-                                        <p class="mb-1">
-                                            <strong>Job Type:</strong>
-                                            {{ i.jobtype }}
-                                        </p>
-
-                                    </div>
-
-                                    <div class="col-md-6 mb-2">
-
-                                        <p class="mb-1">
-                                            <strong>Apply Before:</strong>
-                                            {{ i.jobdate }}
-                                        </p>
-
-                                        <p class="mb-1">
-                                            <strong>Location:</strong>
-                                            {{ i.joblocation }}
-                                        </p>
-
+                                    <div class="company-name">
+                                        {{ company_name }}
                                     </div>
 
                                 </div>
 
                             </div>
 
-                            <!-- Right Buttons -->
-                            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
 
-                                <a href="/recruiter_jobviewmore/{{ i.id }}"
-                                   class="btn btn-info text-white px-4 py-2 mb-2">
-                                    View Details
-                                </a>
+                            <div class="job-type">
 
-                                <br>
-
-                                <a href="/recruiter_view_applicants/{{ i.id }}/"
-                                   class="btn btn-primary px-4 py-2">
-                                    View Applicants
-                                </a>
+                                {{ i.jobtype }}
 
                             </div>
 
                         </div>
 
+
+                        <!-- JOB DETAILS -->
+
+                        <div class="job-details">
+
+                            <!-- EXPERIENCE -->
+
+                            <div class="detail-item">
+
+                                <div class="detail-icon">
+                                    💼
+                                </div>
+
+                                <div class="detail-content">
+
+                                    <span>
+                                        Experience
+                                    </span>
+
+                                    <strong>
+                                        {{ i.jobexp1 }} - {{ i.jobexp2 }} Years
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- LOCATION -->
+
+                            <div class="detail-item">
+
+                                <div class="detail-icon">
+                                    📍
+                                </div>
+
+                                <div class="detail-content">
+
+                                    <span>
+                                        Location
+                                    </span>
+
+                                    <strong>
+                                        {{ i.joblocation }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- APPLICATION DEADLINE -->
+
+                            <div class="detail-item">
+
+                                <div class="detail-icon">
+                                    ⏰
+                                </div>
+
+                                <div class="detail-content">
+
+                                    <span>
+                                        Apply Before
+                                    </span>
+
+                                    <strong>
+                                        {{ i.jobdate2 }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="job-actions">
+
+                            <a
+                                href="/recruiter_jobviewmore/{{ i.id }}"
+                                class="action-btn view-btn">
+
+                                👁
+                                View Details
+
+                            </a>
+
+
+                            <a
+                                href="/recruiter_view_applicants/{{ i.id }}/"
+                                class="action-btn applicants-btn">
+
+                                👥
+                                View Applicants
+
+                            </a>
+
+                        </div>
+
                     </div>
 
-                </div>
+                {% endfor %}
 
-            </div>
 
-            {% empty %}
+            {% else %}
 
-            <div class="col-lg-12">
+                <!-- EMPTY STATE -->
 
-                <div class="alert alert-warning text-center shadow-sm">
+                <div class="empty-box">
 
-                    <h5 class="mb-2">
+                    <div class="empty-icon">
+                        💼
+                    </div>
+
+                    <h3>
                         No Jobs Posted Yet
-                    </h5>
+                    </h3>
 
-                    <p class="mb-0">
-                        Start posting jobs to attract candidates.
+                    <p>
+                        Start posting jobs to attract qualified candidates
+                        and build your recruitment pipeline.
                     </p>
 
                 </div>
 
-            </div>
-
-            {% endfor %}
+            {% endif %}
 
         </div>
 
@@ -156,3 +486,4 @@
 </section>
 
 {% endblock %}
+

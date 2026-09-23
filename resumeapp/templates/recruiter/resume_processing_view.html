@@ -1,33 +1,508 @@
 {% extends 'recruiter_home.html' %}
-{%  block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Processing Results</title>
-</head>
-<body>
-    <h1>Resume Processing Results</h1>
 
-    <p>Resume Path: {{ resume_path }}</p>
-    <p>Number of Predefined Skills: {{ num_predefined_skills }}</p>
-    <p>Number of Matching Skills: {{ num_matching_skills }}</p>
+{% block content %}
 
-    <h2>Matching Skills:</h2>
-    <ul>
-        {% for skill in matching_skills %}
-            <li>{{ skill }}</li>
-        {% endfor %}
-    </ul>
+<style>
 
-    <h2>Job Skills from Database:</h2>
-    <ul>
-        {% for job_skill in job_skills_from_db %}
-            <li>{{ job_skill }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+    .resume-results-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
+    }
+
+    .results-wrapper {
+        max-width: 1050px;
+        margin: auto;
+    }
+
+    /* PAGE HEADER */
+
+    .results-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .results-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .results-header h1 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .results-header p {
+        max-width: 650px;
+        margin: auto;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* SUMMARY GRID */
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+
+    .summary-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 23px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+    }
+
+    .summary-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+
+    .summary-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .summary-label {
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+    }
+
+    .summary-value {
+        color: #0f172a;
+        font-size: 28px;
+        font-weight: 800;
+    }
+
+    /* RESUME PATH */
+
+    .resume-path-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .section-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+    }
+
+    .section-title h3 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .resume-path {
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        color: #475569;
+        font-size: 13px;
+        word-break: break-all;
+    }
+
+    /* SKILLS CARDS */
+
+    .skills-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+    }
+
+    .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .skill-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 9px 14px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .job-skill-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 9px 14px;
+        border-radius: 50px;
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #e2e8f0;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .empty-skills {
+        color: #94a3b8;
+        font-size: 14px;
+        font-style: italic;
+        margin-top: 15px;
+    }
+
+    /* MATCHING RESULT */
+
+    .matching-card {
+        background: #ffffff;
+        border: 1px solid #bbf7d0;
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+    }
+
+    .matching-card .section-icon {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .matching-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 12px;
+        margin-left: auto;
+        border-radius: 50px;
+        background: #dcfce7;
+        color: #15803d;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .matching-header {
+        display: flex;
+        align-items: center;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .resume-results-page {
+            padding: 40px 15px 60px;
+        }
+
+        .results-header h1 {
+            font-size: 30px;
+        }
+
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .matching-header {
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .matching-badge {
+            margin-left: 0;
+        }
+
+        .skills-card,
+        .matching-card,
+        .resume-path-card {
+            padding: 22px;
+        }
+
+    }
+
+</style>
+
+
+<section class="resume-results-page">
+
+    <div class="container">
+
+        <div class="results-wrapper">
+
+            <!-- PAGE HEADER -->
+
+            <div class="results-header">
+
+                <div class="results-badge">
+                    🤖 ResumeAI Analysis
+                </div>
+
+                <h1>
+                    Resume Processing Results
+                </h1>
+
+                <p>
+                    Review the skills identified from the candidate's resume
+                    and compare them with the skills required for the job.
+                </p>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="summary-grid">
+
+                <!-- PREDEFINED SKILLS -->
+
+                <div class="summary-card">
+
+                    <div class="summary-top">
+
+                        <div class="summary-icon">
+                            📋
+                        </div>
+
+                        <div class="summary-label">
+                            Predefined Skills
+                        </div>
+
+                    </div>
+
+                    <div class="summary-value">
+                        {{ num_predefined_skills }}
+                    </div>
+
+                </div>
+
+
+                <!-- MATCHING SKILLS -->
+
+                <div class="summary-card">
+
+                    <div class="summary-top">
+
+                        <div class="summary-icon">
+                            ✓
+                        </div>
+
+                        <div class="summary-label">
+                            Matching Skills
+                        </div>
+
+                    </div>
+
+                    <div class="summary-value">
+                        {{ num_matching_skills }}
+                    </div>
+
+                </div>
+
+
+                <!-- MATCHING RATE -->
+
+                <div class="summary-card">
+
+                    <div class="summary-top">
+
+                        <div class="summary-icon">
+                            🎯
+                        </div>
+
+                        <div class="summary-label">
+                            Matching Status
+                        </div>
+
+                    </div>
+
+                    <div class="summary-value">
+
+                        {% if num_matching_skills > 0 %}
+                            Active
+                        {% else %}
+                            None
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESUME PATH -->
+
+            <div class="resume-path-card">
+
+                <div class="section-title">
+
+                    <div class="section-icon">
+                        📄
+                    </div>
+
+                    <h3>
+                        Processed Resume
+                    </h3>
+
+                </div>
+
+                <div class="resume-path">
+
+                    {{ resume_path }}
+
+                </div>
+
+            </div>
+
+
+            <!-- MATCHING SKILLS -->
+
+            <div class="matching-card">
+
+                <div class="matching-header">
+
+                    <div class="section-title" style="margin-bottom:0;">
+
+                        <div class="section-icon">
+                            ✓
+                        </div>
+
+                        <h3>
+                            Matching Skills
+                        </h3>
+
+                    </div>
+
+                    {% if num_matching_skills > 0 %}
+
+                        <div class="matching-badge">
+                            ✓ Skills Matched
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                {% if matching_skills %}
+
+                    <div class="skills-list">
+
+                        {% for skill in matching_skills %}
+
+                            <span class="skill-badge">
+
+                                ✓ {{ skill }}
+
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-skills">
+                        No matching skills were found.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- JOB SKILLS -->
+
+            <div class="skills-card">
+
+                <div class="section-title">
+
+                    <div class="section-icon">
+                        💼
+                    </div>
+
+                    <h3>
+                        Job Skills from Database
+                    </h3>
+
+                </div>
+
+
+                {% if job_skills_from_db %}
+
+                    <div class="skills-list">
+
+                        {% for job_skill in job_skills_from_db %}
+
+                            <span class="job-skill-badge">
+
+                                {{ job_skill }}
+
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-skills">
+                        No job skills were available for comparison.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
 {% endblock %}
+

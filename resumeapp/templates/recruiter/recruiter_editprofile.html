@@ -1,63 +1,474 @@
+django
 {% extends 'recruiter_home.html' %}
-{%  block content %}
 
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
-    <div class="block no-padding gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="inner2">
-                        <div class="inner-title2">
-                            <h2 style="font-weight: bold; color: black; text-align: center;">Edit Your Profile</h2>
+{% block content %}
+
+<style>
+
+    .edit-profile-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
+    }
+
+    .profile-wrapper {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* PAGE HEADER */
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .profile-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .profile-header h1 {
+        margin: 0 0 10px;
+        font-size: 38px;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .profile-header p {
+        margin: auto;
+        max-width: 650px;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* PROFILE CARD */
+
+    .profile-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 42px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    /* CARD HEADER */
+
+    .card-header-custom {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .card-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 14px;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .card-header-custom h3 {
+        margin: 0 0 4px;
+        color: #0f172a;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .card-header-custom p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    /* FORM */
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 9px;
+        color: #1e293b;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .form-control-custom {
+        width: 100%;
+        min-height: 50px;
+        padding: 13px 15px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 15px;
+        outline: none;
+        box-sizing: border-box;
+        transition: all 0.25s ease;
+    }
+
+    .form-control-custom:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
+    }
+
+    textarea.form-control-custom {
+        min-height: 150px;
+        resize: vertical;
+        line-height: 1.7;
+    }
+
+    .form-control-custom::placeholder {
+        color: #94a3b8;
+    }
+
+    /* GRID */
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    /* ACTIONS */
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 10px;
+        padding-top: 28px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-cancel {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 13px 24px;
+        border-radius: 12px;
+        background: #f1f5f9;
+        color: #475569;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: 0.25s ease;
+    }
+
+    .btn-cancel:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+        text-decoration: none;
+    }
+
+    .btn-save {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 26px;
+        border: none;
+        border-radius: 12px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .btn-save:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
+    }
+
+    /* PROFILE TIP */
+
+    .profile-tip {
+        margin-top: 25px;
+        padding: 18px;
+        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .tip-icon {
+        font-size: 18px;
+    }
+
+    .profile-tip strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #1e293b;
+        font-size: 14px;
+    }
+
+    .profile-tip span {
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .edit-profile-page {
+            padding: 40px 15px 60px;
+        }
+
+        .profile-card {
+            padding: 25px;
+        }
+
+        .profile-header h1 {
+            font-size: 30px;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-cancel,
+        .btn-save {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+
+<section class="edit-profile-page">
+
+    <div class="container">
+
+        <div class="profile-wrapper">
+
+            <!-- PAGE HEADER -->
+
+            <div class="profile-header">
+
+                <div class="profile-badge">
+                    👤 Recruiter Profile
+                </div>
+
+                <h1>Edit Your Profile</h1>
+
+                <p>
+                    Keep your recruiter profile up to date so applicants
+                    can learn more about your organization and contact you easily.
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE CARD -->
+
+            <div class="profile-card">
+
+                <div class="card-header-custom">
+
+                    <div class="card-icon">
+                        👤
+                    </div>
+
+                    <div>
+                        <h3>Profile Information</h3>
+
+                        <p>
+                            Update your personal and contact information.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form method="post"
+                      action="{% url 'recruiter_editprofile' %}">
+
+                    {% csrf_token %}
+
+                    {% for user_profile in user_profile %}
+
+                        <!-- NAME -->
+
+                        <div class="form-group">
+
+                            <label for="name">
+                                Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value="{{ user_profile.name }}"
+                                class="form-control-custom"
+                                placeholder="Enter your name"
+                                required>
+
                         </div>
+
+
+                        <!-- BIO -->
+
+                        <div class="form-group">
+
+                            <label for="bio">
+                                Professional Bio
+                            </label>
+
+                            <textarea
+                                id="bio"
+                                name="bio"
+                                class="form-control-custom"
+                                placeholder="Write a short professional description about yourself or your organization..."
+                                required>{{ user_profile.bio }}</textarea>
+
+                        </div>
+
+
+                        <!-- ADDRESS + PLACE -->
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="adrs">
+                                    Address
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="adrs"
+                                    name="adrs"
+                                    value="{{ user_profile.adrs }}"
+                                    class="form-control-custom"
+                                    placeholder="Enter your address">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="plc">
+                                    Place
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="plc"
+                                    name="plc"
+                                    value="{{ user_profile.plc }}"
+                                    class="form-control-custom"
+                                    placeholder="Enter your location">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="form-group">
+
+                            <label for="phn">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="phn"
+                                name="phn"
+                                value="{{ user_profile.phn }}"
+                                class="form-control-custom"
+                                placeholder="Enter your phone number">
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="form-actions">
+
+                            <a href="{% url 'recruiter_home' %}"
+                               class="btn-cancel">
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn-save">
+
+                                ✓
+                                Save Changes
+
+                            </button>
+
+                        </div>
+
+                    {% endfor %}
+
+                </form>
+
+
+                <!-- TIP -->
+
+                <div class="profile-tip">
+
+                    <div class="tip-icon">
+                        💡
                     </div>
+
+                    <div>
+
+                        <strong>Profile Tip</strong>
+
+                        <span>
+                            A complete and professional recruiter profile
+                            helps applicants understand your organization
+                            and improves communication during the hiring process.
+                        </span>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </section>
 
-<section>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="account-popup-area signup-popup-box static">
-                    <div class="account-popup">
-                        <form method="post" action="/recruiter_editprofile/">
-                            {% csrf_token %}
-                            {% for user_profile in user_profile %}
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name:</label>
-                                    <input type="text" name="name" value="{{ user_profile.name }}" class="form-control">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="bio" class="form-label">Bio:</label>
-                                    <textarea name="bio" rows="4" class="form-control" required>{{ user_profile.bio }}</textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="adrs" class="form-label">Address:</label>
-                                    <input type="text" name="adrs" class="form-control" value="{{ user_profile.adrs }}">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="phn" class="form-label">Phone:</label>
-                                    <input type="text" name="phn" class="form-control" value="{{ user_profile.phn }}">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="plc" class="form-label">Place:</label>
-                                    <input type="text" name="plc" class="form-control" value="{{ user_profile.plc }}">
-                                </div>
-
-                                <button type="submit" class="btn btn-success">Save Changes</button>
-                            {% endfor %}
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 {% endblock %}
+

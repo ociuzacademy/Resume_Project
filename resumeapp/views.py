@@ -18,58 +18,121 @@ def index(request):
     return render(request,'index.html')
 
 def user_register(request):
-     if request.method=='POST':
-        name=request.POST.get('name')
-        uname=request.POST.get('uname')
-        email=request.POST.get('email')
-        pswd=request.POST.get('pswd')
-        adrs=request.POST.get('adrs')
-        phn=request.POST.get('phn')
-        plc=request.POST.get('plc')
-        gender=request.POST.get('dob')
-        dob=request.POST.get('gender')
-        qualification=request.POST.get('qualification')
-        tbl_register(name=name,uname=uname,email=email,pswd=pswd,adrs=adrs,phn=phn,plc=plc,dob=dob,gender=gender,qualification=qualification,utype='user').save()
-        return render(request,'index.html')
-     else:
-         return render(request,'user_register.html')
-     
 
+    if request.method == 'POST':
 
+        name = request.POST.get('name')
+        uname = request.POST.get('uname')
+        email = request.POST.get('email')
+        pswd = request.POST.get('pswd')
+        adrs = request.POST.get('adrs')
+        phn = request.POST.get('phn')
+        plc = request.POST.get('plc')
+
+        gender = request.POST.get('gender')
+        dob = request.POST.get('dob')
+
+        qualification = request.POST.get('qualification')
+
+        tbl_register.objects.create(
+            name=name,
+            uname=uname,
+            email=email,
+            pswd=pswd,
+            adrs=adrs,
+            phn=phn,
+            plc=plc,
+            dob=dob if dob else None,
+            gender=gender,
+            qualification=qualification,
+            utype='user'
+        )
+
+        return render(request, 'index.html')
+
+    return render(request, 'user_register.html')
 
 
 def login(request):
+
     if request.method == "POST":
+
         pswd = request.POST['pswd']
         email = request.POST['email']
-        var = tbl_register.objects.all().filter(pswd=pswd, email=email, utype='user')
-        var2 = tbl_register.objects.all().filter(pswd=pswd, email=email, utype='recruiter')
-        var4= tbl_register.objects.all().filter(pswd=pswd, email=email,utype='admin')
-        if var:
-            for x in var:
-                request.session['id'] = x.id
-                request.session['username'] = x.uname
-                request.session['name'] = x.name
-                
-            return render(request, 'user/user_home.html')
-        if var2:
-            for x in var2:
-                request.session['id'] = x.id
-                request.session['name'] = x.name
-            return render(request, 'recruiter/recruiter_home.html')
-        elif var4:
-            for x in var4:
-                request.session['id'] = x.id
-                request.session['name'] = x.name
-            return render(request, 'admin/admin_home.html')
+
+
+        # USER
+        var = tbl_register.objects.filter(
+            pswd=pswd,
+            email=email,
+            utype='user'
+        )
+
+
+        # RECRUITER
+        var2 = tbl_register.objects.filter(
+            pswd=pswd,
+            email=email,
+            utype='recruiter'
+        )
+
+
+        # ADMIN
+        var4 = tbl_register.objects.filter(
+            pswd=pswd,
+            email=email,
+            utype='admin'
+        )
+
+
+        if var.exists():
+
+            x = var.first()
+
+            request.session['id'] = x.id
+            request.session['username'] = x.uname
+            request.session['name'] = x.name
+
+            return redirect('user_home')
+
+
+        elif var2.exists():
+
+            x = var2.first()
+
+            request.session['id'] = x.id
+            request.session['name'] = x.name
+
+            return redirect('recruiter_home')
+
+
+        elif var4.exists():
+
+            x = var4.first()
+
+            request.session['id'] = x.id
+            request.session['name'] = x.name
+
+            return redirect('admin_home')
+
 
         else:
-            txt = """<script>alert("Invalid user Credentials....");window.location='/';</script>"""
-            return HttpResponse(txt) 
+
+            txt = """
+            <script>
+                alert("Invalid user Credentials....");
+                window.location='/';
+            </script>
+            """
+
+            return HttpResponse(txt)
+
+
     else:
+
         return render(request, "login.html")
 
-
+    
 def logout(request):
     
     request.session.clear()
@@ -81,8 +144,159 @@ def logout(request):
 
 # <----------------------------------USER----------------------------------------->
 
+from django.shortcuts import render, redirect
+
+from .models import (
+    tbl_register,
+    tbl_jobdetails,
+    tbl_userresume,
+    tbl_userresume2,
+    tb_skill,
+    tbl_user_apply_job,
+    tbl_notification,
+)
+
+
 def user_home(request):
-    return render(request,'user_home.html')
+
+    # -----------------------------------------
+    # GET LOGGED-IN USER ID
+    # -----------------------------------------
+
+    user_id = request.session.get('id')
+
+    if not user_id:
+        return redirect('login')
+
+
+    # -----------------------------------------
+    # GET USER
+    # -----------------------------------------
+
+    user = tbl_register.objects.filter(
+        id=user_id,
+        utype='user'
+    ).first()
+
+
+    if not user:
+        request.session.flush()
+        return redirect('login')
+
+
+    # -----------------------------------------
+    # DASHBOARD COUNTS
+    # -----------------------------------------
+
+    # Total available jobs
+    job_count = tbl_jobdetails.objects.count()
+
+
+    # User's uploaded resumes
+    resume_count = tbl_userresume.objects.filter(
+        user=user
+    ).count()
+
+
+    # User's second resume table
+    resume2_count = tbl_userresume2.objects.filter(
+        user=user
+    ).count()
+
+
+    # User's skills
+    skill_count = tb_skill.objects.filter(
+        user_id=user
+    ).count()
+
+
+    # Jobs applied by the user
+    applied_job_count = tbl_user_apply_job.objects.filter(
+        user=user
+    ).count()
+
+
+    # Notifications related to user's applications
+    notification_count = tbl_notification.objects.filter(
+        application__user=user
+    ).count()
+
+
+    # -----------------------------------------
+    # PROFILE COMPLETION
+    # -----------------------------------------
+
+    total_fields = 7
+    completed_fields = 0
+
+
+    if user.name:
+        completed_fields += 1
+
+
+    if user.email:
+        completed_fields += 1
+
+
+    if user.phn:
+        completed_fields += 1
+
+
+    if user.adrs:
+        completed_fields += 1
+
+
+    if user.gender:
+        completed_fields += 1
+
+
+    if user.qualification:
+        completed_fields += 1
+
+
+    if user.profile_pic:
+        completed_fields += 1
+
+
+    profile_completion = int(
+        (completed_fields / total_fields) * 100
+    )
+
+
+    # -----------------------------------------
+    # CONTEXT
+    # -----------------------------------------
+
+    context = {
+
+        'user': user,
+
+        'job_count': job_count,
+
+        'resume_count': resume_count,
+
+        'resume2_count': resume2_count,
+
+        'skill_count': skill_count,
+
+        'applied_job_count': applied_job_count,
+
+        'notification_count': notification_count,
+
+        'profile_completion': profile_completion,
+
+    }
+
+
+    # -----------------------------------------
+    # RENDER
+    # -----------------------------------------
+
+    return render(
+        request,
+        'user/user_home.html',
+        context
+    )
 
 
 # views.py
@@ -478,8 +692,14 @@ def user_apply_job(request, job_id):
 
 
 
+from django.shortcuts import render
+from .models import tbl_register
+
+
 def recruiter_register(request):
+
     if request.method == 'POST':
+
         name = request.POST.get('name')
         uname = request.POST.get('uname')
         email = request.POST.get('email')
@@ -487,6 +707,8 @@ def recruiter_register(request):
         adrs = request.POST.get('adrs')
         phn = request.POST.get('phn')
         plc = request.POST.get('plc')
+
+        # Get company logo
         profile_pic = request.FILES.get('logo')
 
         tbl_register.objects.create(
@@ -506,8 +728,131 @@ def recruiter_register(request):
 
     return render(request, 'recruiter_register.html')
 
+
+from django.shortcuts import render, redirect
+
+from .models import (
+    tbl_register,
+    tbl_jobdetails,
+    tbl_user_apply_job,
+)
+
+
 def recruiter_home(request):
-    return render(request, 'recruiter/recruiter_home.html')
+
+    # -----------------------------------------
+    # GET LOGGED-IN RECRUITER
+    # -----------------------------------------
+
+    recruiter_id = request.session.get('id')
+
+    if not recruiter_id:
+        return redirect('login')
+
+
+    recruiter = tbl_register.objects.filter(
+        id=recruiter_id,
+        utype='recruiter'
+    ).first()
+
+
+    if not recruiter:
+        request.session.flush()
+        return redirect('login')
+
+
+    # -----------------------------------------
+    # RECRUITER JOBS
+    # -----------------------------------------
+
+    jobs = tbl_jobdetails.objects.filter(
+        company=recruiter
+    ).order_by('-id')
+
+
+    # Total jobs posted by recruiter
+    job_count = jobs.count()
+
+
+    # -----------------------------------------
+    # APPLICATIONS
+    # -----------------------------------------
+
+    applications = tbl_user_apply_job.objects.filter(
+        job__company=recruiter
+    )
+
+
+    # Total applications
+    application_count = applications.count()
+
+
+    # Pending applications
+    pending_count = applications.filter(
+        status='applied'
+    ).count()
+
+
+    # Shortlisted applications
+    shortlisted_count = applications.filter(
+        status='shortlisted'
+    ).count()
+
+
+    # Rejected applications
+    rejected_count = applications.filter(
+        status='rejected'
+    ).count()
+
+
+    # -----------------------------------------
+    # RECENT JOBS
+    # -----------------------------------------
+
+    recent_jobs = jobs[:5]
+
+
+    # -----------------------------------------
+    # RECENT APPLICATIONS
+    # -----------------------------------------
+
+    recent_applications = applications.select_related(
+        'user',
+        'job'
+    ).order_by('-id')[:5]
+
+
+    # -----------------------------------------
+    # CONTEXT
+    # -----------------------------------------
+
+    context = {
+
+        'recruiter': recruiter,
+
+        'job_count': job_count,
+
+        'application_count': application_count,
+
+        'pending_count': pending_count,
+
+        'shortlisted_count': shortlisted_count,
+
+        'rejected_count': rejected_count,
+
+        'recent_jobs': recent_jobs,
+
+        'recent_applications': recent_applications,
+
+    }
+
+
+    return render(
+        request,
+        'recruiter/recruiter_home.html',
+        context
+    )
+
 
 def recruiter_viewprofile(request):
     # Assuming you have a way to identify the user, replace '<user_id>' with the actual user ID or use the user from the request if using authentication
@@ -779,8 +1124,41 @@ def user_cancel_application(request, appli_id):
     return redirect('user_view_applied_jobs')
 #----------------------Admin---------------------------------------
 
+from django.shortcuts import render
+from .models import tbl_register, tbl_jobdetails
+
+
 def admin_home(request):
-    return render(request,'admin/admin_home.html')
+
+    user_count = tbl_register.objects.filter(
+        utype='user'
+    ).count()
+
+    approved_count = tbl_register.objects.filter(
+        utype='recruiter',
+        status='approved'
+    ).count()
+
+    pending_count = tbl_register.objects.filter(
+        utype='recruiter',
+        status='pending'
+    ).count()
+
+    rejected_count = tbl_register.objects.filter(
+        utype='recruiter',
+        status='rejected'
+    ).count()
+
+    job_count = tbl_jobdetails.objects.count()
+
+    return render(request, 'admin_home.html', {
+        'user_count': user_count,
+        'approved_count': approved_count,
+        'pending_count': pending_count,
+        'rejected_count': rejected_count,
+        'job_count': job_count,
+    })
+
 
 def admin_viewpending(request):
     # Assuming you have a 'status' field in your tbl_jobdetails model
@@ -823,12 +1201,17 @@ def admin_reject(request, user_id):
         return redirect('/admin_viewpending/')
 
     return render(request, 'admin_viewpending.html', {'recruiter': recruiter})
+from django.shortcuts import render, get_object_or_404
 
-def admin_viewjob(request,company_id):
-    # Correct the filter to use company_id
+def admin_viewjob(request, company_id):
+    company = get_object_or_404(tbl_register, id=company_id)
+
     joblist = tbl_jobdetails.objects.filter(company_id=company_id)
-    company_name=tbl_register.objects.get(id=company_id).name
-    return render(request, 'admin_viewjob.html',{'joblist': joblist,'company_name':company_name})
+
+    return render(request, 'admin_viewjob.html', {
+        'joblist': joblist,
+        'company_name': company.name,
+    })
 
 def view_users(request):
     users = tbl_register.objects.filter(utype='user')

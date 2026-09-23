@@ -1,80 +1,626 @@
 {% extends 'recruiter_home.html' %}
 
 {% block content %}
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
-    <div class="block no-padding gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="inner2">
-                        <div class="inner-title2">
-                            <h2 style="font-weight: bold; color: black; text-align: center;">Pending applicants</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-{% csrf_token %}
+<style>
 
-<section class="site-section">
+    .pending-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
+    }
+
+    .pending-wrapper {
+        max-width: 1250px;
+        margin: auto;
+    }
+
+    /* PAGE HEADER */
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: #fff7ed;
+        color: #ea580c;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .page-header h1 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .page-header p {
+        max-width: 680px;
+        margin: auto;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* MAIN CARD */
+
+    .pending-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    .card-header-custom {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 25px 30px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .card-icon {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        border-radius: 13px;
+        background: #ffedd5;
+        color: #ea580c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .card-header-custom h3 {
+        margin: 0 0 3px;
+        color: #0f172a;
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+    .card-header-custom p {
+        margin: 0;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    /* TABLE */
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .pending-table {
+        width: 100%;
+        min-width: 1050px;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .pending-table thead {
+        background: #0f172a;
+    }
+
+    .pending-table th {
+        padding: 17px 16px;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+        text-align: left;
+        white-space: nowrap;
+        border: none;
+    }
+
+    .pending-table td {
+        padding: 20px 16px;
+        color: #475569;
+        font-size: 14px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .pending-table tbody tr {
+        transition: .2s ease;
+    }
+
+    .pending-table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .pending-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* JOB */
+
+    .job-title {
+        color: #0f172a !important;
+        font-weight: 800 !important;
+    }
+
+    /* APPLICANT */
+
+    .applicant-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 160px;
+    }
+
+    .applicant-avatar {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        border-radius: 50%;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .applicant-name {
+        color: #1e293b;
+        font-weight: 700;
+    }
+
+    /* EMAIL */
+
+    .email-text {
+        color: #64748b;
+        white-space: nowrap;
+    }
+
+    /* QUALIFICATION */
+
+    .qualification {
+        color: #475569;
+        font-weight: 500;
+    }
+
+    /* EXPERIENCE */
+
+    .experience-badge {
+        display: inline-block;
+        padding: 7px 11px;
+        border-radius: 8px;
+        background: #f1f5f9;
+        color: #475569;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    /* RESUME */
+
+    .resume-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 14px;
+        border-radius: 9px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #2563eb;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: .25s ease;
+    }
+
+    .resume-link:hover {
+        background: #2563eb;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .no-resume {
+        display: inline-flex;
+        padding: 8px 11px;
+        border-radius: 8px;
+        background: #fef2f2;
+        color: #dc2626;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    /* ACTIONS */
+
+    .action-buttons {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .btn-shortlist {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 9px 14px;
+        border-radius: 9px;
+        background: #dcfce7;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: .25s ease;
+    }
+
+    .btn-shortlist:hover {
+        background: #16a34a;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .btn-reject {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 9px 14px;
+        border-radius: 9px;
+        background: #fee2e2;
+        color: #dc2626;
+        border: 1px solid #fecaca;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: .25s ease;
+    }
+
+    .btn-reject:hover {
+        background: #dc2626;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    /* EMPTY STATE */
+
+    .empty-box {
+        text-align: center;
+        padding: 80px 30px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+    }
+
+    .empty-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        border-radius: 20px;
+        background: #fff7ed;
+        color: #ea580c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+
+    .empty-box h3 {
+        margin-bottom: 10px;
+        color: #0f172a;
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .empty-box p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .pending-page {
+            padding: 40px 15px 60px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+        }
+
+        .card-header-custom {
+            padding: 20px;
+        }
+
+    }
+
+</style>
+
+
+<section class="pending-page">
+
     <div class="container">
 
-      {% if pending_applicants %}
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Job Title</th>
-              <th>Applicant Name</th>
-              <th>Email</th>
-              <th>Qualification</th>
-              <th>Experience</th>
-              <th>Resume</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for job in pending_applicants %}
-              {% for applicant in job.applicants %}
-                <tr>
-                  <td>{{ job.job_title }}</td>
-                  <td>{{ applicant.user.name }}</td>
-                  <td>{{ applicant.user.email }}</td>
-                  <td>{{ applicant.user.qualification }}</td>
-                  <td>{{ applicant.resume.experience }}</td>
-                  <td>
-                    <a href="{{ applicant.resume.resume1.url }}" target="_blank">View/Download Resume</a>
-                  </td>
-    
-                  <td>
-                    <a href="/shortlistCandidate/{{applicant.id}}/" class="btn btn-success">shortlist</a>
-                    <a href="/rejectCandidate/{{applicant.id}}/" class="btn btn-danger">Reject</a>
-                    {% comment %} <button type="button" class="btn btn-success" onclick="shortlistCandidate({{ applicant.id }})">Shortlist</button>
-                    <button type="button" class="btn btn-danger" onclick="rejectCandidate({{ applicant.id }})">Reject</button>
-                  </td> {% endcomment %}
-                </tr>
-              {% endfor %}
-            {% endfor %}
-          </tbody>
-        </table>
-      {% else %}
-        <p>No pending applicants for any job.</p>
-      {% endif %}
-    </section>
-  </div>
+        <div class="pending-wrapper">
 
-  <!-- Add JavaScript functions for shortlisting and rejecting candidates -->
-  <script>
-    function shortlistCandidate(candidateId) {
-      // Add logic to handle shortlisting of the candidate with the given ID
-      alert("Shortlisting candidate with ID: " + candidateId);
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div class="page-badge">
+                    ⏳ Application Management
+                </div>
+
+                <h1>Pending Applicants</h1>
+
+                <p>
+                    Review candidates who have applied for your job
+                    openings and decide whether to shortlist or reject them.
+                </p>
+
+            </div>
+
+
+            {% if pending_applicants %}
+
+                <!-- APPLICANTS CARD -->
+
+                <div class="pending-card">
+
+                    <div class="card-header-custom">
+
+                        <div class="card-icon">
+                            ⏳
+                        </div>
+
+                        <div>
+
+                            <h3>Pending Applications</h3>
+
+                            <p>
+                                Review applicant details and take action
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TABLE -->
+
+                    <div class="table-wrapper">
+
+                        <table class="pending-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Job Title</th>
+                                    <th>Applicant</th>
+                                    <th>Email</th>
+                                    <th>Qualification</th>
+                                    <th>Experience</th>
+                                    <th>Resume</th>
+                                    <th>Actions</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for job in pending_applicants %}
+
+                                    {% for applicant in job.applicants %}
+
+                                        <tr>
+
+                                            <!-- JOB -->
+
+                                            <td class="job-title">
+
+                                                {{ job.job_title }}
+
+                                            </td>
+
+
+                                            <!-- APPLICANT -->
+
+                                            <td>
+
+                                                <div class="applicant-info">
+
+                                                    <div class="applicant-avatar">
+
+                                                        {{ applicant.user.name|first|upper }}
+
+                                                    </div>
+
+                                                    <span class="applicant-name">
+
+                                                        {{ applicant.user.name }}
+
+                                                    </span>
+
+                                                </div>
+
+                                            </td>
+
+
+                                            <!-- EMAIL -->
+
+                                            <td>
+
+                                                <span class="email-text">
+
+                                                    {{ applicant.user.email }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- QUALIFICATION -->
+
+                                            <td>
+
+                                                <span class="qualification">
+
+                                                    {{ applicant.user.qualification }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- EXPERIENCE -->
+
+                                            <td>
+
+                                                <span class="experience-badge">
+
+                                                    {{ applicant.resume.experience }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- RESUME -->
+
+                                            <td>
+
+                                                {% if applicant.resume.resume1 %}
+
+                                                    <a
+                                                        href="{{ applicant.resume.resume1.url }}"
+                                                        target="_blank"
+                                                        class="resume-link">
+
+                                                        📄 View / Download
+
+                                                    </a>
+
+                                                {% else %}
+
+                                                    <span class="no-resume">
+
+                                                        No Resume
+
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </td>
+
+
+                                            <!-- ACTIONS -->
+
+                                            <td>
+
+                                                <div class="action-buttons">
+
+                                                    <a
+                                                        href="/shortlistCandidate/{{ applicant.id }}/"
+                                                        class="btn-shortlist"
+                                                        onclick="return confirmShortlist();">
+
+                                                        ✓ Shortlist
+
+                                                    </a>
+
+
+                                                    <a
+                                                        href="/rejectCandidate/{{ applicant.id }}/"
+                                                        class="btn-reject"
+                                                        onclick="return confirmReject();">
+
+                                                        ✕ Reject
+
+                                                    </a>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+
+                                    {% endfor %}
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <!-- EMPTY STATE -->
+
+                <div class="empty-box">
+
+                    <div class="empty-icon">
+                        ⏳
+                    </div>
+
+                    <h3>No Pending Applicants</h3>
+
+                    <p>
+                        There are currently no pending applicants for any of your jobs.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    function confirmShortlist() {
+
+        return confirm(
+            "Are you sure you want to shortlist this applicant?"
+        );
+
     }
 
-    function rejectCandidate(candidateId) {
-      // Add logic to handle rejecting of the candidate with the given ID
-      alert("Rejecting candidate with ID: " + candidateId);
+
+    function confirmReject() {
+
+        return confirm(
+            "Are you sure you want to reject this applicant?"
+        );
+
     }
-  </script>
+
+</script>
+
 {% endblock %}
+

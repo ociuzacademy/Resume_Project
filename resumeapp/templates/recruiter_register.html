@@ -1,100 +1,711 @@
 {% extends 'index.html' %}
+
 {% block content %}
-    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');" id="home-section">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-7">
-              <h1 class="text-white font-weight-bold">Register</h1>
-              <div class="custom-breadcrumbs">
-                <a href="#">Home</a> <span class="mx-2 slash">/</span>
-                <span class="text-white"><strong>Register</strong></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="site-section" id="next-section">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-              <form action="/recruiter_register/" class="" enctype="multipart/form-data" method="post" onsubmit="return validateForm()">
-                {% csrf_token %}
-  
-                <div class="row form-group">
-                  <div class="col-md-6 mb-3 mb-md-0">
-                    <label class="text-black" for="fname">Name Of Company</label>
-                    <input type="text" id="fname" class="form-control" name="name" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="text-black" for="lname">Email</label>
-                    <input type="email" id="lname" class="form-control" name="email" required>
-                  </div>
-                </div>
-  
-               
-  
-                  <div class="row form-group">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label class="text-black" for="fname">Phone Number</label>
-                        <input type="text" id="fname" class="form-control" name="phn" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
-                      </div>
-                    <div class="col-md-6">
-                        <label class="text-black" for="lname">Address</label>
-                        <input type="text" id="lname" class="form-control" name="adrs">
-                      </div>
-                    
-                  </div>
-                
-                  <div class="row form-group">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <label class="text-black" for="fname">Username</label>
-                      <input type="text" id="fname" class="form-control" name="uname" pattern="[a-zA-Z0-9]+" title="Please enter only letters and numbers" required>
+
+<style>
+
+    /* =========================================
+       RECRUITER REGISTER PAGE
+    ========================================= */
+
+    .register-page {
+        background: #f8fafc;
+        padding: 70px 0 90px;
+        min-height: calc(100vh - 72px);
+    }
+
+    .register-wrapper {
+        max-width: 1050px;
+        margin: auto;
+    }
+
+    /* LEFT INFORMATION PANEL */
+
+    .register-info {
+        background: linear-gradient(
+            135deg,
+            #0f172a,
+            #1d4ed8
+        );
+        border-radius: 18px 0 0 18px;
+        padding: 45px 38px;
+        height: 100%;
+        color: white;
+    }
+
+    .register-info-badge {
+        display: inline-block;
+        background: rgba(255,255,255,.12);
+        border: 1px solid rgba(255,255,255,.2);
+        color: #bfdbfe;
+        padding: 7px 13px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 22px;
+    }
+
+    .register-info h1 {
+        font-size: 35px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 18px;
+        color: white;
+    }
+
+    .register-info h1 span {
+        color: #93c5fd;
+    }
+
+    .register-info > p {
+        color: #cbd5e1;
+        line-height: 1.8;
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+
+    .benefit-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 22px;
+    }
+
+    .benefit-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 10px;
+        background: rgba(255,255,255,.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #93c5fd;
+        margin-right: 13px;
+    }
+
+    .benefit-item h5 {
+        margin: 0 0 4px;
+        font-size: 15px;
+        color: white;
+        font-weight: 700;
+    }
+
+    .benefit-item p {
+        margin: 0;
+        color: #cbd5e1;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+
+    /* RIGHT FORM */
+
+    .register-form-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 0 18px 18px 0;
+        padding: 42px;
+        height: 100%;
+        box-shadow: 0 15px 40px rgba(15,23,42,.06);
+    }
+
+    .form-heading {
+        margin-bottom: 30px;
+    }
+
+    .form-heading h2 {
+        font-size: 27px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 8px;
+    }
+
+    .form-heading p {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .form-label-custom {
+        display: block;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 7px;
+    }
+
+    .form-control-custom {
+        width: 100%;
+        height: 46px;
+        border: 1px solid #dbe2ea;
+        border-radius: 8px;
+        padding: 0 13px;
+        font-size: 14px;
+        color: #1e293b;
+        background: #fff;
+        transition: .2s;
+    }
+
+    .form-control-custom:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+        outline: none;
+    }
+
+    textarea.form-control-custom {
+        height: auto;
+        padding-top: 12px;
+    }
+
+    .logo-upload {
+        border: 1.5px dashed #cbd5e1;
+        border-radius: 10px;
+        padding: 18px;
+        background: #f8fafc;
+    }
+
+    .logo-upload input {
+        width: 100%;
+    }
+
+    .upload-note {
+        display: block;
+        margin-top: 7px;
+        color: #94a3b8;
+        font-size: 12px;
+    }
+
+    .register-submit {
+        width: 100%;
+        height: 48px;
+        border: none;
+        border-radius: 8px;
+        background: #2563eb;
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    .register-submit:hover {
+        background: #1d4ed8;
+    }
+
+    .login-note {
+        text-align: center;
+        margin-top: 20px;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .login-note a {
+        color: #2563eb;
+        font-weight: 700;
+    }
+
+
+    /* RESPONSIVE */
+
+    @media(max-width: 991px) {
+
+        .register-info {
+            border-radius: 18px 18px 0 0;
+        }
+
+        .register-form-card {
+            border-radius: 0 0 18px 18px;
+        }
+
+    }
+
+    @media(max-width: 576px) {
+
+        .register-page {
+            padding: 35px 15px 55px;
+        }
+
+        .register-info {
+            padding: 30px 25px;
+        }
+
+        .register-form-card {
+            padding: 28px 20px;
+        }
+
+        .register-info h1 {
+            font-size: 29px;
+        }
+
+    }
+
+</style>
+
+
+<!-- =========================================
+     REGISTER PAGE
+========================================= -->
+
+<section class="register-page">
+
+    <div class="container">
+
+        <div class="register-wrapper">
+
+            <div class="row no-gutters">
+
+
+                <!-- =================================
+                     LEFT INFORMATION
+                ================================== -->
+
+                <div class="col-lg-5">
+
+                    <div class="register-info">
+
+                        <span class="register-info-badge">
+                            RECRUITER ACCOUNT
+                        </span>
+
+
+                        <h1>
+                            Find The Right
+                            <span>Talent.</span>
+                        </h1>
+
+
+                        <p>
+
+                            Join ResumeAI and connect your company
+                            with qualified candidates. Publish jobs,
+                            manage applications and simplify your
+                            recruitment process.
+
+                        </p>
+
+
+                        <!-- BENEFIT 1 -->
+
+                        <div class="benefit-item">
+
+                            <div class="benefit-icon">
+
+                                <span class="icon-briefcase"></span>
+
+                            </div>
+
+                            <div>
+
+                                <h5>
+                                    Post Job Opportunities
+                                </h5>
+
+                                <p>
+                                    Create and publish job openings
+                                    for candidates.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BENEFIT 2 -->
+
+                        <div class="benefit-item">
+
+                            <div class="benefit-icon">
+
+                                <span class="icon-users"></span>
+
+                            </div>
+
+                            <div>
+
+                                <h5>
+                                    Manage Candidates
+                                </h5>
+
+                                <p>
+                                    Review applications and manage
+                                    candidates efficiently.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BENEFIT 3 -->
+
+                        <div class="benefit-item">
+
+                            <div class="benefit-icon">
+
+                                <span class="icon-search"></span>
+
+                            </div>
+
+                            <div>
+
+                                <h5>
+                                    AI-Powered Screening
+                                </h5>
+
+                                <p>
+                                    Use intelligent resume analysis
+                                    to identify relevant candidates.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
                     </div>
-                    <div class="col-md-6">
-                        <label class="text-black" for="lname">Password</label>
-                        <input type="password" id="lname" class="form-control" name="pswd" pattern=".{6,}" title="Password must be at least 6 characters" required>
-                      </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label class="text-black" for="fname">Place</label>
-                        <input type="text" id="fname" class="form-control" name="plc">
-                      </div>
-                    
-                  </div>
-                  <br>
-                  <div class="row form-group">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label class="text-black" for="logo">Company Logo</label>
-                        <input type="file" id="logo" class="form-control" name="logo" accept="image/*">
+
+                </div>
+
+
+                <!-- =================================
+                     REGISTRATION FORM
+                ================================== -->
+
+                <div class="col-lg-7">
+
+                    <div class="register-form-card">
+
+
+                        <div class="form-heading">
+
+                            <h2>
+                                Create Recruiter Account
+                            </h2>
+
+                            <p>
+                                Register your company to start
+                                recruiting candidates.
+                            </p>
+
+                        </div>
+
+
+                        <form action="/recruiter_register/"
+                              method="post"
+                              enctype="multipart/form-data"
+                              onsubmit="return validateForm()">
+
+                            {% csrf_token %}
+
+
+                            <!-- COMPANY + EMAIL -->
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label-custom"
+                                           for="name">
+
+                                        Company Name
+
+                                    </label>
+
+                                    <input type="text"
+                                           id="name"
+                                           class="form-control-custom"
+                                           name="name"
+                                           placeholder="Enter company name"
+                                           required>
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label-custom"
+                                           for="email">
+
+                                        Company Email
+
+                                    </label>
+
+                                    <input type="email"
+                                           id="email"
+                                           class="form-control-custom"
+                                           name="email"
+                                           placeholder="company@example.com"
+                                           required>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- PHONE + PLACE -->
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label-custom"
+                                           for="phn">
+
+                                        Phone Number
+
+                                    </label>
+
+                                    <input type="text"
+                                           id="phn"
+                                           class="form-control-custom"
+                                           name="phn"
+                                           placeholder="10-digit phone number"
+                                           pattern="[0-9]{10}"
+                                           maxlength="10"
+                                           minlength="10"
+                                           title="Please enter a valid 10-digit phone number"
+                                           required>
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label-custom"
+                                           for="plc">
+
+                                        Place
+
+                                    </label>
+
+                                    <input type="text"
+                                           id="plc"
+                                           class="form-control-custom"
+                                           name="plc"
+                                           placeholder="Company location"
+                                           required>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ADDRESS -->
+
+                            <div class="row">
+
+                                <div class="col-md-12 mb-3">
+
+                                    <label class="form-label-custom"
+                                           for="adrs">
+
+                                        Company Address
+
+                                    </label>
+
+                                    <input type="text"
+                                           id="adrs"
+                                           class="form-control-custom"
+                                           name="adrs"
+                                           placeholder="Enter company address"
+                                           required>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- USERNAME + PASSWORD -->
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label-custom"
+                                           for="uname">
+
+                                        Username
+
+                                    </label>
+
+                                    <input type="text"
+                                           id="uname"
+                                           class="form-control-custom"
+                                           name="uname"
+                                           placeholder="Create username"
+                                           pattern="[a-zA-Z0-9]+"
+                                           title="Username can contain only letters and numbers"
+                                           required>
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label-custom"
+                                           for="pswd">
+
+                                        Password
+
+                                    </label>
+
+                                    <input type="password"
+                                           id="pswd"
+                                           class="form-control-custom"
+                                           name="pswd"
+                                           placeholder="Minimum 6 characters"
+                                           minlength="6"
+                                           required>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- COMPANY LOGO -->
+
+                            <div class="row">
+
+                                <div class="col-md-12 mb-4">
+
+                                    <label class="form-label-custom"
+                                           for="logo">
+
+                                        Company Logo
+
+                                    </label>
+
+
+                                    <div class="logo-upload">
+
+                                        <input type="file"
+                                               id="logo"
+                                               name="logo"
+                                               accept="image/png, image/jpeg, image/jpg"
+                                               required>
+
+                                        <span class="upload-note">
+
+                                            JPG, JPEG or PNG format
+                                            recommended.
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- SUBMIT -->
+
+                            <button type="submit"
+                                    class="register-submit">
+
+                                Create Recruiter Account
+
+                            </button>
+
+
+                            <div class="login-note">
+
+                                Already have an account?
+
+                                <a href="{% url 'login' %}">
+                                    Log In
+                                </a>
+
+                            </div>
+
+
+                        </form>
+
                     </div>
+
                 </div>
-  
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <input type="submit" value="Register" class="btn btn-primary btn-md text-white">
-                  </div>
-                </div>
-  
-    
-              </form>
-              <script>
-                function validateForm() {
-                    // Validate phone number
-                    var phn = document.getElementById("phn");
-                    if (!/^\d{10}$/.test(phn.value)) {
-                        alert("Please enter a valid 10-digit phone number");
-                        return false;
-                    }
-            
-                    // Additional validation for other fields can be added here
-            
-                    return true;
-                }
-            </script>
+
             </div>
+
         </div>
+
     </div>
-  </section>
-            {%  endblock %}
+
+</section>
+
+
+<!-- =========================================
+     VALIDATION
+========================================= -->
+
+<script>
+
+function validateForm() {
+
+    /* PHONE */
+
+    var phn = document.getElementById("phn");
+
+    if (!/^\d{10}$/.test(phn.value)) {
+
+        alert("Please enter a valid 10-digit phone number.");
+
+        phn.focus();
+
+        return false;
+
+    }
+
+
+    /* USERNAME */
+
+    var uname = document.getElementById("uname");
+
+    if (!/^[a-zA-Z0-9]+$/.test(uname.value)) {
+
+        alert("Username can contain only letters and numbers.");
+
+        uname.focus();
+
+        return false;
+
+    }
+
+
+    /* PASSWORD */
+
+    var pswd = document.getElementById("pswd");
+
+    if (pswd.value.length < 6) {
+
+        alert("Password must be at least 6 characters.");
+
+        pswd.focus();
+
+        return false;
+
+    }
+
+
+    /* LOGO */
+
+    var logo = document.getElementById("logo");
+
+    if (logo.files.length === 0) {
+
+        alert("Please upload a company logo.");
+
+        logo.focus();
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+</script>
+
+{% endblock %}

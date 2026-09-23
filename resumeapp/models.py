@@ -3,21 +3,33 @@ from PIL import Image
 
 # Create your models here.
 
+from django.db import models
+from PIL import Image
+
+
 class tbl_register(models.Model):
     email = models.EmailField(max_length=100)
-    phn = models.CharField(max_length=100, default="")
+    phn = models.CharField(max_length=15, default="")
     name = models.CharField(max_length=100, default="")
     uname = models.CharField(max_length=100, default="")
-    pswd = models.CharField(max_length=100, default="")
-    adrs = models.CharField(max_length=100, default="")
-    gender = models.CharField(max_length=100, default="")
-    dob = models.CharField(max_length=100, default="")
+    pswd = models.CharField(max_length=255, default="")
+    
+    adrs = models.CharField(max_length=255, default="")
+    gender = models.CharField(max_length=20, default="")
+    dob = models.DateField(null=True, blank=True)
+    
     qualification = models.CharField(max_length=100, default="")
     plc = models.CharField(max_length=100, default="")
-    utype = models.CharField(max_length=100, default="")
-    status = models.CharField(max_length=100, default="")
+    
+    utype = models.CharField(max_length=20, default="")
+    status = models.CharField(max_length=20, default="")
+    
     bio = models.TextField(blank=True, null=True)
-    profile_pic = models.ImageField(upload_to='profile_pics')
+    profile_pic = models.ImageField(
+        upload_to='profile_pics',
+        blank=True,
+        null=True
+    )
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -25,13 +37,11 @@ class tbl_register(models.Model):
         if self.profile_pic:
             img = Image.open(self.profile_pic.path)
 
-            # resize image
             if img.height > 300 or img.width > 300:
                 output_size = (300, 300)
                 img.thumbnail(output_size)
-                img.save(self.profile_pic.path)
-                
-                
+                img.save(self.profile_pic.path)           
+
     
 class tbl_jobdetails(models.Model):
     company = models.ForeignKey(tbl_register, on_delete=models.CASCADE, blank=True, null=True)

@@ -1,160 +1,345 @@
+django
 {% extends 'recruiter_home.html' %}
 
 {% block content %}
 
 <style>
 
-    .notification-section{
-        min-height:100vh;
-        background:#f8fafc;
-        padding:80px 0;
+    .notification-page {
+        min-height: calc(100vh - 80px);
+        background: #f8fafc;
+        padding: 60px 0 80px;
     }
 
-    .notification-card{
-        background:white;
-        border-radius:24px;
-        padding:50px;
-        max-width:700px;
-        margin:auto;
-        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    .notification-wrapper {
+        max-width: 900px;
+        margin: auto;
     }
 
-    .notification-title{
-        text-align:center;
-        margin-bottom:35px;
+    /* HEADER */
+
+    .notification-header {
+        text-align: center;
+        margin-bottom: 40px;
     }
 
-    .notification-title h2{
-        font-size:40px;
-        font-weight:800;
-        color:#0f172a;
-        margin-bottom:10px;
+    .notification-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #eff6ff;
+        color: #2563eb;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 15px;
     }
 
-    .notification-title p{
-        color:#64748b;
-        font-size:16px;
+    .notification-header h1 {
+        font-size: 38px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 10px;
     }
 
-    .form-group{
-        margin-bottom:25px;
+    .notification-header p {
+        color: #64748b;
+        font-size: 16px;
+        max-width: 650px;
+        margin: auto;
+        line-height: 1.7;
     }
 
-    .form-group label{
-        display:block;
-        margin-bottom:10px;
-        font-size:16px;
-        font-weight:600;
-        color:#1e293b;
+    /* CARD */
+
+    .notification-card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 42px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e2e8f0;
     }
 
-    textarea{
-        width:100%;
-        min-height:220px;
-        border:1px solid #cbd5e1;
-        border-radius:14px;
-        padding:18px;
-        font-size:15px;
-        resize:none;
-        outline:none;
-        transition:0.3s ease;
+    /* INFO BOX */
+
+    .notification-info {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 18px;
+        border-radius: 16px;
+        margin-bottom: 30px;
     }
 
-    textarea:focus{
-        border-color:#2563eb;
-        box-shadow:0 0 0 4px rgba(37,99,235,0.15);
+    .notification-info-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 12px;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
     }
 
-    .submit-btn{
-        width:100%;
-        background:#2563eb;
-        color:white;
-        border:none;
-        padding:16px;
-        font-size:16px;
-        font-weight:700;
-        border-radius:14px;
-        transition:0.3s ease;
+    .notification-info h4 {
+        margin: 0 0 5px;
+        color: #0f172a;
+        font-size: 15px;
+        font-weight: 700;
     }
 
-    .submit-btn:hover{
-        background:#1d4ed8;
+    .notification-info p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    /* FORM */
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .form-label label {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0;
+    }
+
+    .required-text {
+        color: #ef4444;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 240px;
+        border: 1px solid #cbd5e1;
+        border-radius: 16px;
+        padding: 18px;
+        font-size: 15px;
+        color: #334155;
+        background: #ffffff;
+        resize: vertical;
+        outline: none;
+        transition: all 0.25s ease;
+        box-sizing: border-box;
+        line-height: 1.7;
+    }
+
+    textarea::placeholder {
+        color: #94a3b8;
+    }
+
+    textarea:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
+    }
+
+    /* BUTTONS */
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-cancel {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 13px 24px;
+        border-radius: 12px;
+        background: #f1f5f9;
+        color: #475569;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: 0.25s ease;
+    }
+
+    .btn-cancel:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+        text-decoration: none;
+    }
+
+    .submit-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 13px 26px;
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .submit-btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .notification-page {
+            padding: 40px 15px 60px;
+        }
+
+        .notification-card {
+            padding: 25px;
+        }
+
+        .notification-header h1 {
+            font-size: 30px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-cancel,
+        .submit-btn {
+            width: 100%;
+        }
+
     }
 
 </style>
 
 
-<!-- HERO SECTION -->
+<!-- PAGE -->
 
-<section class="section-hero overlay inner-page bg-image"
-         style="background-image: url('/static/images/hero_1.jpg');
-                height:300px;
-                background-size:cover;
-                background-position:center;">
-
-    <div class="container h-100 d-flex align-items-center justify-content-center">
-
-        <div class="text-center">
-
-            <h1 style="color:white; font-size:50px; font-weight:800;">
-                Create Notification
-            </h1>
-
-            <p style="color:white; font-size:18px;">
-                Send interview or job updates to applicants
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- FORM SECTION -->
-
-<section class="notification-section">
+<section class="notification-page">
 
     <div class="container">
 
-        <div class="notification-card">
+        <div class="notification-wrapper">
 
-            <div class="notification-title">
+            <!-- HEADER -->
 
-                <h2>Create Notification</h2>
+            <div class="notification-header">
+
+                <div class="notification-badge">
+                    <span>🔔</span>
+                    Recruiter Communication
+                </div>
+
+                <h1>Create Notification</h1>
 
                 <p>
-                    Notify applicants regarding interview schedules,
-                    shortlisting status, or other important updates.
+                    Send important updates to applicants about interviews,
+                    application status, shortlisting, and other recruitment activities.
                 </p>
 
             </div>
 
-            <form method="post">
 
-                {% csrf_token %}
+            <!-- CARD -->
 
-                <div class="form-group">
+            <div class="notification-card">
 
-                    <label for="id_message">
-                        Notification Message
-                    </label>
+                <!-- INFORMATION -->
 
-                    <textarea name="message"
-                              id="id_message"
-                              placeholder="Enter your message here..."
-                              required></textarea>
+                <div class="notification-info">
+
+                    <div class="notification-info-icon">
+                        🔔
+                    </div>
+
+                    <div>
+
+                        <h4>Keep applicants informed</h4>
+
+                        <p>
+                            Write a clear and professional message.
+                            Applicants will receive this notification regarding
+                            their recruitment process.
+                        </p>
+
+                    </div>
 
                 </div>
 
-                <button type="submit" class="submit-btn">
 
-                    Send Notification
+                <!-- FORM -->
 
-                </button>
+                <form method="post">
 
-            </form>
+                    {% csrf_token %}
+
+                    <div class="form-group">
+
+                        <div class="form-label">
+
+                            <label for="id_message">
+                                Notification Message
+                            </label>
+
+                            <span class="required-text">
+                                Required
+                            </span>
+
+                        </div>
+
+                        <textarea
+                            name="message"
+                            id="id_message"
+                            placeholder="Example: Your interview has been scheduled for Monday at 10:00 AM. Please be available at the scheduled time."
+                            required></textarea>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="form-actions">
+
+                        <a href="{% url 'recruiter_home' %}"
+                           class="btn-cancel">
+                            Cancel
+                        </a>
+
+                        <button type="submit"
+                                class="submit-btn">
+
+                            <span>🔔</span>
+                            Send Notification
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
 
         </div>
 

@@ -1,74 +1,663 @@
 {% extends 'admin/admin_home.html' %}
-{%  block content %}
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('/static/images/hero_1.jpg');">
-    <div class="block no-padding  gray">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="inner2">
-              <div class="inner-title2">
-                <h3></h3>
-                <h2 style="font-weight: bold; color: black; text-align: center;">Approved companies</h2>
-              </div>
-    
+
+{% block content %}
+
+<style>
+    /* =========================================
+       APPROVED COMPANIES LIST
+    ========================================== */
+
+    .companies-page {
+        padding: 10px 0 40px;
+    }
+
+    /* Header */
+    .page-header-card {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        border-radius: 18px;
+        padding: 28px 30px;
+        margin-bottom: 25px;
+        position: relative;
+        overflow: hidden;
+        color: #ffffff;
+    }
+
+    .page-header-card::after {
+        content: "";
+        position: absolute;
+        width: 190px;
+        height: 190px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.05);
+        right: -55px;
+        top: -75px;
+    }
+
+    .page-header-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px 12px;
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+        margin-bottom: 12px;
+    }
+
+    .page-header-card h2 {
+        margin: 0 0 7px;
+        font-size: 27px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .page-header-card p {
+        margin: 0;
+        color: rgba(255,255,255,0.75);
+        font-size: 14px;
+    }
+
+
+    /* =========================================
+       SUMMARY
+    ========================================== */
+
+    .summary-card {
+        background: #ffffff;
+        border: 1px solid #e8edf4;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .summary-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #ecfdf5;
+        color: #059669;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+    }
+
+    .summary-info span {
+        display: block;
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 3px;
+    }
+
+    .summary-info strong {
+        display: block;
+        font-size: 22px;
+        color: #0f172a;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+       COMPANY CARD
+    ========================================== */
+
+    .companies-card {
+        background: #ffffff;
+        border: 1px solid #e8edf4;
+        border-radius: 16px;
+        box-shadow: 0 5px 22px rgba(15, 23, 42, 0.05);
+        overflow: hidden;
+    }
+
+    .companies-card-header {
+        padding: 20px 22px;
+        border-bottom: 1px solid #edf1f5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .title-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .title-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+    }
+
+    .title-wrapper h4 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .title-wrapper p {
+        margin: 3px 0 0;
+        color: #94a3b8;
+        font-size: 12px;
+    }
+
+    .company-count {
+        background: #ecfdf5;
+        color: #059669;
+        border: 1px solid #a7f3d0;
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+       COMPANY LIST
+    ========================================== */
+
+    .company-list {
+        padding: 8px 22px 20px;
+    }
+
+    .company-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 18px 0;
+        border-bottom: 1px solid #eef2f6;
+        transition: .18s ease;
+    }
+
+    .company-item:last-child {
+        border-bottom: none;
+    }
+
+    .company-item:hover {
+        background: #f8fbff;
+        margin: 0 -10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 10px;
+    }
+
+
+    /* Company Information */
+    .company-main {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .company-logo {
+        width: 55px;
+        height: 55px;
+        border-radius: 13px;
+        object-fit: cover;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        flex-shrink: 0;
+    }
+
+    .company-placeholder {
+        width: 55px;
+        height: 55px;
+        border-radius: 13px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+        flex-shrink: 0;
+    }
+
+    .company-details {
+        min-width: 0;
+    }
+
+    .company-details h3 {
+        margin: 0 0 5px;
+        color: #0f172a;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .company-email {
+        color: #64748b;
+        font-size: 12px;
+        margin-bottom: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .company-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #ecfdf5;
+        color: #059669;
+        border: 1px solid #a7f3d0;
+        border-radius: 20px;
+        padding: 4px 8px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: capitalize;
+    }
+
+    .status-dot {
+        width: 6px;
+        height: 6px;
+        background: #10b981;
+        border-radius: 50%;
+    }
+
+
+    /* Contact Information */
+    .company-contact {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+        min-width: 300px;
+    }
+
+    .contact-item {
+        min-width: 110px;
+    }
+
+    .contact-label {
+        display: block;
+        font-size: 10px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+        margin-bottom: 4px;
+    }
+
+    .contact-value {
+        color: #475569;
+        font-size: 12px;
+    }
+
+
+    /* Action */
+    .company-action {
+        flex-shrink: 0;
+    }
+
+    .view-jobs-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+        padding: 9px 13px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: .18s ease;
+    }
+
+    .view-jobs-btn:hover {
+        background: #2563eb;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+
+    /* =========================================
+       EMPTY STATE
+    ========================================== */
+
+    .empty-state {
+        text-align: center;
+        padding: 65px 20px;
+    }
+
+    .empty-icon {
+        width: 65px;
+        height: 65px;
+        margin: 0 auto 17px;
+        border-radius: 16px;
+        background: #f1f5f9;
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 27px;
+    }
+
+    .empty-state h5 {
+        margin: 0 0 7px;
+        color: #334155;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .empty-state p {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 13px;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================== */
+
+    @media (max-width: 1000px) {
+
+        .company-item {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .company-main {
+            width: 100%;
+        }
+
+        .company-contact {
+            width: 100%;
+            min-width: 0;
+            gap: 30px;
+        }
+
+        .company-action {
+            width: 100%;
+        }
+
+        .view-jobs-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 700px) {
+
+        .page-header-card {
+            padding: 23px;
+        }
+
+        .page-header-card h2 {
+            font-size: 22px;
+        }
+
+        .companies-card-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .company-contact {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .contact-item {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 500px) {
+
+        .company-list {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .company-main {
+            align-items: flex-start;
+        }
+
+        .company-logo,
+        .company-placeholder {
+            width: 48px;
+            height: 48px;
+        }
+    }
+</style>
+
+<div class="companies-page">
+
+
+<div class="container-fluid">
+
+    <!-- =========================================
+         PAGE HEADER
+    ========================================== -->
+
+    <div class="page-header-card">
+
+        <div class="page-header-content">
+
+            <div class="page-badge">
+                <span class="icon-check_circle"></span>
+                Recruiter Management
             </div>
-          </div>
+
+            <h2>Approved Companies</h2>
+
+            <p>
+                View approved companies and access their published job opportunities.
+            </p>
+
         </div>
-      </div>
+
     </div>
-  </section>
 
-<section class="site-section">
-    <div class="container">
-        <div class="row mb-5 justify-content-center">
-            <div class="col-md-7 text-center">
-                <h2 class="section-title mb-2">Companies Listed</h2>
-            </div>
+
+    <!-- =========================================
+         SUMMARY
+    ========================================== -->
+
+    <div class="summary-card">
+
+        <div class="summary-icon">
+            <span class="icon-business"></span>
         </div>
 
-        <ul class="job-listings mb-5">
-            {% for i in approved_recruiters %}
-                <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-                    <a href="/admin_viewjob/{{i.id}}"></a>
-                    {% comment %} <div class="job-listing-logo">
-                        <img src="{{ job.logo }}" alt="Free Website Template by Free-Template.co" class="img-fluid">
-                    </div> {% endcomment %}
+        <div class="summary-info">
 
-                    <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-                        <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                            <h2>{{ i.name }}</h2>
-                            <strong>{{ i.email }}</strong>
-                        </div>
-                        <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                            <span class="icon-room"></span> {{ i.plc }}<br>
-                            <span></span> {{ i.phn }}
-                        </div>
-                        {% comment %} <div class="job-listing-meta">
-                            <b><a href="/admin_reject/{{ i.id }}/">
-                                <input type="button" class="btn btn-danger" value="Reject">
-                              </a> </span><h3><b>
-                        </div> {% endcomment %}
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+            <span>Approved Companies</span>
 
-        <div class="row pagination-wrap">
-            <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
-                {% comment %} <span>Showing 1-{{ jobs|length }} Of 43,167 Jobs</span> {% endcomment %}
-            </div>
-            <div class="col-md-6 text-center text-md-right">
-                <div class="custom-pagination ml-auto">
-                    <a href="#" class="prev">Prev</a>
-                    <div class="d-inline-block">
-                        {% for page_num in pages %}
-                            <a href="#" {% if page_num == current_page %}class="active"{% endif %}>{{ page_num }}</a>
-                        {% endfor %}
-                    </div>
-                    <a href="#" class="next">Next</a>
+            <strong>
+                {{ approved_recruiters|length }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         COMPANIES CARD
+    ========================================== -->
+
+    <div class="companies-card">
+
+        <div class="companies-card-header">
+
+            <div class="title-wrapper">
+
+                <div class="title-icon">
+                    <span class="icon-business"></span>
                 </div>
+
+                <div>
+
+                    <h4>Companies Listed</h4>
+
+                    <p>
+                        Approved recruiters registered on ResumeAI
+                    </p>
+
+                </div>
+
             </div>
+
+
+            <span class="company-count">
+
+                {{ approved_recruiters|length }} Companies
+
+            </span>
+
         </div>
+
+
+        <!-- =====================================
+             COMPANY LIST
+        ====================================== -->
+
+        <div class="company-list">
+
+            {% for i in approved_recruiters %}
+
+            <div class="company-item">
+
+                <!-- Company -->
+                <div class="company-main">
+
+                    {% if i.profile_pic %}
+
+                        <img
+                            src="{{ i.profile_pic.url }}"
+                            alt="{{ i.name }}"
+                            class="company-logo"
+                        >
+
+                    {% else %}
+
+                        <div class="company-placeholder">
+                            <span class="icon-business"></span>
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="company-details">
+
+                        <h3>
+                            {{ i.name }}
+                        </h3>
+
+                        <div class="company-email">
+                            {{ i.email }}
+                        </div>
+
+                        <span class="company-status">
+
+                            <span class="status-dot"></span>
+
+                            {{ i.status }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Contact -->
+                <div class="company-contact">
+
+                    <div class="contact-item">
+
+                        <span class="contact-label">
+                            Location
+                        </span>
+
+                        <span class="contact-value">
+                            <span class="icon-room"></span>
+                            {{ i.plc }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <span class="contact-label">
+                            Phone
+                        </span>
+
+                        <span class="contact-value">
+                            {{ i.phn }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Action -->
+                <div class="company-action">
+
+                    <a
+                        href="/admin_viewjob/{{ i.id }}/"
+                        class="view-jobs-btn"
+                    >
+                        <span class="icon-briefcase"></span>
+                        View Jobs
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    <span class="icon-business"></span>
+                </div>
+
+                <h5>No Approved Companies</h5>
+
+                <p>
+                    There are currently no approved companies registered on the platform.
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
     </div>
-</section>
-{% endblock%}
+
+</div>
+
+
+</div>
+
+{% endblock %}

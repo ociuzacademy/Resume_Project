@@ -60,7 +60,7 @@ path('admin_reject/<int:user_id>/', views.admin_reject, name='admin_reject'),
 path('admin_viewapproved/',views.admin_viewapproved, name='admin_viewapproved'),
 path('admin_viewrecruiters/',views.admin_viewrecruiters, name='admin_viewrecruiters'),
 path('admin_viewrejected/',views.admin_viewrejected, name='admin_viewrejected'),
-path('admin_viewjob/<int:company_id>',views.admin_viewjob, name='admin_viewjob' ),
+path('admin_viewjob/<int:company_id>/', views.admin_viewjob, name='admin_viewjob'),
 path('view_users/',views.view_users,name='view_users'),
 
 path('main/',views.main, name='main' ),

@@ -4,292 +4,777 @@
 
 <style>
 
-    .users-section{
-        padding:80px 0;
-        background:#f8fafc;
-        min-height:100vh;
+    /* =========================================
+       USERS PAGE
+    ========================================== */
+
+    .users-page {
+        padding: 10px 0 40px;
     }
 
-    .page-title{
-        text-align:center;
-        margin-bottom:50px;
+
+    /* =========================================
+       PAGE HEADER
+    ========================================== */
+
+    .page-header-card {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        border-radius: 18px;
+        padding: 28px 30px;
+        margin-bottom: 25px;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
     }
 
-    .page-title h2{
-        font-size:42px;
-        font-weight:700;
-        color:#0f172a;
+    .page-header-card::after {
+        content: "";
+        position: absolute;
+        width: 190px;
+        height: 190px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.05);
+        right: -55px;
+        top: -75px;
     }
 
-    .users-container{
-        background:white;
-        border-radius:20px;
-        overflow:hidden;
-        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    .page-header-content {
+        position: relative;
+        z-index: 2;
     }
 
-    .table{
-        margin-bottom:0;
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px 12px;
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+        margin-bottom: 12px;
     }
 
-    .table thead{
-        background:#0f172a;
+    .page-header-card h2 {
+        margin: 0 0 7px;
+        font-size: 27px;
+        font-weight: 700;
+        color: #ffffff;
     }
 
-    .table th{
-        color:white;
-        padding:18px;
-        font-size:15px;
-        font-weight:600;
-        border:none;
-        text-align:center;
-        white-space:nowrap;
+    .page-header-card p {
+        margin: 0;
+        color: rgba(255,255,255,0.75);
+        font-size: 14px;
     }
 
-    .table td{
-        padding:18px;
-        text-align:center;
-        vertical-align:middle;
-        color:#334155;
-        font-size:14px;
+
+    /* =========================================
+       SUMMARY CARDS
+    ========================================== */
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 25px;
     }
 
-    .profile-img{
-        width:70px;
-        height:70px;
-        border-radius:50%;
-        object-fit:cover;
-        border:3px solid #dbeafe;
+    .summary-card {
+        background: #ffffff;
+        border: 1px solid #e8edf4;
+        border-radius: 14px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
     }
 
-    .user-name{
-        font-weight:700;
-        color:#0f172a;
+    .summary-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+        flex-shrink: 0;
     }
 
-    .badge-user{
-        display:inline-block;
-        padding:6px 14px;
-        border-radius:30px;
-        font-size:12px;
-        font-weight:600;
-        background:#dbeafe;
-        color:#1d4ed8;
+    .summary-icon.users {
+        background: #eff6ff;
+        color: #2563eb;
     }
 
-    .bio-box{
-        max-width:250px;
-        margin:auto;
-        color:#64748b;
-        font-size:13px;
-        line-height:1.5;
+    .summary-icon.profile {
+        background: #ecfdf5;
+        color: #059669;
     }
 
-    .empty-box{
-        background:white;
-        padding:80px 40px;
-        border-radius:20px;
-        text-align:center;
-        box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    .summary-icon.accounts {
+        background: #f5f3ff;
+        color: #7c3aed;
     }
 
-    .empty-box h3{
-        font-size:32px;
-        font-weight:700;
-        color:#0f172a;
-        margin-bottom:10px;
+    .summary-info span {
+        display: block;
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 3px;
     }
 
-    .empty-box p{
-        color:#64748b;
-        font-size:16px;
+    .summary-info strong {
+        display: block;
+        font-size: 22px;
+        color: #0f172a;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+       USERS CARD
+    ========================================== */
+
+    .users-card {
+        background: #ffffff;
+        border: 1px solid #e8edf4;
+        border-radius: 16px;
+        box-shadow: 0 5px 22px rgba(15, 23, 42, 0.05);
+        overflow: hidden;
+    }
+
+    .users-card-header {
+        padding: 20px 22px;
+        border-bottom: 1px solid #edf1f5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .title-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .title-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+    }
+
+    .title-wrapper h4 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .title-wrapper p {
+        margin: 3px 0 0;
+        color: #94a3b8;
+        font-size: 12px;
+    }
+
+    .user-count {
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+       TABLE
+    ========================================== */
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .users-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1100px;
+    }
+
+    .users-table thead {
+        background: #f8fafc;
+    }
+
+    .users-table th {
+        padding: 13px 16px;
+        color: #64748b;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+        border-bottom: 1px solid #e8edf4;
+        white-space: nowrap;
+    }
+
+    .users-table td {
+        padding: 15px 16px;
+        color: #475569;
+        font-size: 12px;
+        border-bottom: 1px solid #f0f3f7;
+        vertical-align: middle;
+    }
+
+    .users-table tbody tr {
+        transition: .18s ease;
+    }
+
+    .users-table tbody tr:hover {
+        background: #f8fbff;
+    }
+
+    .users-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    /* =========================================
+       USER PROFILE
+    ========================================== */
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        min-width: 180px;
+    }
+
+    .profile-img {
+        width: 45px;
+        height: 45px;
+        border-radius: 11px;
+        object-fit: cover;
+        border: 1px solid #dbeafe;
+        background: #f8fafc;
+        flex-shrink: 0;
+    }
+
+    .profile-placeholder {
+        width: 45px;
+        height: 45px;
+        border-radius: 11px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .user-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 3px;
+    }
+
+    .user-username {
+        font-size: 11px;
+        color: #94a3b8;
+    }
+
+
+    /* =========================================
+       USER TYPE
+    ========================================== */
+
+    .badge-user {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 10px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: 700;
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+        text-transform: capitalize;
+    }
+
+    .user-type-dot {
+        width: 6px;
+        height: 6px;
+        background: #3b82f6;
+        border-radius: 50%;
+    }
+
+
+    /* =========================================
+       INFORMATION
+    ========================================== */
+
+    .info-label {
+        display: block;
+        font-size: 9px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+        margin-bottom: 3px;
+    }
+
+    .info-value {
+        color: #475569;
+        font-size: 12px;
+    }
+
+
+    /* =========================================
+       BIO
+    ========================================== */
+
+    .bio-box {
+        max-width: 220px;
+        color: #64748b;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+
+    /* =========================================
+       EMPTY STATE
+    ========================================== */
+
+    .empty-state {
+        text-align: center;
+        padding: 70px 20px;
+    }
+
+    .empty-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 18px;
+        border-radius: 17px;
+        background: #f1f5f9;
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+
+    .empty-state h5 {
+        margin: 0 0 7px;
+        color: #334155;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .empty-state p {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 13px;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================== */
+
+    @media (max-width: 900px) {
+
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .page-header-card {
+            padding: 24px;
+        }
+
+        .page-header-card h2 {
+            font-size: 23px;
+        }
+
+        .users-card-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+
+
+    @media (max-width: 576px) {
+
+        .page-header-card {
+            border-radius: 13px;
+            padding: 20px;
+        }
+
+        .page-header-card h2 {
+            font-size: 20px;
+        }
+
+        .summary-card {
+            padding: 16px;
+        }
     }
 
 </style>
 
+<div class="users-page">
 
 
-<!-- HERO SECTION -->
+<div class="container-fluid">
 
-<section class="section-hero overlay inner-page bg-image"
-         style="background-image:url('/static/images/hero_1.jpg');
-                background-size:cover;
-                background-position:center;
-                height:300px;">
 
-    <div class="container h-100 d-flex align-items-center justify-content-center">
+    <!-- =========================================
+         PAGE HEADER
+    ========================================== -->
 
-        <div class="text-center">
+    <div class="page-header-card">
 
-            <h1 style="color:white; font-size:52px; font-weight:800;">
-                View Users
-            </h1>
+        <div class="page-header-content">
 
-            <p style="color:white; font-size:18px;">
-                Manage and view registered users
+            <div class="page-badge">
+                <span class="icon-people"></span>
+                User Management
+            </div>
+
+            <h2>Registered Users</h2>
+
+            <p>
+                View and manage users registered on the ResumeAI platform.
             </p>
 
         </div>
 
     </div>
 
-</section>
+
+    <!-- =========================================
+         SUMMARY CARDS
+    ========================================== -->
+
+    <div class="summary-grid">
 
 
+        <div class="summary-card">
 
-<!-- USERS SECTION -->
+            <div class="summary-icon users">
+                <span class="icon-people"></span>
+            </div>
 
-<section class="users-section">
+            <div class="summary-info">
 
-    <div class="container">
+                <span>Total Users</span>
 
-        <div class="page-title">
-
-            <h2>Registered Users</h2>
-
-        </div>
-
-        {% if users %}
-
-        <div class="users-container">
-
-            <div class="table-responsive">
-
-                <table class="table table-hover align-middle">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Profile</th>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Gender</th>
-                            <th>Qualification</th>
-                            <th>Place</th>
-                            <th>User Type</th>
-                            <th>Bio</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {% for i in users %}
-
-                        <tr>
-
-                            <td>
-
-                                {% if i.profile_pic %}
-
-                                    <img src="{{ i.profile_pic.url }}"
-                                         class="profile-img"
-                                         alt="Profile Picture">
-
-                                {% else %}
-
-                                    <img src="/static/images/default-user.png"
-                                         class="profile-img"
-                                         alt="Default User">
-
-                                {% endif %}
-
-                            </td>
-
-                            <td class="user-name">
-
-                                {{ i.name }}
-
-                            </td>
-
-                            <td>
-
-                                {{ i.uname }}
-
-                            </td>
-
-                            <td>
-
-                                {{ i.email }}
-
-                            </td>
-
-                            <td>
-
-                                {{ i.phn }}
-
-                            </td>
-
-                            <td>
-
-                                {{ i.gender }}
-
-                            </td>
-
-                            <td>
-
-                                {{ i.qualification }}
-
-                            </td>
-
-                            <td>
-
-                                {{ i.plc }}
-
-                            </td>
-
-                            <td>
-
-                                <span class="badge-user">
-
-                                    {{ i.utype }}
-
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <div class="bio-box">
-
-                                    {{ i.bio|default:"No bio added" }}
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
+                <strong>
+                    {{ users|length }}
+                </strong>
 
             </div>
 
         </div>
 
-        {% else %}
 
-        <div class="empty-box">
+        <div class="summary-card">
 
-            <h3>No Users Found</h3>
+            <div class="summary-icon profile">
+                <span class="icon-account_circle"></span>
+            </div>
 
-            <p>
-                There are currently no registered users available.
-            </p>
+            <div class="summary-info">
+
+                <span>Registered Profiles</span>
+
+                <strong>
+                    {{ users|length }}
+                </strong>
+
+            </div>
 
         </div>
 
-        {% endif %}
+
+        <div class="summary-card">
+
+            <div class="summary-icon accounts">
+                <span class="icon-person"></span>
+            </div>
+
+            <div class="summary-info">
+
+                <span>Account Type</span>
+
+                <strong>User</strong>
+
+            </div>
+
+        </div>
+
 
     </div>
 
-</section>
+
+    <!-- =========================================
+         USERS CARD
+    ========================================== -->
+
+    <div class="users-card">
+
+
+        <div class="users-card-header">
+
+            <div class="title-wrapper">
+
+                <div class="title-icon">
+                    <span class="icon-people"></span>
+                </div>
+
+                <div>
+
+                    <h4>Platform Users</h4>
+
+                    <p>
+                        Registered job seekers and user profiles
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <span class="user-count">
+
+                {{ users|length }} Users
+
+            </span>
+
+        </div>
+
+
+        <!-- =====================================
+             USER TABLE
+        ====================================== -->
+
+        <div class="table-container">
+
+            {% if users %}
+
+            <table class="users-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Profile</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Gender</th>
+                        <th>Qualification</th>
+                        <th>Location</th>
+                        <th>User Type</th>
+                        <th>Bio</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for i in users %}
+
+                    <tr>
+
+
+                        <!-- Profile -->
+
+                        <td>
+
+                            <div class="user-profile">
+
+                                {% if i.profile_pic %}
+
+                                    <img
+                                        src="{{ i.profile_pic.url }}"
+                                        class="profile-img"
+                                        alt="{{ i.name }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="profile-placeholder">
+
+                                        <span class="icon-person"></span>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div>
+
+                                    <div class="user-name">
+                                        {{ i.name }}
+                                    </div>
+
+                                    <div class="user-username">
+                                        @{{ i.uname }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Email -->
+
+                        <td>
+
+                            <span class="info-label">
+                                Email
+                            </span>
+
+                            <span class="info-value">
+                                {{ i.email }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- Phone -->
+
+                        <td>
+
+                            <span class="info-label">
+                                Phone
+                            </span>
+
+                            <span class="info-value">
+                                {{ i.phn }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- Gender -->
+
+                        <td>
+
+                            <span class="info-value">
+                                {{ i.gender|default:"Not specified" }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- Qualification -->
+
+                        <td>
+
+                            <span class="info-value">
+                                {{ i.qualification|default:"Not specified" }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- Location -->
+
+                        <td>
+
+                            <span class="info-value">
+
+                                <span class="icon-room"></span>
+
+                                {{ i.plc|default:"Not specified" }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- User Type -->
+
+                        <td>
+
+                            <span class="badge-user">
+
+                                <span class="user-type-dot"></span>
+
+                                {{ i.utype }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Bio -->
+
+                        <td>
+
+                            <div class="bio-box">
+
+                                {{ i.bio|default:"No bio added" }}
+
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+
+            {% else %}
+
+
+            <!-- Empty State -->
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+
+                    <span class="icon-people"></span>
+
+                </div>
+
+                <h5>No Users Found</h5>
+
+                <p>
+                    There are currently no registered users available.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
 
 {% endblock %}
