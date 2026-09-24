@@ -5,7 +5,10 @@ from django.http import HttpResponse,HttpResponseRedirect
 # from resumeapp.models import job
 from django.contrib import messages
 from .models import tbl_register
-
+from django.shortcuts import get_object_or_404
+from .models import AIResumeScreening
+from ai_resume.resume_parser import extract_resume_text
+from ai_resume.ai_screening import screen_resume
 from .resume_detect import *
 import ast
 from django.conf import settings
@@ -1400,3 +1403,67 @@ def user_view_notification(request):
     
     # Render the template
     return render(request, 'user/user_view_notification.html', context)
+
+def ai_screen_resume(request, application_id):
+    application = get_object_or_404(
+        tbl_user_apply_job.objects.select_related(
+            'user',
+            'resume',
+            'job'
+        ),
+        id=application_id
+    )
+
+    # Check whether resume exists
+    if not application.resume or not application.resume.resume1:
+        return HttpResponse("Resume not found for this application.")
+
+    # Get uploaded resume file path
+    resume_path = application.resume.resume1.path
+
+    # Extract text from PDF/DOCX resume
+    resume_text = extract_resume_text(resume_path)
+
+    # Prepare job information for AI
+    job_description = f"""
+    Job Title: {application.job.jobtitle}
+
+    Required Skills:
+    {application.job.jobskills}
+
+    Job Description:
+    {application.job.jobdescription}
+
+    Required Experience:
+    {application.job.jobexp1} - {application.job.jobexp2}
+    """
+
+    # Run AI screening
+    result = screen_resume(
+        resume_text,
+        job_description
+    )
+
+    # Save AI screening result
+    screening, created = AIResumeScreening.objects.update_or_create(
+        application=application,
+        defaults={
+            'match_score': result['final_score'],
+            'semantic_score': result['semantic_score'],
+            'skill_score': result['skill_score'],
+            'matched_skills': ', '.join(result['matched_skills']),
+            'missing_skills': ', '.join(result['missing_skills']),
+            'recommendation': result['recommendation'],
+        }
+    )
+
+    return render(
+        request,
+        'recruiter/ai_screening_result.html',
+        {
+            'application': application,
+            'screening': screening,
+            'result': result,
+        }
+    )
+

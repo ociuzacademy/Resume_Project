@@ -27,7 +27,11 @@ path('user_view_applied_jobs/', views.user_view_applied_jobs, name='user_view_ap
 path('user_cancel_application/<int:appli_id>/', views.user_cancel_application, name='user_cancel_application'),
 path('user_view_notification/', views.user_view_notification, name='user_view_notification'),
 path('user_jobviewmore/<int:job_id>/', views.user_jobviewmore, name='user_jobviewmore'),
-
+path(
+    'ai_screen_resume/<int:application_id>/',
+    views.ai_screen_resume,
+    name='ai_screen_resume'
+),
 
 path('recruiter_home/',views.recruiter_home, name='recruiter_home'),
 path('recruiter_addjob/', views.recruiter_addjob, name='recruiter_addjob'),

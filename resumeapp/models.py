@@ -89,4 +89,30 @@ class tbl_notification(models.Model):
     message = models.TextField()
 
 
+
+class AIResumeScreening(models.Model):
+    application = models.OneToOneField(
+        tbl_user_apply_job,
+        on_delete=models.CASCADE,
+        related_name='ai_screening'
+    )
+
+    match_score = models.FloatField(default=0)
+    semantic_score = models.FloatField(default=0)
+    skill_score = models.FloatField(default=0)
+
+    matched_skills = models.TextField(blank=True, null=True)
+    missing_skills = models.TextField(blank=True, null=True)
+
+    recommendation = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.application} - {self.match_score}%"
+
     

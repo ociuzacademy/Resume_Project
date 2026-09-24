@@ -1,4 +1,4 @@
-{% extends 'recruiter_home.html' %}
+{% extends 'user/user_home.html' %}
 
 {% block content %}
 
@@ -552,7 +552,7 @@
                     <div class="job-actions">
 
                         <a
-                            href="/recruiter_viewjob/"
+                            href="/user_view_jobs/"
                             class="action-btn back-btn">
 
                             ←
@@ -561,25 +561,7 @@
                         </a>
 
 
-                        <a
-                            href="/recruiter_updatejob/{{ job.id }}"
-                            class="action-btn update-btn">
-
-                            ✏️
-                            Update Job
-
-                        </a>
-
-
-                        <a
-                            href="/recruiter_deletejob/{{ job.id }}/"
-                            class="action-btn delete-btn"
-                            onclick="return confirm('Are you sure you want to delete this job?');">
-
-                            🗑️
-                            Delete Job
-
-                        </a>
+                       
 
                     </div>
 

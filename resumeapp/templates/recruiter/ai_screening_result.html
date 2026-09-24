@@ -1,0 +1,324 @@
+{% extends 'recruiter/recruiter_home.html' %}
+
+{% block content %}
+
+<style>
+    .ai-screening-container {
+        max-width: 1100px;
+        margin: 30px auto;
+    }
+
+    .ai-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 30px rgba(30, 40, 70, 0.08);
+    }
+
+    .ai-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .ai-header h2 {
+        margin: 0 0 6px;
+        color: #1f2937;
+    }
+
+    .ai-header p {
+        margin: 0;
+        color: #6b7280;
+    }
+
+    .recommendation {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 30px;
+        background: #eaf8ef;
+        color: #198754;
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+    .score-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 25px;
+    }
+
+    .score-box {
+        background: #f8f9ff;
+        border: 1px solid #eef0f7;
+        border-radius: 14px;
+        padding: 22px;
+        text-align: center;
+    }
+
+    .score-box h4 {
+        margin: 0 0 10px;
+        color: #6b7280;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .score-value {
+        font-size: 30px;
+        font-weight: 800;
+        color: #5b5bf7;
+    }
+
+    .main-score {
+        background: linear-gradient(135deg, #f1f1ff, #fafaff);
+    }
+
+    .main-score .score-value {
+        font-size: 42px;
+    }
+
+    .skill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .skill {
+        padding: 8px 13px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .matched {
+        background: #eaf8ef;
+        color: #198754;
+    }
+
+    .missing {
+        background: #fff0f0;
+        color: #dc3545;
+    }
+
+    .required {
+        background: #f0f1ff;
+        color: #5557d9;
+    }
+
+    .section-title {
+        margin: 0;
+        color: #1f2937;
+        font-size: 18px;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 17px;
+        border-radius: 9px;
+        background: #5b5bf7;
+        color: white;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .back-btn:hover {
+        color: white;
+        opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+        .score-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .ai-screening-container {
+            margin: 20px 10px;
+        }
+    }
+</style>
+
+
+<div class="ai-screening-container">
+
+    <!-- Header -->
+    <div class="ai-card">
+        <div class="ai-header">
+
+            <div>
+                <h2>
+                    <i class="fa-solid fa-robot"></i>
+                    AI Resume Screening
+                </h2>
+
+                <p>
+                    Candidate:
+                    <strong>{{ application.user.name }}</strong>
+                </p>
+
+                <p>
+                    Job:
+                    <strong>{{ application.job.jobtitle }}</strong>
+                </p>
+            </div>
+
+            <div>
+                <span class="recommendation">
+                    {{ screening.recommendation }}
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Scores -->
+    <div class="ai-card">
+
+        <h3 class="section-title">
+            <i class="fa-solid fa-chart-line"></i>
+            AI Screening Scores
+        </h3>
+
+        <div class="score-grid">
+
+            <div class="score-box main-score">
+                <h4>FINAL MATCH SCORE</h4>
+
+                <div class="score-value">
+                    {{ screening.match_score }}%
+                </div>
+            </div>
+
+
+            <div class="score-box">
+                <h4>SEMANTIC SCORE</h4>
+
+                <div class="score-value">
+                    {{ screening.semantic_score }}%
+                </div>
+            </div>
+
+
+            <div class="score-box">
+                <h4>SKILL SCORE</h4>
+
+                <div class="score-value">
+                    {{ screening.skill_score }}%
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Matched Skills -->
+    <div class="ai-card">
+
+        <h3 class="section-title">
+            <i class="fa-solid fa-circle-check"></i>
+            Matched Skills
+        </h3>
+
+        <div class="skill-list">
+
+            {% if result.matched_skills %}
+
+                {% for skill in result.matched_skills %}
+
+                    <span class="skill matched">
+                        ✓ {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No matching skills found.</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Missing Skills -->
+    <div class="ai-card">
+
+        <h3 class="section-title">
+            <i class="fa-solid fa-circle-xmark"></i>
+            Missing Skills
+        </h3>
+
+        <div class="skill-list">
+
+            {% if result.missing_skills %}
+
+                {% for skill in result.missing_skills %}
+
+                    <span class="skill missing">
+                        ✗ {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No missing skills.</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Required Skills -->
+    <div class="ai-card">
+
+        <h3 class="section-title">
+            <i class="fa-solid fa-list-check"></i>
+            Required Skills
+        </h3>
+
+        <div class="skill-list">
+
+            {% if result.required_skills %}
+
+                {% for skill in result.required_skills %}
+
+                    <span class="skill required">
+                        {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Back -->
+    <div style="margin-top: 25px;">
+
+        <a href="{% url 'recruiter_home' %}" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

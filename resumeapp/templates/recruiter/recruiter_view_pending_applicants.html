@@ -3,7 +3,6 @@
 {% block content %}
 
 <style>
-
     .pending-page {
         min-height: calc(100vh - 80px);
         background: #f8fafc;
@@ -331,6 +330,31 @@
         font-size: 14px;
     }
 
+    /* AI SCREENING */
+
+    .btn-ai-screen {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 9px 14px;
+        border-radius: 9px;
+        background: #eef2ff;
+        color: #4f46e5;
+        border: 1px solid #c7d2fe;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: .25s ease;
+    }
+
+    .btn-ai-screen:hover {
+        background: #4f46e5;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
     /* RESPONSIVE */
 
     @media (max-width: 768px) {
@@ -348,7 +372,6 @@
         }
 
     }
-
 </style>
 
 
@@ -378,219 +401,225 @@
 
             {% if pending_applicants %}
 
-                <!-- APPLICANTS CARD -->
+            <!-- APPLICANTS CARD -->
 
-                <div class="pending-card">
+            <div class="pending-card">
 
-                    <div class="card-header-custom">
+                <div class="card-header-custom">
 
-                        <div class="card-icon">
-                            ⏳
-                        </div>
-
-                        <div>
-
-                            <h3>Pending Applications</h3>
-
-                            <p>
-                                Review applicant details and take action
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- TABLE -->
-
-                    <div class="table-wrapper">
-
-                        <table class="pending-table">
-
-                            <thead>
-
-                                <tr>
-
-                                    <th>Job Title</th>
-                                    <th>Applicant</th>
-                                    <th>Email</th>
-                                    <th>Qualification</th>
-                                    <th>Experience</th>
-                                    <th>Resume</th>
-                                    <th>Actions</th>
-
-                                </tr>
-
-                            </thead>
-
-
-                            <tbody>
-
-                                {% for job in pending_applicants %}
-
-                                    {% for applicant in job.applicants %}
-
-                                        <tr>
-
-                                            <!-- JOB -->
-
-                                            <td class="job-title">
-
-                                                {{ job.job_title }}
-
-                                            </td>
-
-
-                                            <!-- APPLICANT -->
-
-                                            <td>
-
-                                                <div class="applicant-info">
-
-                                                    <div class="applicant-avatar">
-
-                                                        {{ applicant.user.name|first|upper }}
-
-                                                    </div>
-
-                                                    <span class="applicant-name">
-
-                                                        {{ applicant.user.name }}
-
-                                                    </span>
-
-                                                </div>
-
-                                            </td>
-
-
-                                            <!-- EMAIL -->
-
-                                            <td>
-
-                                                <span class="email-text">
-
-                                                    {{ applicant.user.email }}
-
-                                                </span>
-
-                                            </td>
-
-
-                                            <!-- QUALIFICATION -->
-
-                                            <td>
-
-                                                <span class="qualification">
-
-                                                    {{ applicant.user.qualification }}
-
-                                                </span>
-
-                                            </td>
-
-
-                                            <!-- EXPERIENCE -->
-
-                                            <td>
-
-                                                <span class="experience-badge">
-
-                                                    {{ applicant.resume.experience }}
-
-                                                </span>
-
-                                            </td>
-
-
-                                            <!-- RESUME -->
-
-                                            <td>
-
-                                                {% if applicant.resume.resume1 %}
-
-                                                    <a
-                                                        href="{{ applicant.resume.resume1.url }}"
-                                                        target="_blank"
-                                                        class="resume-link">
-
-                                                        📄 View / Download
-
-                                                    </a>
-
-                                                {% else %}
-
-                                                    <span class="no-resume">
-
-                                                        No Resume
-
-                                                    </span>
-
-                                                {% endif %}
-
-                                            </td>
-
-
-                                            <!-- ACTIONS -->
-
-                                            <td>
-
-                                                <div class="action-buttons">
-
-                                                    <a
-                                                        href="/shortlistCandidate/{{ applicant.id }}/"
-                                                        class="btn-shortlist"
-                                                        onclick="return confirmShortlist();">
-
-                                                        ✓ Shortlist
-
-                                                    </a>
-
-
-                                                    <a
-                                                        href="/rejectCandidate/{{ applicant.id }}/"
-                                                        class="btn-reject"
-                                                        onclick="return confirmReject();">
-
-                                                        ✕ Reject
-
-                                                    </a>
-
-                                                </div>
-
-                                            </td>
-
-                                        </tr>
-
-                                    {% endfor %}
-
-                                {% endfor %}
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            {% else %}
-
-                <!-- EMPTY STATE -->
-
-                <div class="empty-box">
-
-                    <div class="empty-icon">
+                    <div class="card-icon">
                         ⏳
                     </div>
 
-                    <h3>No Pending Applicants</h3>
+                    <div>
 
-                    <p>
-                        There are currently no pending applicants for any of your jobs.
-                    </p>
+                        <h3>Pending Applications</h3>
+
+                        <p>
+                            Review applicant details and take action
+                        </p>
+
+                    </div>
 
                 </div>
+
+
+                <!-- TABLE -->
+
+                <div class="table-wrapper">
+
+                    <table class="pending-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Job Title</th>
+                                <th>Applicant</th>
+                                <th>Email</th>
+                                <th>Qualification</th>
+                                <th>Experience</th>
+                                <th>Resume</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for job in pending_applicants %}
+
+                            {% for applicant in job.applicants %}
+
+                            <tr>
+
+                                <!-- JOB -->
+
+                                <td class="job-title">
+
+                                    {{ job.job_title }}
+
+                                </td>
+
+
+                                <!-- APPLICANT -->
+
+                                <td>
+
+                                    <div class="applicant-info">
+
+                                        <div class="applicant-avatar">
+
+                                            {{ applicant.user.name|first|upper }}
+
+                                        </div>
+
+                                        <span class="applicant-name">
+
+                                            {{ applicant.user.name }}
+
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- EMAIL -->
+
+                                <td>
+
+                                    <span class="email-text">
+
+                                        {{ applicant.user.email }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- QUALIFICATION -->
+
+                                <td>
+
+                                    <span class="qualification">
+
+                                        {{ applicant.user.qualification }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- EXPERIENCE -->
+
+                                <td>
+
+                                    <span class="experience-badge">
+
+                                        {{ applicant.resume.experience }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- RESUME -->
+
+                                <td>
+
+                                    {% if applicant.resume.resume1 %}
+
+                                    <a href="{{ applicant.resume.resume1.url }}" target="_blank" class="resume-link">
+
+                                        📄 View / Download
+
+                                    </a>
+
+                                    {% else %}
+
+                                    <span class="no-resume">
+
+                                        No Resume
+
+                                    </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- ACTIONS -->
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <!-- AI SCREEN -->
+                                        <a href="{% url 'ai_screen_resume' applicant.id %}" class="btn-ai-screen">
+
+                                            <i class="fa-solid fa-robot"></i>
+                                            AI Screen
+
+                                        </a>
+
+
+                                        <!-- SHORTLIST -->
+                                        <a href="/shortlistCandidate/{{ applicant.id }}/" class="btn-shortlist"
+                                            onclick="return confirmShortlist();">
+
+                                            ✓ Shortlist
+
+                                        </a>
+
+
+                                        <!-- REJECT -->
+                                        <a href="/rejectCandidate/{{ applicant.id }}/" class="btn-reject"
+                                            onclick="return confirmReject();">
+
+                                            ✕ Reject
+
+                                        </a>
+
+                                    </div>
+
+
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <!-- EMPTY STATE -->
+
+            <div class="empty-box">
+
+                <div class="empty-icon">
+                    ⏳
+                </div>
+
+                <h3>No Pending Applicants</h3>
+
+                <p>
+                    There are currently no pending applicants for any of your jobs.
+                </p>
+
+            </div>
 
             {% endif %}
 
@@ -623,4 +652,3 @@
 </script>
 
 {% endblock %}
-
